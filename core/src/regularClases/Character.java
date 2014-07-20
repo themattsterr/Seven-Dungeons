@@ -52,5 +52,9 @@ public abstract class Character extends Actor {
 	public int getAttack(){
 		return this.attack;
 	}
+	
+	public int getDefense(){
+		return this.attack;
+	}
 
 }
