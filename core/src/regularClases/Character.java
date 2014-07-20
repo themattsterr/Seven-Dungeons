@@ -44,6 +44,8 @@ public abstract class Character extends Actor {
 		batch.end();
 	}
 
-	
+	public int getAttack(){
+		return this.attack;
+	}
 
 }
