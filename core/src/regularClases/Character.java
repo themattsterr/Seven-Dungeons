@@ -56,5 +56,5 @@ public abstract class Character extends Actor {
 	public int getDefense(){
 		return this.attack;
 	}
-
+//test
 }
