@@ -1,11 +1,14 @@
 package regularClases;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.Card;
 
 public abstract class Character extends Actor {
 	private int maxHealth;
@@ -16,6 +19,7 @@ public abstract class Character extends Actor {
 	public float xPos = 0;
 	public float yPos = 0;
 	Batch batch = new SpriteBatch();
+	ArrayList<Card> hand = new ArrayList<Card>();
 
 	public Character(String texture, int health, int attack, int defense) {
 		this.texture = new Texture(texture);
@@ -55,6 +59,18 @@ public abstract class Character extends Actor {
 	
 	public int getDefense(){
 		return this.attack;
+	}
+	
+	public void updateStat(Card card){
+		
+			 maxHealth += card.activateHealth();
+			 attack += card.activateAttack();
+			 defense += card.activateDefense();
+		
+	}
+	
+	public void giveCard(Card card){
+		hand.add(card);
 	}
 //test
 }
