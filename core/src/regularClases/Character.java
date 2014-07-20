@@ -44,8 +44,13 @@ public abstract class Character extends Actor {
 		batch.end();
 	}
 
+<<<<<<< HEAD
 	public int getCurrentHealth(){
 		return currentHealth;
+=======
+	public int getAttack(){
+		return this.attack;
+>>>>>>> origin/Mikes-Branch
 	}
 
 }
