@@ -60,9 +60,13 @@ public  class SevenDungeons extends Game{
 		
 		/*TEMPERARY PLACING PLAYERS PLAYER SELECT SCREEN WILL HANDLE THIS */
 		players.add(new Mage());
+		players.get(0).warp(0,0);
 		players.add(new Archer());
+		players.get(1).warp(0,9);
 		players.add(new Knight());
+		players.get(2).warp(0,18);
 		players.add(new Assassin());
+		players.get(3).warp(0, 27);
 		game = this;
 		
 	}

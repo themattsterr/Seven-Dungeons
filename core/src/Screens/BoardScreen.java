@@ -52,9 +52,16 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	//the game board
 	public class MyActor extends Actor{
-		public Texture texture = new Texture("board.png");
+		public Texture texture = new Texture("new_board.png");
 		public void draw(Batch batch, float alpha){
 			batch.draw(texture, 0, 0);
+		}
+	}
+	
+	public class Back extends Actor{
+		public Texture texture = new Texture("background_table.png");
+		public void draw(Batch batch, float alpha){
+			batch.draw(texture, -500, -500);
 		}
 	}
 
@@ -84,6 +91,8 @@ public class BoardScreen implements Screen, GestureListener {
 	    if(move == false)
 	    if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2){
 	    	SevenDungeons.getPlayer().move();
+	    	x = SevenDungeons.getPlayer().getX() - 75;
+	    	y = SevenDungeons.getPlayer().getY() - 75;
 	    	move = true;
 	    }
 	}
@@ -110,10 +119,11 @@ public class BoardScreen implements Screen, GestureListener {
 			
 			//creates the board 
 			MyActor boardPic = new MyActor();
+			Back back = new Back();
 			
-			
+			stage.addActor(back);
 			stage.addActor(boardPic);
-	
+						
 			//adds the actors to the screean
 			for(int i = 0; i < SevenDungeons.getNumPlayers(); i++){
 				stage.addActor(SevenDungeons.getPlayer(i));
@@ -190,6 +200,7 @@ public class BoardScreen implements Screen, GestureListener {
 	@Override
 	public boolean longPress(float x, float y) {
 		// TODO Auto-generated method stub
+		camera.zoom = 3;
 	return false;
 	
 	}
@@ -232,6 +243,8 @@ public class BoardScreen implements Screen, GestureListener {
 	public boolean zoom(float initialDistance, float distance) {
 		if(initialDistance > distance) camera.zoom+= .02;
 		else camera.zoom-= .02;
+		
+		
 		return true;
 	}
 

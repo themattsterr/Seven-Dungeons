@@ -47,12 +47,24 @@ public abstract class HumanCharacter extends Player {
 	
 	}
 	
+	public void warp(int level, int position){
+		SevenDungeons.board.getTile(this.level, this.position).removePlayer(this);
+		SevenDungeons.board.getTile(level, position).addPlayer(this);
+		super.move(SevenDungeons.board.getTile(level, position).getVector());
+	}
+	
 	private int rollDice(){
 		return new Dice().roll();
 		
 	}
 	
+	public float getX(){
+		return super.xPos;
+	}
 	
+	public float getY(){
+		return super.yPos;
+	}
 		
 	
 }
