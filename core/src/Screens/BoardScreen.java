@@ -40,6 +40,7 @@ public class BoardScreen implements Screen, GestureListener {
 	private Viewport viewport;
 	private OrthographicCamera camera; 
 	
+	
 	float x =  WIDTH / 2;
 	float y = HEIGHT /2;
 
@@ -47,10 +48,8 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	int testPos = 0;
 	
-
-	
-	
-	
+	private Dock dock;
+	private Stage dockStage;
 	
 	public class MyActor extends Actor{
 		public Texture texture = new Texture("board.png");
@@ -61,34 +60,37 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	
 	
-	
-	
 	public BoardScreen(GameTest game) {
 		this.game = game;
 		this.board = game.board;
+		
 	}
 
-	
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    stage.act(Gdx.graphics.getDeltaTime());
 	    
+		
+		stage.act(Gdx.graphics.getDeltaTime());
+		dockStage.act(Gdx.graphics.getDeltaTime());
+	   
 	    stage.draw();
+	    dockStage.draw();
 	    
 	    checkMax();
-	   
-	 camera.position.set(x, y,0);
+	    
+	    
+	    camera.position.set(x, y,0);
 	 
 	
 	
-	 camera.update();
+	    camera.update();
 	 
-	 if((Gdx.input.getAccelerometerX()  > 3) && (Gdx.input.getAccelerometerY() > 3)){
-		 players[turn++].move();
-		 turn %= 4;
+	    if((Gdx.input.getAccelerometerX()  > 3) && (Gdx.input.getAccelerometerY() > 3)){
+	    	players[turn++].move();
+	    	turn %= 4;
 	 }
 	
 	}
@@ -107,6 +109,8 @@ public class BoardScreen implements Screen, GestureListener {
 			viewport = new ScreenViewport();
 			stage = new Stage(new FitViewport(WIDTH,HEIGHT,camera));
 			
+			
+			
 			MyActor boardPic = new MyActor();
 			
 			players = new HumanCharacter[4];
@@ -115,13 +119,19 @@ public class BoardScreen implements Screen, GestureListener {
 			players[2] = new Knight(board);
 			players[3] = new Archer(board);
 			
-			
 			stage.addActor(boardPic);
 	
 			for(int i = 0; i < 4; i++){
 				stage.addActor(players[i]);
 			}
-		
+			
+			
+			
+			
+			dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
+			dock = new Dock(WIDTH,HEIGHT);
+			dockStage.addActor(dock);
+			dock.show(dockStage);
 			
 			Gdx.input.setInputProcessor(new GestureDetector(this));
 			initial = true;
@@ -156,6 +166,7 @@ public class BoardScreen implements Screen, GestureListener {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		stage.dispose();
+		dockStage.dispose();
 	}
 
 
@@ -204,7 +215,10 @@ public class BoardScreen implements Screen, GestureListener {
 		 this.y+= deltaY;
 		 
 		  
-		   return false;
+		 	
+		 	
+	
+		  return false;
 	
 	}
 
