@@ -5,9 +5,11 @@ import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Dice;
 import com.mygdx.game.GameBoard;
+import com.mygdx.game.SevenDungeons;
 
-public abstract class HumanCharacter extends Character {
+public abstract class HumanCharacter extends Player {
 	
 	//the characters square position
 	public int position = 0;
@@ -17,20 +19,18 @@ public abstract class HumanCharacter extends Character {
 	//will be replaced with dice class
 	Random rand = new Random();
 	
-	//takes in board so it can move
-	GameBoard board;
 	
-	public HumanCharacter(String texture, int health, int attack, int defense, GameBoard board) {
+	public HumanCharacter(String texture, int health, int attack, int defense) {
 		super(texture, health, attack, defense);
-		this.board = board;
+		
 	}
 	
-	public boolean move(){
+	public void move(){
 		//tells the current tile that the character has left
-		board.getTile(level, position).removePlayer(this);
+		SevenDungeons.board.getTile(level, position).removePlayer(this);
 		
 		
-			position += this.rollDice();
+		position += this.rollDice();
 		
 		
 		switch (level){
@@ -42,13 +42,13 @@ public abstract class HumanCharacter extends Character {
 					break;
 		}
 		
-		board.getTile(level, position).addPlayer(this);
-		super.move(board.getTile(level, position).getVector());
-		return true;
+		SevenDungeons.board.getTile(level, position).addPlayer(this);
+		super.move(SevenDungeons.board.getTile(level, position).getVector());
+	
 	}
 	
 	private int rollDice(){
-		return rand.nextInt(6) + 1;
+		return new Dice().roll();
 		
 	}
 	

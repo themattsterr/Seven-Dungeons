@@ -10,24 +10,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GameTest;
+import com.mygdx.game.SevenDungeons;
 
 public class NewGameScreen implements Screen{
 
 	
 	static int width;
     static int height;
-	GameTest game;
 	private Batch batch;
 	private Texture img;
-	Vector3 position;
-	
-	 private OrthographicCamera  cam;
 	 
 	 
-	public NewGameScreen(GameTest game) {
+	public NewGameScreen() {
 		// TODO Auto-generated constructor stub
-		this.game = game;
+		
 	}
 
 	
@@ -39,23 +35,16 @@ public class NewGameScreen implements Screen{
 		
 		// TODO Auto-generated method stub
 		if(Gdx.input.justTouched()){
-			game.setScreen(game.chooseClassScreen);
+			SevenDungeons.game.setScreen(SevenDungeons.chooseClassScreen);
 			//dispose();
 			
 		
 		} 
 		
-		
-		
-		
-		position.x += Gdx.input.getPitch() * .2;
-		position.y -= Gdx.input.getRoll() * .2 ;
-		cam.position.set(position);
-		batch.setProjectionMatrix(cam.combined);
-		cam.update();
+	
 		
 		batch.begin();
-		batch.draw(img,0,0);
+		batch.draw(img,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.end(); 
 		
 		
@@ -75,10 +64,8 @@ public class NewGameScreen implements Screen{
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 		
-		img = new Texture("bluespider.png");
-		cam = new OrthographicCamera(width, height ); 
-		position = new Vector3(width/2, height /2, 0);
-		cam.position.set(position);
+		img = new Texture("7_dungeons_title_screen.png");
+		
 		
 	}
 

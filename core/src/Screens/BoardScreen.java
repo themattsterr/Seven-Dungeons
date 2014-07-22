@@ -21,108 +21,101 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.GameBoard;
-import com.mygdx.game.GameTest;
+import com.mygdx.game.SevenDungeons;
 
 public class BoardScreen implements Screen, GestureListener {
 	
+	//holds the actors
 	private Stage stage;
+	
+	//initial screen size (samsung galaxy s5
 	static final int WIDTH = 1080;
 	static final int HEIGHT = 720;
+	//initialized already ?
 	static boolean initial = false;
-	private GameBoard board; 
-	private HumanCharacter[] players;
-	
-	private int turn = 0;
-	
 	
 
-	
+	//camera
 	private Viewport viewport;
 	private OrthographicCamera camera; 
 	
-	
+	//initial position of screen
 	float x =  WIDTH / 2;
 	float y = HEIGHT /2;
 
-	private GameTest game;
 	
-	int testPos = 0;
 	
 	private Dock dock;
 	private Stage dockStage;
 	
+	
+	//the game board
 	public class MyActor extends Actor{
 		public Texture texture = new Texture("board.png");
 		public void draw(Batch batch, float alpha){
 			batch.draw(texture, 0, 0);
 		}
 	}
-	
-	
-	
-	public BoardScreen(GameTest game) {
-		this.game = game;
-		this.board = game.board;
-		
-	}
+
 
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    
 		
-		stage.act(Gdx.graphics.getDeltaTime());
+		//resets graphics
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	    stage.act(Gdx.graphics.getDeltaTime());
 		dockStage.act(Gdx.graphics.getDeltaTime());
 	   
-	    stage.draw();
+	   //draws the stages
+		stage.draw();
 	    dockStage.draw();
 	    
+	    //checks the cameras max bounsd 
 	    checkMax();
 	    
-	    
+	    //sets the camera
 	    camera.position.set(x, y,0);
-	 
-	
-	
 	    camera.update();
 	 
-	    if((Gdx.input.getAccelerometerX()  > 3) && (Gdx.input.getAccelerometerY() > 3)){
-	    	players[turn++].move();
-	    	turn %= 4;
-	 }
-	
+	    	//rolls the dice if the player shakes the game while holding down
+	    if(Gdx.input.isTouched()){
+	    if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 3){
+	    	//SevenDungeons.getPlayer().move();
+	    	}
+	    }
 	}
+	
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		//viewport.update(width, height);
+		viewport.update(width, height);
 	}
 
 	@Override
 	public void show() {
+		
+		//makes sure that the game never accidently reinitializes
 		if(initial == false){
 			// TODO Auto-generated method stub
+			
+			//camera functions
 			camera = new OrthographicCamera();
 			viewport = new ScreenViewport();
 			stage = new Stage(new FitViewport(WIDTH,HEIGHT,camera));
 			
 			
-			
+			//creates the board 
 			MyActor boardPic = new MyActor();
 			
-			players = new HumanCharacter[4];
-			players[0] = new Assassin(board);
-			players[1] = new Mage(board);
-			players[2] = new Knight(board);
-			players[3] = new Archer(board);
 			
 			stage.addActor(boardPic);
 	
-			for(int i = 0; i < 4; i++){
-				stage.addActor(players[i]);
+			//adds the actors to the screean
+			for(int i = 0; i < SevenDungeons.getNumPlayers(); i++){
+				stage.addActor(SevenDungeons.getPlayer(i));
 			}
 			
 			
@@ -133,7 +126,10 @@ public class BoardScreen implements Screen, GestureListener {
 			dockStage.addActor(dock);
 			dock.show(dockStage);
 			
+			//dont worry about this
 			Gdx.input.setInputProcessor(new GestureDetector(this));
+			
+			//says the game has initialized
 			initial = true;
 		}
 		
@@ -180,11 +176,11 @@ public class BoardScreen implements Screen, GestureListener {
 
 
 	@Override
+	//changes turn if the player makes a quick tap
 	public boolean tap(float x, float y, int count, int button) {
-	
+		SevenDungeons.changeTurn();
 		 
-		while(!players[turn++].move());
-		turn %= 4;
+		
 		return false;
 	}
 
@@ -193,10 +189,8 @@ public class BoardScreen implements Screen, GestureListener {
 	@Override
 	public boolean longPress(float x, float y) {
 		// TODO Auto-generated method stub
+	return false;
 	
-	game.setScreen(game.battleScreen);
-	game.battleScreen.setBattle(players[turn], players[(turn + 1) % 4]);
-		return false;
 	}
 
 
@@ -233,6 +227,7 @@ public class BoardScreen implements Screen, GestureListener {
 
 
 	@Override
+	//pinch to zoom
 	public boolean zoom(float initialDistance, float distance) {
 		if(initialDistance > distance) camera.zoom+= .02;
 		else camera.zoom-= .02;
@@ -248,7 +243,7 @@ public class BoardScreen implements Screen, GestureListener {
 		return false;
 	}
 	
-
+//checks camera bounds 
  public void checkMax(){
 	 
 	 if (camera.zoom >3) camera.zoom = 3;

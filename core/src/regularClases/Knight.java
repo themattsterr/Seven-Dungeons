@@ -5,8 +5,8 @@ import com.mygdx.game.GameBoard;
 
 public class Knight extends HumanCharacter {
 
-	public Knight(GameBoard board) {
-		super("knight.png" ,0,0,0, board);
+	public Knight() {
+		super("knight.png" ,0,0,0);
 		// TODO Auto-generated constructor stub
 	}
 

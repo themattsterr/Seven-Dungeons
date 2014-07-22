@@ -41,5 +41,5 @@ public abstract class Tile {
 		return vector;
 	}
 	
-	public abstract void execute(GameTest game);
+	public abstract void execute();
 }

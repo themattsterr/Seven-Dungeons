@@ -5,8 +5,8 @@ import com.mygdx.game.GameBoard;
 
 public class Mage extends HumanCharacter {
 
-	public Mage(GameBoard board) {
-		super("mage.png", 0,0,0,board);
+	public Mage() {
+		super("mage.png", 0,0,0);
 		// TODO Auto-generated constructor stub
 	}
 

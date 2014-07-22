@@ -2,9 +2,9 @@ package com.mygdx.game;
 
 
 
-import regularClases.Character;
+import regularClases.Player;
 
-public class Monster extends Character {
+public class Monster extends Player {
 	
 	private static String[][] Strings = {{new String("greenflytrap.png"), new String("greensprite.png"), new String("greenbiclops.png"), new String("greenslime.png"), new String("greenspider.png")},
 									{new String("blueflytrap.png"), new String("bluesprite.png"), new String("bluebiclops.png"), new String("blueslime.png"), new String("bluespider.png")},
