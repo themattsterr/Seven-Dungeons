@@ -6,18 +6,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.GameTest;
+import com.mygdx.game.SevenDungeons;
 
 public class ChooseClassScreen implements Screen{
 
-	
-	GameTest game;
+
 	private Batch batch;
 	private Texture img;
+	private int width; 
+	private int height;
 	
-	public ChooseClassScreen(GameTest game) {
+	public ChooseClassScreen() {
 		// TODO Auto-generated constructor stub
-		this.game = game;
+		
 	}
 
 	@Override
@@ -27,26 +28,29 @@ public class ChooseClassScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		// TODO Auto-generated method stub
 		if(Gdx.input.justTouched()){
-			game.setScreen(game.boardScreen);
+			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
 			dispose();
 		}
 		
 		batch.begin();
-		batch.draw(img,0,0);
+		batch.draw(img,0,0, width, height);
 		batch.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+		this.width = width;
+		this.height = height;
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 		batch = new SpriteBatch();
-		img = new Texture("redspider.png");
+		img = new Texture("player1_class_select.png");
+		width = Gdx.graphics.getWidth();
+		height = Gdx.graphics.getHeight();
 	}
 
 	@Override

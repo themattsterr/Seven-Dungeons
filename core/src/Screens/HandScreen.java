@@ -1,11 +1,10 @@
 package Screens;
 
 import com.badlogic.gdx.Screen;
-import com.mygdx.game.GameTest;
 
 public class HandScreen implements Screen {
 
-	public HandScreen(GameTest game) {
+	public HandScreen() {
 		// TODO Auto-generated constructor stub
 	}
 
