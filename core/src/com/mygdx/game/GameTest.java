@@ -23,6 +23,7 @@ public class GameTest extends Game {
 	public HandScreen handScreen; 
 	public GameBoard board = new GameBoard();
 	
+	
 	@Override
 	public void create () {
 		newGameScreen = new NewGameScreen(this);
