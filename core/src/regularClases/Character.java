@@ -54,7 +54,9 @@ public abstract class Character extends Actor {
 	}
 	
 	public int getDefense(){
-		return this.attack;
+		return this.defense;
 	}
-
+	public void takeHit(int hit){
+		currentHealth -= hit;
+	}
 }

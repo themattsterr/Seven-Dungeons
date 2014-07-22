@@ -26,12 +26,47 @@ public class BattleScreen implements Screen {
 	
 	}
 
-	public void setBattle(HumanCharacter player1, HumanCharacter player2){
-		fighter = player1;
-		defender = player2;
-		//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
-	//	music.play();
-	}
+	//THIS FUNCTION TAKES IN TWO FIGHTERS AND MAKES THE BATTLE 
+		public void setBattle(HumanCharacter player1, HumanCharacter player2){
+			fighter = player1;
+			defender = player2;
+			//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
+		//	music.play();
+			//music.play();
+			fight(player1, player2);
+		}
+		
+		private void fight(HumanCharacter attacker, HumanCharacter defender){
+			
+			int diceNumb = (int)(Math.random() * 6);
+			int  theAttack;
+			switch(diceNumb){
+			 		
+			case 1: theAttack = (int) ((attacker.getAttack() - defender.getDefense() ) * 0);
+					break;
+			
+			case 2:	theAttack = (int) ((attacker.getAttack() - defender.getDefense())*.50);
+					break;
+			
+			case 3: theAttack = (int) ((attacker.getAttack() - defender.getDefense())*.50);
+					break;
+			
+			case 4: theAttack = (int) ((attacker.getAttack() - defender.getDefense()));
+					break;
+			
+			case 5: theAttack = (attacker.getAttack() - defender.getDefense());
+					break;
+			
+			case 6: theAttack = (attacker.getAttack());
+					break;
+		    
+			default: theAttack = 0;
+					break;
+			}
+			
+			defender.takeHit(theAttack);
+			
+		}
 
 	@Override
 	public void render(float delta) {
