@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GameBoard;
+
 import com.mygdx.game.SevenDungeons;
 
 public class BoardScreen implements Screen, GestureListener {
@@ -33,6 +33,7 @@ public class BoardScreen implements Screen, GestureListener {
 	static final int HEIGHT = 720;
 	//initialized already ?
 	static boolean initial = false;
+	private boolean move = false; 
 	
 
 	//camera
@@ -80,10 +81,10 @@ public class BoardScreen implements Screen, GestureListener {
 	    camera.update();
 	 
 	    	//rolls the dice if the player shakes the game while holding down
-	    if(Gdx.input.isTouched()){
-	    if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 3){
-	    	//SevenDungeons.getPlayer().move();
-	    	}
+	    if(move == false)
+	    if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2){
+	    	SevenDungeons.getPlayer().move();
+	    	move = true;
 	    }
 	}
 	
@@ -179,7 +180,7 @@ public class BoardScreen implements Screen, GestureListener {
 	//changes turn if the player makes a quick tap
 	public boolean tap(float x, float y, int count, int button) {
 		SevenDungeons.changeTurn();
-		 
+		 move = false;
 		
 		return false;
 	}
