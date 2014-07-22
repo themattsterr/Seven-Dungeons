@@ -59,7 +59,7 @@ public class BoardScreen implements Screen, GestureListener {
 	}
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.png");
+		public Texture texture = new Texture("redspider.png");
 		public void draw(Batch batch, float alpha){
 			batch.draw(texture, -500, -500);
 		}
@@ -129,7 +129,8 @@ public class BoardScreen implements Screen, GestureListener {
 				stage.addActor(SevenDungeons.getPlayer(i));
 			}
 			
-			
+			x = SevenDungeons.getPlayer().getX() - 75;
+	    	y = SevenDungeons.getPlayer().getY() - 75;
 			
 			
 			dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
@@ -191,7 +192,9 @@ public class BoardScreen implements Screen, GestureListener {
 	public boolean tap(float x, float y, int count, int button) {
 		SevenDungeons.changeTurn();
 		 move = false;
-		
+		this.x = SevenDungeons.getPlayer().getX() - 75;
+	    this.y = SevenDungeons.getPlayer().getY() - 75;
+	  
 		return false;
 	}
 
