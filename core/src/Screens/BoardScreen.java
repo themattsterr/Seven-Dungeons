@@ -7,6 +7,7 @@ import regularClases.Knight;
 import regularClases.Mage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,10 +17,14 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Dice;
 import com.mygdx.game.GameBoard;
 import com.mygdx.game.GameTest;
 
@@ -50,6 +55,8 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	private Dock dock;
 	private Stage dockStage;
+	private InputMultiplexer multiplexer;
+	private Dice dice;
 	
 	public class MyActor extends Actor{
 		public Texture texture = new Texture("board.png");
@@ -78,6 +85,8 @@ public class BoardScreen implements Screen, GestureListener {
 	   
 	    stage.draw();
 	    dockStage.draw();
+	    
+	    Table.drawDebug(dockStage);
 	    
 	    checkMax();
 	    
@@ -110,7 +119,6 @@ public class BoardScreen implements Screen, GestureListener {
 			stage = new Stage(new FitViewport(WIDTH,HEIGHT,camera));
 			
 			
-			
 			MyActor boardPic = new MyActor();
 			
 			players = new HumanCharacter[4];
@@ -125,15 +133,23 @@ public class BoardScreen implements Screen, GestureListener {
 				stage.addActor(players[i]);
 			}
 			
-			
-			
-			
 			dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
 			dock = new Dock(WIDTH,HEIGHT);
 			dockStage.addActor(dock);
-			dock.show(dockStage);
+			dock.show();
 			
-			Gdx.input.setInputProcessor(new GestureDetector(this));
+			
+			dice = new Dice();
+			dockStage.addActor(dice);
+			dice.setPosition(400, 50);
+			dice.setSize(80, 80);
+			dice.roll();
+			
+			multiplexer = new InputMultiplexer();
+			multiplexer.addProcessor(dockStage);
+			multiplexer.addProcessor(new GestureDetector(this));
+			
+			Gdx.input.setInputProcessor(multiplexer);
 			initial = true;
 		}
 		
@@ -181,8 +197,8 @@ public class BoardScreen implements Screen, GestureListener {
 
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
-	
-		 
+		dice.roll();
+		
 		while(!players[turn++].move());
 		turn %= 4;
 		return false;
