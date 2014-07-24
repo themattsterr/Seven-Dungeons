@@ -91,8 +91,8 @@ public class BoardScreen implements Screen, GestureListener {
 	    if(move == false)
 	    if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2){
 	    	SevenDungeons.getPlayer().move();
-	    	x = SevenDungeons.getPlayer().getX() - 75;
-	    	y = SevenDungeons.getPlayer().getY() - 75;
+	    	x = SevenDungeons.getPlayer().getX();
+	    	y = SevenDungeons.getPlayer().getY();
 	    	move = true;
 	    }
 	}
@@ -136,7 +136,7 @@ public class BoardScreen implements Screen, GestureListener {
 			dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
 			dock = new Dock(WIDTH,HEIGHT);
 			dockStage.addActor(dock);
-			dock.show(dockStage);
+			dock.show();
 			
 			//dont worry about this
 			Gdx.input.setInputProcessor(new GestureDetector(this));
