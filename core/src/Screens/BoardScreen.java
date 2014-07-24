@@ -46,8 +46,8 @@ public class BoardScreen implements Screen, GestureListener {
 
 	
 	
-	private Dock dock;
-	private Stage dockStage;
+	//private Dock dock;
+	//private Stage dockStage;
 	
 	
 	//the game board
@@ -74,11 +74,11 @@ public class BoardScreen implements Screen, GestureListener {
 		//resets graphics
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	    stage.act(Gdx.graphics.getDeltaTime());
-		dockStage.act(Gdx.graphics.getDeltaTime());
+	//	dockStage.act(Gdx.graphics.getDeltaTime());
 	   
 	   //draws the stages
 		stage.draw();
-	    dockStage.draw();
+	  //  dockStage.draw();
 	    
 	    //checks the cameras max bounsd 
 	    checkMax();
@@ -133,10 +133,10 @@ public class BoardScreen implements Screen, GestureListener {
 	    	y = SevenDungeons.getPlayer().getY() - 75;
 			
 			
-			dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
-			dock = new Dock(WIDTH,HEIGHT);
-			dockStage.addActor(dock);
-			dock.show();
+			//dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
+		//	dock = new Dock(WIDTH,HEIGHT);
+		//	dockStage.addActor(dock);
+		//	dock.show();
 			
 			//dont worry about this
 			Gdx.input.setInputProcessor(new GestureDetector(this));
@@ -174,7 +174,7 @@ public class BoardScreen implements Screen, GestureListener {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		stage.dispose();
-		dockStage.dispose();
+	//	dockStage.dispose();
 	}
 
 
