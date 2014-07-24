@@ -58,7 +58,7 @@ public abstract class Player extends Actor {
 	}
 	
 	public int getDefense(){
-		return this.attack;
+		return this.defense;
 	}
 	
 	public void updateStat(Card card){
@@ -72,5 +72,9 @@ public abstract class Player extends Actor {
 	public void giveCard(Card card){
 		hand.add(card);
 	}
-//test
+	
+	public void takeHit(int damage){
+		currentHealth-= damage;
+	}
+
 }

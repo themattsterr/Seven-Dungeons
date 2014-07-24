@@ -9,6 +9,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Dice;
 import com.sun.corba.se.impl.oa.poa.ActiveObjectMap.Key;
 
 public class BattleScreen implements Screen {
@@ -25,14 +26,14 @@ public class BattleScreen implements Screen {
 	
 	}
 
-<<<<<<< HEAD
+
 	public void setBattle(HumanCharacter player1, Player player2){
 		fighter = player1;
 		defender = player2;
 		//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
 	//	music.play();
 	}
-=======
+
 	//THIS FUNCTION TAKES IN TWO FIGHTERS AND MAKES THE BATTLE 
 		public void setBattle(HumanCharacter player1, HumanCharacter player2){
 			fighter = player1;
@@ -45,7 +46,7 @@ public class BattleScreen implements Screen {
 		
 		private void fight(HumanCharacter attacker, HumanCharacter defender){
 			
-			int diceNumb = (int)(Math.random() * 6);
+			int diceNumb = new Dice().roll();
 			int  theAttack;
 			switch(diceNumb){
 			 		
@@ -74,7 +75,7 @@ public class BattleScreen implements Screen {
 			defender.takeHit(theAttack);
 			
 		}
->>>>>>> origin/juammy-branch
+
 
 	@Override
 	public void render(float delta) {
