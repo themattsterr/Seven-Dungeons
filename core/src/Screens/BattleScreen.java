@@ -71,7 +71,8 @@ public class BattleScreen implements Screen {
 					break;
 			}
 			
-			defender.takeHit(theAttack);
+			// Commented out until method is functional
+			//defender.takeHit(theAttack);
 			
 		}
 

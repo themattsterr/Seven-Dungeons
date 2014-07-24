@@ -42,7 +42,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 	private TextureRegion goldRegion;
 	
 	private Table infoTable;
-	private LabelStyle style;
+	private LabelStyle labelStyle;
 	private BitmapFont font;
 	
 	private Image currentPlayer;
@@ -51,11 +51,20 @@ public class Dock extends WidgetGroup implements ActionListener {
 	private Integer defense;
 	private Integer gold;
 	
+	/* 
+	 * HOW TO BUTTONS:
+	 * I use a Table to arrange them easily
+	 * Just one TextureAtlas and Skin for the buttons is needed
+	 */
 	private Table arrowTable;
 	private TextureAtlas buttonAtlas;
 	private Skin skin;
 	
-	
+	/*
+	 *  You'll need these for each button
+	 *  ButtonImageButtonStyle instance
+	 *  ImageButton instance
+	 */
 	private ImageButtonStyle upArrowStyle;
 	private ImageButtonStyle leftArrowStyle;
 	private ImageButtonStyle downArrowStyle;
@@ -96,12 +105,28 @@ public class Dock extends WidgetGroup implements ActionListener {
 		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
 		
 		font = new BitmapFont(Gdx.files.internal("exo-small.fnt"), false);
-		style = new LabelStyle(font, Color.BLACK);
-		
-		skin = new Skin();
+		labelStyle = new LabelStyle(font, Color.BLACK);
+
+		/*
+		 * Skin constructor takes nothing
+		 * TextureAtlas constructor takes in path to .pack file that 
+		 * is made with gdx-texturepacker and changing run configurations on Eclipse
+		 * and running TexturePacker.class its complicated for Mac
+		 * or I can make it quickly with the individual textures
+		 * 
+		 * Add TextureAtlas to the Skin
+		 */
+		skin = new Skin(); //
 		buttonAtlas = new TextureAtlas("buttons/button.pack");
 		skin.addRegions(buttonAtlas);
 				
+		/*
+		 * ImageButtonStyle has empty constructor
+		 * .up is the default image for the button and uses texture from .pack
+		 * .disabled is used when button is disabled  
+		 * ImageButton constructor takes in the ImageButtonStyle instance
+		 * addListener to the ImageButton instance I got this from a tutorial and it works
+		 */
 		upArrowStyle = new ImageButtonStyle();
 		upArrowStyle.up = skin.getDrawable("uparrow");
 		upArrowStyle.disabled = skin.getDrawable("uparrowdisabled");
@@ -237,28 +262,28 @@ public class Dock extends WidgetGroup implements ActionListener {
 		Image healthImage = new Image(healthRegion);
 		healthTable.add(healthImage).size(imageSize, imageSize).expand();
 		healthTable.row();
-		healthTable.add(new Label(health.toString(), style)).expand();
+		healthTable.add(new Label(health.toString(), labelStyle)).expand();
 		table.add(healthTable).size(cellWidth, height);
 
 		Table attackTable = new Table();
 		Image attackImage = new Image(attackRegion);
 		attackTable.add(attackImage).size(imageSize, imageSize).expand();
 		attackTable.row();
-		attackTable.add(new Label(attack.toString(), style)).expand();
+		attackTable.add(new Label(attack.toString(), labelStyle)).expand();
 		table.add(attackTable).size(cellWidth, height);
 		
 		Table defenseTable = new Table();
 		Image defenseImage = new Image(defenseRegion);
 		defenseTable.add(defenseImage).size(imageSize, imageSize).expand();
 		defenseTable.row();
-		defenseTable.add(new Label(defense.toString(), style)).expand();
+		defenseTable.add(new Label(defense.toString(), labelStyle)).expand();
 		table.add(defenseTable).size(cellWidth, height);
 		
 		Table goldTable = new Table();
 		Image goldImage = new Image(goldRegion);
 		goldTable.add(goldImage).size(imageSize, imageSize).expand();
 		goldTable.row();
-		goldTable.add(new Label(gold.toString(), style)).expand();
+		goldTable.add(new Label(gold.toString(), labelStyle)).expand();
 		table.add(goldTable).size(cellWidth, height);
 		
 		//table.setFillParent(true);

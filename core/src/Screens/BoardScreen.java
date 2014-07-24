@@ -7,6 +7,7 @@ import regularClases.Knight;
 import regularClases.Mage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,12 +17,16 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import com.mygdx.game.SevenDungeons;
+import com.mygdx.game.Dice;
+import com.mygdx.game.GameBoard;
 
 public class BoardScreen implements Screen, GestureListener {
 	
@@ -48,7 +53,8 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	//private Dock dock;
 	//private Stage dockStage;
-	
+	private InputMultiplexer multiplexer;
+	//private Dice dice;
 	
 	//the game board
 	public class MyActor extends Actor{
@@ -78,9 +84,12 @@ public class BoardScreen implements Screen, GestureListener {
 	   
 	   //draws the stages
 		stage.draw();
-	  //  dockStage.draw();
+	  //dockStage.draw();
 	    
-	    //checks the cameras max bounsd 
+	    
+	    //Table.drawDebug(dockStage);
+	    
+		//checks the cameras max bounsd 
 	    checkMax();
 	    
 	    //sets the camera
@@ -131,17 +140,24 @@ public class BoardScreen implements Screen, GestureListener {
 			
 			x = SevenDungeons.getPlayer().getX() - 75;
 	    	y = SevenDungeons.getPlayer().getY() - 75;
-			
-			
+
 			//dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
-		//	dock = new Dock(WIDTH,HEIGHT);
-		//	dockStage.addActor(dock);
-		//	dock.show();
+			//dock = new Dock(WIDTH,HEIGHT);
+			//dockStage.addActor(dock);
+			//dock.show();
 			
-			//dont worry about this
-			Gdx.input.setInputProcessor(new GestureDetector(this));
 			
-			//says the game has initialized
+			//dice = new Dice();
+			//dockStage.addActor(dice);
+			//dice.setPosition(400, 50);
+			//dice.setSize(80, 80);
+			//dice.roll();
+			
+			multiplexer = new InputMultiplexer();
+			//multiplexer.addProcessor(dockStage);
+			multiplexer.addProcessor(new GestureDetector(this));
+			
+			Gdx.input.setInputProcessor(multiplexer);
 			initial = true;
 		}
 		
@@ -195,6 +211,8 @@ public class BoardScreen implements Screen, GestureListener {
 		this.x = SevenDungeons.getPlayer().getX() - 75;
 	    this.y = SevenDungeons.getPlayer().getY() - 75;
 	  
+		//dice.roll();
+
 		return false;
 	}
 
