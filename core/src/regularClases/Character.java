@@ -63,13 +63,12 @@ public abstract class Character extends Actor {
 	public void takeHit(int hit){
 		currentHealth -= hit;
 	}
-<<<<<<< HEAD
-	
+
 	public void updateStat(Card card){
 		
-			 maxHealth += card.activateHealth();
-			 attack += card.activateAttack();
-			 defense += card.activateDefense();
+		//	 maxHealth += card.activateHealth();
+		//	 attack += card.activateAttack();
+			// defense += card.activateDefense();
 		
 	}
 	
@@ -77,6 +76,5 @@ public abstract class Character extends Actor {
 		hand.add(card);
 	}
 //test
-=======
->>>>>>> origin/juammy-branch
+
 }
