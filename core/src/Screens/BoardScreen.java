@@ -192,8 +192,8 @@ public class BoardScreen implements Screen, GestureListener {
 	public boolean tap(float x, float y, int count, int button) {
 		SevenDungeons.changeTurn();
 		 move = false;
-		this.x = SevenDungeons.getPlayer().getX();
-	    this.y = SevenDungeons.getPlayer().getY();
+		this.x = SevenDungeons.getPlayer().getX() - 75;
+	    this.y = SevenDungeons.getPlayer().getY() - 75;
 	  
 		return false;
 	}
