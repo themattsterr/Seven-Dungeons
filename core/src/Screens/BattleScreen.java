@@ -49,6 +49,9 @@ public class BattleScreen implements Screen {
 	private TextureRegion defenseRegion;
 	private TextureRegion goldRegion;
 	
+	private Image fighterImage;
+	private Image defenderImage;
+	
 	private LabelStyle labelStyle;
 	private BitmapFont font;
 	
@@ -65,6 +68,8 @@ public class BattleScreen implements Screen {
 		attackRegion = new TextureRegion(iconTexture, 180, 0, 180, 180); 
 		defenseRegion = new TextureRegion(iconTexture, 360, 0, 180, 180);
 		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
+		
+
 		
 		font = new BitmapFont(Gdx.files.internal("exo-small.fnt"), false);
 		labelStyle = new LabelStyle(font, Color.BLACK);
@@ -148,8 +153,8 @@ public class BattleScreen implements Screen {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		fighter.drawFighter();
-		defender.drawDefennder();
+		//fighter.drawFighter();
+		//defender.drawDefennder();
 		
 		
 		
@@ -168,28 +173,32 @@ public class BattleScreen implements Screen {
 	public void show() {
 		// TODO Auto-generated method stub
 		
-		middleTable.setFillParent(true);
+		float imageHeight = 100;
 		
-		battleTable.add(fighter).align(Align.bottom);
+		fighterImage = new Image(fighter.getTexture());
+		defenderImage = new Image(defender.getTexture());
 		
-		fighterTable = createInfoTable(this.fighter, 100, 50);
-		fighterTable.setFillParent(true);
-		defenderTable = createInfoTable(this.defender, 100, 50);
-		defenderTable.setFillParent(true);
-		middleTable.add(fighterTable).align(Align.bottom);
-		middleTable.row();
-		middleTable.add(dice).align(Align.center);
-		middleTable.row();
-		middleTable.add(defenderTable).align(Align.top);
+		fighterTable = createInfoTable(this.fighter, stage.getWidth()/3, stage.getWidth()/6);
+		defenderTable = createInfoTable(this.defender, stage.getWidth()/3, stage.getWidth()/6);
 		
-		battleTable.add(middleTable).align(Align.bottom);
 		
-		battleTable.add(defender);
+		
+		battleTable.add().size(stage.getWidth()/3, stage.getWidth()/3);
+		battleTable.add(defenderTable).align(Align.top);
+		battleTable.add(defenderImage).align(Align.top);
+		battleTable.row();
+		battleTable.add(fighterImage).align(Align.bottom);
+		battleTable.add(fighterTable).align(Align.bottom);
+		battleTable.add().size(stage.getWidth()/3, stage.getWidth()/3);
 		
 		battleTable.setFillParent(true);
 		
 		stage.addActor(background);
 		stage.addActor(battleTable);
+		stage.addActor(dice);
+		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
+		dice.setSize(40, 40);
+		
 		
 		fighterTable.debug();
 		defenderTable.debug();

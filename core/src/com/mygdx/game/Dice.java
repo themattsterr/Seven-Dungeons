@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Dice extends Actor{
+public class Dice extends Actor {
 	
 	private Random rand = new Random();
 	private int value;
