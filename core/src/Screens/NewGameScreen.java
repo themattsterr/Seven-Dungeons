@@ -17,35 +17,33 @@ public class NewGameScreen implements Screen{
 	
 	static int width;
     static int height;
-	private Batch batch;
-	private Texture img;
+	//private static Batch batch;
+	private static Texture img;
 	 
-	 
-	public NewGameScreen() {
-		// TODO Auto-generated constructor stub
-		
-	}
 
 	
 
 	@Override
 	public void render(float delta) {
+		
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		
 		// TODO Auto-generated method stub
 		if(Gdx.input.justTouched()){
 			SevenDungeons.game.setScreen(SevenDungeons.chooseClassScreen);
+			//game.setScreen(SevenDungeons.chooseClassScreen);
 			//dispose();
 			
 		
 		} 
 		
 	
-		
-		batch.begin();
-		batch.draw(img,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.end(); 
+		SevenDungeons.batch.begin();
+		SevenDungeons.batch.draw(img,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		SevenDungeons.batch.end(); 
+
 		
 		
 		
@@ -59,12 +57,16 @@ public class NewGameScreen implements Screen{
 
 	@Override
 	public void show() {
+
 		// TODO Auto-generated method stub
-		batch = new SpriteBatch();
+		//batch = new SpriteBatch();
+		//batch = SevenDungeons.batch;
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 		
-		img = new Texture("7_dungeons_title_screen.png");
+		img = new Texture("7_dungeons_title_screen_small.png");
+		
+
 		
 		
 	}

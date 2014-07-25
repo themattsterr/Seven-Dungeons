@@ -60,9 +60,8 @@ public abstract class Character extends Actor {
 	public int getDefense(){
 		return this.defense;
 	}
-	public void takeHit(int hit){
-		currentHealth -= hit;
-	}
+	
+
 
 	public void updateStat(Card card){
 		
