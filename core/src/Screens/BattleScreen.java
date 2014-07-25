@@ -2,7 +2,6 @@ package Screens;
 
 import regularClases.HumanCharacter;
 import regularClases.Player;
-import Screens.ShopScreen.Back;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

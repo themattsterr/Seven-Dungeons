@@ -61,6 +61,9 @@ public abstract class Character extends Actor {
 		return this.defense;
 	}
 	
+	public Texture getTexture(){
+		return texture; 
+	}
 
 
 	public void updateStat(Card card){

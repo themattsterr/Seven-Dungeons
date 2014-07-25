@@ -72,6 +72,8 @@ public abstract class Player extends Actor {
 		currentHealth -= hit;
 	}
 	
+
+	
 	public void updateStat(Card card){
 		
 			// maxHealth += card.activateHealth();
