@@ -15,7 +15,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import regularClases.Archer;
 import regularClases.Assassin;
@@ -34,6 +36,8 @@ public  class SevenDungeons extends Game{
 	public static HandScreen handScreen; 
 	public static GameBoard board = new GameBoard();
 	
+
+	
 	 //Holds Players
 	static ArrayList<HumanCharacter> players = new ArrayList<HumanCharacter>();
 	//whos turn is it
@@ -42,6 +46,14 @@ public  class SevenDungeons extends Game{
 	
 	//saves the first instance of itself, allows us to cheat and use non static members on a static class
 	public static SevenDungeons game;
+	
+	public static Batch batch;
+	
+	public SevenDungeons(){
+		System.out.println("created");
+		
+
+	}
 	
 	public  void create () {
 		
@@ -53,9 +65,10 @@ public  class SevenDungeons extends Game{
 		shopScreen = new ShopScreen();
 		handScreen = new HandScreen();
 		
-		
+		batch = new SpriteBatch();
 		//sets the initial screen
-		this.setScreen(newGameScreen);
+		//this.setScreen(newGameScreen);
+		
 		
 		
 		/*TEMPERARY PLACING PLAYERS PLAYER SELECT SCREEN WILL HANDLE THIS */
@@ -68,6 +81,8 @@ public  class SevenDungeons extends Game{
 		players.add(new Assassin());
 		players.get(3).warp(0, 27);
 		game = this;
+		
+		this.setScreen(boardScreen);
 		
 	}
 

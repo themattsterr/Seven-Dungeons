@@ -16,6 +16,8 @@ public abstract class HumanCharacter extends Player {
 	//the characters level
 	public int level = 0;
 	
+	private int gold = 0;
+	
 	//will be replaced with dice class
 	Random rand = new Random();
 	
@@ -60,12 +62,27 @@ public abstract class HumanCharacter extends Player {
 		
 	}
 	
+	public int getGold(){
+		return this.gold;
+	}
+	
 	public float getX(){
 		return super.xPos;
 	}
 	
 	public float getY(){
 		return super.yPos;
+	}
+	
+	// returns true if gold was given, false if player's amount is < 0
+	public boolean giveGold(int gold){
+		
+		if(this.gold + gold > 0)
+			return false;
+		else
+			this.gold += gold;
+		
+		return true;
 	}
 		
 	

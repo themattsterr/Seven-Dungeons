@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Card;
+import com.mygdx.game.SevenDungeons;
 
 public abstract class Player extends Actor {
 	private int maxHealth;
@@ -18,11 +19,13 @@ public abstract class Player extends Actor {
 	private Texture texture;
 	public float xPos = 0;
 	public float yPos = 0;
-	Batch batch = new SpriteBatch();
+	Batch batch;
 	ArrayList<Card> hand = new ArrayList<Card>();
+
 
 	public Player(String texture, int health, int attack, int defense) {
 		this.texture = new Texture(texture);
+		this.batch = SevenDungeons.batch;
 	}
 
 	public void draw(Batch batch, float alpha) {
@@ -59,6 +62,14 @@ public abstract class Player extends Actor {
 	
 	public int getDefense(){
 		return this.attack;
+	}
+	
+	public Texture getTexture(){
+		return this.texture;
+	}
+	
+	public void takeHit(int hit){
+		currentHealth -= hit;
 	}
 	
 	public void updateStat(Card card){

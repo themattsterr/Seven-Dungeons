@@ -31,11 +31,11 @@ import com.mygdx.game.GameBoard;
 public class BoardScreen implements Screen, GestureListener {
 	
 	//holds the actors
-	private Stage stage;
+	private Stage boardStage;
 	
 	//initial screen size (samsung galaxy s5
-	static final int WIDTH = 1080;
-	static final int HEIGHT = 720;
+	static final int WIDTH = Gdx.graphics.getWidth();
+	static final int HEIGHT = Gdx.graphics.getHeight();
 	//initialized already ?
 	static boolean initial = false;
 	private boolean move = false; 
@@ -48,46 +48,70 @@ public class BoardScreen implements Screen, GestureListener {
 	//initial position of screen
 	float x =  WIDTH / 2;
 	float y = HEIGHT /2;
-
 	
+	private Back back;
+	private BoardActor board;
 	
-	//private Dock dock;
-	//private Stage dockStage;
+	private Dock dock;
+	private Stage dockStage;
 	private InputMultiplexer multiplexer;
 	//private Dice dice;
 	
+	
+	public BoardScreen(){
+		// stuff taken from show
+		camera = new OrthographicCamera();
+		viewport = new ScreenViewport();
+		boardStage = new Stage(new FitViewport(WIDTH,HEIGHT,camera), SevenDungeons.batch);
+		
+		//creates the board 
+		board = new BoardActor();
+		back = new Back();
+		
+		// int dock and its own stage
+		dockStage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
+		dock = new Dock(WIDTH,HEIGHT);
+	}
+	
 	//the game board
-	public class MyActor extends Actor{
+	public class BoardActor extends Actor{
 		public Texture texture = new Texture("new_board.png");
-		public void draw(Batch batch, float alpha){
+		public void draw(Batch batch, float parentAlpha){
+			//batch.begin();
 			batch.draw(texture, 0, 0);
+			//batch.end();
 		}
 	}
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("redspider.png");
-		public void draw(Batch batch, float alpha){
+		public Texture texture = new Texture("background_table.png");
+		public void draw(Batch batch, float parentAlpha){
+			//batch.begin();
 			batch.draw(texture, -500, -500);
+			//batch.end();
 		}
 	}
-
-
-
+	
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		
 		//resets graphics
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	    stage.act(Gdx.graphics.getDeltaTime());
-	//	dockStage.act(Gdx.graphics.getDeltaTime());
+	    boardStage.act(Gdx.graphics.getDeltaTime());
+		dockStage.act(Gdx.graphics.getDeltaTime());
+	    
+		//batch.draw(texture, 0, 0);
+		
 	   
 	   //draws the stages
-		stage.draw();
-	  //dockStage.draw();
+	    
+		boardStage.draw();
+	    dockStage.draw();
+		
 	    
 	    
-	    //Table.drawDebug(dockStage);
+	    Table.drawDebug(dockStage);
 	    
 		//checks the cameras max bounsd 
 	    checkMax();
@@ -115,53 +139,31 @@ public class BoardScreen implements Screen, GestureListener {
 
 	@Override
 	public void show() {
-		
-		//makes sure that the game never accidently reinitializes
-		if(initial == false){
-			// TODO Auto-generated method stub
-			
-			//camera functions
-			camera = new OrthographicCamera();
-			viewport = new ScreenViewport();
-			stage = new Stage(new FitViewport(WIDTH,HEIGHT,camera));
-			
-			
-			//creates the board 
-			MyActor boardPic = new MyActor();
-			Back back = new Back();
-			
-			stage.addActor(back);
-			stage.addActor(boardPic);
-						
-			//adds the actors to the screean
-			for(int i = 0; i < SevenDungeons.getNumPlayers(); i++){
-				stage.addActor(SevenDungeons.getPlayer(i));
-			}
-			
-			x = SevenDungeons.getPlayer().getX() - 75;
-	    	y = SevenDungeons.getPlayer().getY() - 75;
 
-			//dockStage = new Stage(new FitViewport(WIDTH,HEIGHT));
-			//dock = new Dock(WIDTH,HEIGHT);
-			//dockStage.addActor(dock);
-			//dock.show();
-			
-			
-			//dice = new Dice();
-			//dockStage.addActor(dice);
-			//dice.setPosition(400, 50);
-			//dice.setSize(80, 80);
-			//dice.roll();
-			
-			multiplexer = new InputMultiplexer();
-			//multiplexer.addProcessor(dockStage);
-			multiplexer.addProcessor(new GestureDetector(this));
-			
-			Gdx.input.setInputProcessor(multiplexer);
-			initial = true;
+
+		
+		boardStage.addActor(back);
+		boardStage.addActor(board);
+					
+		//adds the actors to the screean
+		for(int i = 0; i < SevenDungeons.getNumPlayers(); i++){
+			boardStage.addActor(SevenDungeons.getPlayer(i));
 		}
 		
+		x = SevenDungeons.getPlayer().getX() - 75;
+    	y = SevenDungeons.getPlayer().getY() - 75;
+
+
+		dockStage.addActor(dock);
+		dock.show();
+		
+		multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(dockStage);
+		multiplexer.addProcessor(new GestureDetector(this));
+		
+		Gdx.input.setInputProcessor(multiplexer);
 	
+
 		 
 	}
 
@@ -189,7 +191,7 @@ public class BoardScreen implements Screen, GestureListener {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		stage.dispose();
+		boardStage.dispose();
 	//	dockStage.dispose();
 	}
 
@@ -278,17 +280,17 @@ public class BoardScreen implements Screen, GestureListener {
 		return false;
 	}
 	
-//checks camera bounds 
- public void checkMax(){
-	 
-	 if (camera.zoom >3) camera.zoom = 3;
-	 if (camera.zoom < .5) camera.zoom = 0.5f;
-	 if(y < HEIGHT / 2) y = HEIGHT / 2;
-	 if (x < WIDTH / 2) x = WIDTH /2;
-	 
-	 if(y > 1509.0) y =  1509;
-	 if (x > 2665.0) x = 2665;
- }
+	//checks camera bounds 
+	 public void checkMax(){
+		 
+		 if (camera.zoom >3) camera.zoom = 3;
+		 if (camera.zoom < .5) camera.zoom = 0.5f;
+		 if(y < HEIGHT / 2) y = HEIGHT / 2;
+		 if (x < WIDTH / 2) x = WIDTH /2;
+		 
+		 if(y > 1509.0) y =  1509;
+		 if (x > 2665.0) x = 2665;
+	 }
 
 
  

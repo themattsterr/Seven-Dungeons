@@ -3,6 +3,8 @@ package Screens;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import regularClases.HumanCharacter;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -27,29 +29,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.mygdx.game.SevenDungeons;
 
 public class Dock extends WidgetGroup implements ActionListener {
 	
 	private int dockWidth;
 	private int dockHeight;
 	
-	private Texture texture;
+	private Texture dockTexture;
+	private TextureRegion dockRegion;
+	
 	private Texture iconTexture;
-	private TextureRegion region;
 	private TextureRegion healthRegion;
 	private TextureRegion attackRegion;
 	private TextureRegion defenseRegion;
 	private TextureRegion goldRegion;
 	
-	private Table infoTable;
+	private Table playerTable;
 	private LabelStyle labelStyle;
 	private BitmapFont font;
-	
-	private Image currentPlayer;
-	private Integer health;
-	private Integer attack;
-	private Integer defense;
-	private Integer gold;
 	
 	/* 
 	 * HOW TO BUTTONS:
@@ -94,9 +93,8 @@ public class Dock extends WidgetGroup implements ActionListener {
 	
 	private void create() {
 		
-		texture = new Texture("docktex.png");
-		region = new TextureRegion(texture, 0, 0, dockWidth, dockHeight);
-		
+		dockTexture = new Texture("background_table.png");
+		dockRegion = new TextureRegion(dockTexture, 0, 0, dockWidth, dockHeight);
 		
 		iconTexture = new Texture("playericons.png");
 		healthRegion = new TextureRegion(iconTexture, 0, 0, 180, 180);
@@ -135,7 +133,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("up arrow pressed");
 				upArrowButton.setDisabled(!upArrowButton.isDisabled());
-				addPlayerGold(10);
 				return true;
 			}
 		});
@@ -147,7 +144,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		leftArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("left arrow pressed");
-				addPlayerGold(-1);
 				return true;
 			}
 		});
@@ -158,7 +154,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		downArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("down arrow pressed");
-				addPlayerGold(-10);
 				return true;
 			}
 		});
@@ -169,7 +164,8 @@ public class Dock extends WidgetGroup implements ActionListener {
 		rightArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("right arrow pressed");
-				addPlayerGold(1);
+				SevenDungeons.battleScreen.setBattle(SevenDungeons.getPlayer(0),SevenDungeons.getPlayer(1));
+				SevenDungeons.game.setScreen(SevenDungeons.battleScreen);
 				return true;
 			}
 		});
@@ -180,6 +176,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		pauseButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("pause button pressed");
+				SevenDungeons.game.setScreen(SevenDungeons.shopScreen);
 				return true;
 			}
 		});
@@ -190,44 +187,73 @@ public class Dock extends WidgetGroup implements ActionListener {
 		cardsButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("cards button pressed");
+				SevenDungeons.game.setScreen(SevenDungeons.handScreen);
 				return true;
 			}
 		});
+		
 	}
 	
 	public void show() {
-		
-		//
-		//
-		updatePlayerInfo(10,7,5,100);
-		//
-		//all below added to updatePlayerInfo
-		//
-		//infoTable = createInfoTable(dockWidth/2, dockHeight);
-		//infoTable = createInfoTable(400, 100);
-		//infoTable.setPosition(800, 50);
-		//infoTable.debug();
-		//this.addActor(infoTable);
-		
-		arrowTable = createArrowTable(350);
-		arrowTable.setPosition(200, 74);
+				
+		arrowTable = createArrowTable(dockHeight);
+		arrowTable.setPosition(this.getCenterX(), this.getCenterY());
 		arrowTable.debug();
 		this.addActor(arrowTable);
 		
-
+		playerTable = createPlayerTable(SevenDungeons.getPlayer(),dockHeight);
+		playerTable.setPosition(this.getOriginX(), this.getOriginY());
+		playerTable.debug();
+		this.addActor(playerTable);
+		
+		float buttonSize = dockHeight/2;
+		Table buttonTable = new Table();
+		buttonTable.add(cardsButton).size(buttonSize, buttonSize);
+		buttonTable.add().width(buttonSize/2);
+		buttonTable.add(pauseButton).size(buttonSize, buttonSize);
+		
+		buttonTable.setSize((float) (2.5*buttonSize), buttonSize);
+		buttonTable.setPosition(this.getOriginY() + dockWidth - buttonTable.getWidth(), this.getCenterY() - buttonTable.getHeight()/2);
+		buttonTable.debug();
+		this.addActor(buttonTable);
 	}
 	
+	private Table createPlayerTable(HumanCharacter player, float height) {
+		
+		float imageSize = 50;
+		
+		if(this.getChildren().contains(playerTable, true))
+			this.removeActor(playerTable);
+		
+		Table table = new Table();
+		table.setHeight(height);
+		Table infoTable = createInfoTable(player,200,74);
+		
+		Table innerTable = new Table();
+		Image playerImage = new Image(player.getTexture());
+		innerTable.add(playerImage).size(imageSize, imageSize);
+		innerTable.add(infoTable);
+		innerTable.debug();
+		
+		
+		table.add(new Label("Player 1", labelStyle)).align(Align.left).height(height - infoTable.getHeight());
+		table.row();
+		table.add(innerTable);
+		table.setWidth(imageSize + infoTable.getWidth());
+		
+		
+		return table;
+	}
 	
-	private Table createArrowTable(float width) {
+	private Table createArrowTable(float height) {
 		
 		/// Only width passed in because height is based on width, height will be 2/5 of the width
 		
-		float cellWidth = width/5;
+		float cellWidth = height/2;
 		
 		Table table = new Table();
 		
-		table.add(pauseButton).size(cellWidth, cellWidth);
-		table.add(cardsButton).size(cellWidth, cellWidth);;
+		
 		
 		Table left = new Table();
 		left.add(leftArrowButton).size(cellWidth, cellWidth);
@@ -251,12 +277,18 @@ public class Dock extends WidgetGroup implements ActionListener {
 		return table;
 	}
 	
-	private Table createInfoTable(float width, float height) {
+	private Table createInfoTable(HumanCharacter player, float width, float height) {
 		
 		float cellWidth = width/4;
 		float imageSize = height/2;
+		Integer health = player.getCurrentHealth();
+		Integer attack = player.getAttack();
+		Integer defense = player.getDefense();
+		Integer gold = player.getGold();
 		
 		Table table = new Table();
+		table.setWidth(width);
+		table.setHeight(height);
 		
 		Table healthTable = new Table();
 		Image healthImage = new Image(healthRegion);
@@ -265,6 +297,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		healthTable.add(new Label(health.toString(), labelStyle)).expand();
 		table.add(healthTable).size(cellWidth, height);
 
+		
 		Table attackTable = new Table();
 		Image attackImage = new Image(attackRegion);
 		attackTable.add(attackImage).size(imageSize, imageSize).expand();
@@ -295,38 +328,9 @@ public class Dock extends WidgetGroup implements ActionListener {
 		return table;
 	}
 	
-	public void updatePlayerInfo(int health, int attack, int defense, int gold){
-		this.health = health;
-		this.attack = attack;
-		this.defense = defense;
-		this.gold = gold;
-		
-		if(this.getChildren().contains(infoTable, true))
-			this.removeActor(infoTable);
-		infoTable = createInfoTable(400, 100);
-		infoTable.setPosition(800, 50);
-		infoTable.debug();
-		this.addActor(infoTable);
-	}
-	
-	public boolean addPlayerGold(int gold) {
-		int newGold;
-		
-		newGold = this.gold + gold;
-		
-		if(newGold < 0)
-			return false;
-		else
-			this.gold = newGold;
-		
-		updatePlayerInfo(this.health, this.attack, this.defense, this.gold);
-		
-		return true;
-	}
-	
 	public void draw(Batch batch, float alpha) {
 		
-		batch.draw(region, this.getX(), this.getY());
+		batch.draw(dockRegion, this.getX(), this.getY());
 		
 		this.drawChildren(batch, alpha);
 		

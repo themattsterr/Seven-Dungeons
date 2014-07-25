@@ -20,7 +20,7 @@ public class Dice extends Actor{
 
 	//dice
 	public Dice() {
-		value = 0;
+		
 		
 		texture = new Texture("die.png");
 		regions = new TextureRegion[6];
@@ -30,6 +30,8 @@ public class Dice extends Actor{
 		regions[3] = new TextureRegion(texture,138,0,138,138);
 		regions[4] = new TextureRegion(texture,0,414,138,138);
 		regions[5] = new TextureRegion(texture,138,414,138,138);
+		
+		value = roll();
 		
 	}
 	
