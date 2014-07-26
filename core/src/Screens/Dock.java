@@ -68,13 +68,13 @@ public class Dock extends WidgetGroup implements ActionListener {
 	private ImageButtonStyle leftArrowStyle;
 	private ImageButtonStyle downArrowStyle;
 	private ImageButtonStyle rightArrowStyle;
-	private ImageButton upArrowButton;
-	private ImageButton leftArrowButton;
-	private ImageButton downArrowButton;
-	private ImageButton rightArrowButton;
+	public ImageButton upArrowButton;
+	public ImageButton leftArrowButton;
+	public ImageButton downArrowButton;
+	public ImageButton rightArrowButton;
 	
 	private ImageButtonStyle pauseStyle;
-	private ImageButton pauseButton;
+	public ImageButton pauseButton;
 	
 	private ImageButtonStyle cardsStyle;
 	private ImageButton cardsButton;
@@ -131,7 +131,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		upArrowButton = new ImageButton(upArrowStyle);
 		upArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("up arrow pressed");
+				
 				upArrowButton.setDisabled(!upArrowButton.isDisabled());
 				return true;
 			}
@@ -143,7 +143,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		leftArrowButton = new ImageButton(leftArrowStyle);
 		leftArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("left arrow pressed");
 				return true;
 			}
 		});
@@ -153,7 +152,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		downArrowButton = new ImageButton(downArrowStyle);
 		downArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("down arrow pressed");
 				return true;
 			}
 		});
@@ -163,8 +161,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		rightArrowButton = new ImageButton(rightArrowStyle);
 		rightArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("right arrow pressed");
-			
 				return true;
 			}
 		});

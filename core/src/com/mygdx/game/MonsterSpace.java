@@ -15,9 +15,8 @@ public class MonsterSpace extends Tile {
 	}
 
 	@Override
-	public void execute(HumanCharacter active) {
-		if(super.ifClash()) super.execute(active);
-		else SevenDungeons.game.setEncounter( active, new Monster(level, new Dice().roll()));
+	public void land(HumanCharacter active) {
+		if(super.execute(active)) SevenDungeons.game.setEncounter( active, new Monster(level, new Dice().roll()));
 		
 	}
 

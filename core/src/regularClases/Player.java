@@ -12,10 +12,10 @@ import com.mygdx.game.Card;
 import com.mygdx.game.SevenDungeons;
 
 public abstract class Player extends Actor {
-	private int maxHealth;
-	private int currentHealth;
-	private int attack;
-	private int defense;
+	protected int maxHealth;
+	protected int currentHealth;
+	protected int attack;
+	protected int defense;
 	private Texture texture;
 	public float xPos = 0;
 	public float yPos = 0;
@@ -71,11 +71,15 @@ public abstract class Player extends Actor {
 		return this.texture;
 	}
 	
-	public void takeHit(int hit){
+	public void takeHit(int hit, Player attacker){
+		if (hit > 0)
 		currentHealth -= hit;
+		if (currentHealth <= 0) this.death(attacker);
 	}
 	
-
+	public abstract void death(Player attacker);
+	
+	public abstract void giveGold(int value);
 	
 	public void updateStat(Card card){
 		
@@ -88,5 +92,6 @@ public abstract class Player extends Actor {
 	public void giveCard(Card card){
 		hand.add(card);
 	}
+	
 //test
 }

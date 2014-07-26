@@ -7,6 +7,7 @@ import regularClases.Knight;
 import regularClases.Mage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -32,7 +34,6 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	//holds the actors
 	private Stage boardStage;
-	
 	//initial screen size (samsung galaxy s5
 	static final int WIDTH = Gdx.graphics.getWidth();
 	static final int HEIGHT = Gdx.graphics.getHeight();
@@ -51,6 +52,8 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	private Back back;
 	private BoardActor board;
+	private int roll;
+	private boolean rolled;
 	
 	private Dock dock;
 	private Stage dockStage;
@@ -121,16 +124,75 @@ public class BoardScreen implements Screen, GestureListener {
 	    camera.update();
 	 
 	    	//rolls the dice if the player shakes the game while holding down
-	    if(move == false)
-	    
-	    	if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2){
-	    	SevenDungeons.getPlayer().move();
-	    	x = SevenDungeons.getPlayer().getX();
-	    	y = SevenDungeons.getPlayer().getY();
-	    	move = true;
-	   }
+	    if(move == false){
+	    	if(rolled == false){
+		    	//if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R))){
+		    	if(Gdx.input.isKeyPressed(Keys.R)){
+	    		roll = SevenDungeons.getPlayer().rollDice(dock);
+	    		System.out.println(" goooooooold baby " + SevenDungeons.getPlayer().getGold());
+		    	rolled = true;
+		    	}
+	    	}
+	    	
+	    	if(dock.rightArrowButton.isPressed()){
+	    		SevenDungeons.getPlayer().move(roll, 0);
+	    		x = SevenDungeons.getPlayer().getX();
+	    		y = SevenDungeons.getPlayer().getY();
+	    		move = true;
+	    		dock.rightArrowButton.setVisible(false);
+	    		dock.leftArrowButton.setVisible(false);
+	    		dock.upArrowButton.setVisible(false);
+	    		dock.downArrowButton.setVisible(false);;
+	    	}
+	    	if(dock.downArrowButton.isPressed()){
+	    		SevenDungeons.getPlayer().move(roll, -1);
+	    		x = SevenDungeons.getPlayer().getX();
+	    		y = SevenDungeons.getPlayer().getY();
+	    		move = true;
+	    		dock.rightArrowButton.setVisible(false);
+	    		dock.leftArrowButton.setVisible(false);
+	    		dock.upArrowButton.setVisible(false);
+	    		dock.downArrowButton.setVisible(false);
+	    	}
+	    	if(dock.leftArrowButton.isPressed()){
+	    		SevenDungeons.getPlayer().move(0 - roll, 0);
+	    		x = SevenDungeons.getPlayer().getX();
+	    		y = SevenDungeons.getPlayer().getY();
+	    		move = true;
+	    		dock.rightArrowButton.setVisible(false);
+	    		dock.leftArrowButton.setVisible(false);
+	    		dock.upArrowButton.setVisible(false);
+	    		dock.downArrowButton.setVisible(false);
+	    	}
+	    	if(dock.upArrowButton.isPressed()){
+	    		SevenDungeons.getPlayer().move(roll, 1);
+	    		x = SevenDungeons.getPlayer().getX();
+	    		y = SevenDungeons.getPlayer().getY();
+	    		move = true;
+	    		dock.rightArrowButton.setVisible(false);
+	    		dock.leftArrowButton.setVisible(false);
+	    		dock.upArrowButton.setVisible(false);
+	    		dock.downArrowButton.setVisible(false);
+	    	}
 	}
-	
+	    
+	    
+	    //new turn
+	    if(Gdx.input.isKeyPressed(Keys.ENTER) && move == true){
+	    	SevenDungeons.changeTurn();
+			move = false;
+			rolled = false;
+			 
+			dock.downArrowButton.setVisible(false);
+		    dock.rightArrowButton.setVisible(false);
+		    dock.leftArrowButton.setVisible(false);
+		    dock.upArrowButton.setVisible(false)
+		    ;
+			this.x = SevenDungeons.getPlayer().getX();
+		    this.y = SevenDungeons.getPlayer().getY();
+	    }
+	  
+	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -151,10 +213,14 @@ public class BoardScreen implements Screen, GestureListener {
 			boardStage.addActor(SevenDungeons.getPlayer(i));
 		}
 		
-		x = SevenDungeons.getPlayer().getX() - 75;
-    	y = SevenDungeons.getPlayer().getY() - 75;
-
-
+		x = SevenDungeons.getPlayer().getX();
+    	y = SevenDungeons.getPlayer().getY();
+    	
+    	dock.downArrowButton.setVisible(false);
+    	dock.rightArrowButton.setVisible(false);
+    	dock.leftArrowButton.setVisible(false);
+    	dock.upArrowButton.setVisible(false);
+    	
 		dockStage.addActor(dock);
 		dock.show();
 		
@@ -209,13 +275,6 @@ public class BoardScreen implements Screen, GestureListener {
 	@Override
 	//changes turn if the player makes a quick tap
 	public boolean tap(float x, float y, int count, int button) {
-		SevenDungeons.changeTurn();
-		 move = false;
-		this.x = SevenDungeons.getPlayer().getX();
-	    this.y = SevenDungeons.getPlayer().getY();
-	  
-		//dice.roll();
-
 		return false;
 	}
 

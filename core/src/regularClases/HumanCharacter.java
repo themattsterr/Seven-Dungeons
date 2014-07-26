@@ -2,11 +2,16 @@ package regularClases;
 
 import java.util.Random;
 
+import Screens.Dock;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.Dice;
 import com.mygdx.game.GameBoard;
+import com.mygdx.game.ItemCard;
 import com.mygdx.game.SevenDungeons;
 
 public abstract class HumanCharacter extends Player {
@@ -15,24 +20,28 @@ public abstract class HumanCharacter extends Player {
 	public int position = 0;
 	//the characters level
 	public int level = 0;
+	private Timer wait = new Timer();
+	private int gold = 5;
+	private int id;
 	
-	private int gold = 0;
+	private int items[] = {0,0,0};
+	
 	
 	//will be replaced with dice class
 	Random rand = new Random();
 	
 	
-	public HumanCharacter(String texture, int health, int attack, int defense) {
+	public HumanCharacter(String texture, int id, int health, int attack, int defense) {
 		super(texture, health, attack, defense);
-		
+		this.id = id;
 	}
 	
-	public void move(){
+	public void move(int roll, int levelChange){
 		//tells the current tile that the character has left
 		SevenDungeons.board.getTile(level, position).removePlayer(this);
 		
-		
-		position += this.rollDice();
+		level+= levelChange;
+		position += roll;
 		
 		
 		switch (level){
@@ -46,9 +55,14 @@ public abstract class HumanCharacter extends Player {
 		
 		SevenDungeons.board.getTile(level, position).addPlayer(this);
 		super.move(SevenDungeons.board.getTile(level, position).getVector());
-		SevenDungeons.board.getTile(level, position).execute(this);
+		
+	
+
+		SevenDungeons.board.getTile(level, position).land(this);
+	
 	
 	}
+	
 	
 	public void warp(int level, int position){
 		this.position = position;
@@ -58,7 +72,9 @@ public abstract class HumanCharacter extends Player {
 		super.move(SevenDungeons.board.getTile(level, position).getVector());
 	}
 	
-	private int rollDice(){
+	public int rollDice(Dock dock){
+		
+		SevenDungeons.board.getTile(level, position).getArrow(dock);
 		return new Dice().roll();
 		
 	}
@@ -75,16 +91,41 @@ public abstract class HumanCharacter extends Player {
 		return super.yPos;
 	}
 	
-	// returns true if gold was given, false if player's amount is < 0
-	public boolean giveGold(int gold){
-		
-		if(this.gold + gold > 0)
-			return false;
-		else
-			this.gold += gold;
-		
-		return true;
+	public int getId(){
+		return this.id;
 	}
-		
 	
+	//returns how many times the player has bought a certain upgrade
+	public int Purchased(int type){
+		return items[type - 1];
+	}
+	
+	public void getItem(ItemCard item){
+		switch(item.type){
+		case 1: maxHealth += (item.magnitude * (items[0] + 1));
+		case 2: attack += (item.magnitude * (items[1] + 1));
+		case 3: defense += (item.magnitude  * (items[2] + 1));
+		}
+		
+		items[item.type - 1]++;
+	}
+
+	public void giveGold(int value){
+		this.gold+= value;
+		System.out.print(" give gold + " + value + " have gold " + gold);
+		if(this.gold < 0) this.gold = 0;
+	}
+
+	public void recover(){
+		currentHealth = maxHealth;
+	}
+	
+	public void death(Player attacker){
+		SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+		this.gold *=  .5;
+		currentHealth = maxHealth;
+		attacker.giveGold(gold);
+		this.warp(0, 0);
+		
+	}
 }

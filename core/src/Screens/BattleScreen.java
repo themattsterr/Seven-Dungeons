@@ -53,6 +53,8 @@ public class BattleScreen implements Screen {
 	
 	private LabelStyle labelStyle;
 	private BitmapFont font;
+	private int turn;
+	private boolean fought = false;
 	
 	Dice dice;
 	
@@ -102,18 +104,20 @@ public class BattleScreen implements Screen {
 		public void setBattle(HumanCharacter player1, Player player2){
 			fighter = player1;
 			defender = player2;
+			turn = 0;
 			fighterImage = new Image(fighter.getTexture());
 			defenderImage = new Image(defender.getTexture());
 			//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
 		//	music.play();
 			//music.play();
-			fight(player1, player2);
 		}
 		
-		private void fight(HumanCharacter attacker, Player defender){
+		private void fight(Player attacker, Player defender){
 			
-			int diceNumb = (int)(Math.random() * 6);
+			int diceNumb = new Dice().roll();
 			int  theAttack;
+			
+			
 			switch(diceNumb){
 			 		
 			case 1: theAttack = (int) ((attacker.getAttack() - defender.getDefense() ) * 0);
@@ -137,11 +141,10 @@ public class BattleScreen implements Screen {
 			default: theAttack = 0;
 					break;
 			}
-			
-			defender.takeHit(theAttack);
-			
+				
+			defender.takeHit(theAttack, attacker);
 		}
-
+	
 
 	@Override
 	public void render(float delta) {
@@ -152,10 +155,24 @@ public class BattleScreen implements Screen {
 		//fighter.drawFighter();
 		//defender.drawDefennder();
 		
+		if ((fought == false) && (Gdx.input.isKeyPressed(Keys.R))){
+			fought = true;
+			if((turn % 2) == 0)fight(fighter, defender);
+			else fight(defender, fighter);
+			
+			System.out.println(" your health " + fighter.getCurrentHealth() + " their health + " + defender.getCurrentHealth());
+			turn++;
+			
+		}
+	
 		
-		if(Gdx.input.isButtonPressed(Keys.A)){
+		if(Gdx.input.isKeyPressed(Keys.A)){
 			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
 			this.dispose();
+		}
+		
+		if(Gdx.input.isKeyPressed(Keys.D)){
+			fought = false; 
 		}
 		stage.draw();
 		
