@@ -122,12 +122,13 @@ public class BoardScreen implements Screen, GestureListener {
 	 
 	    	//rolls the dice if the player shakes the game while holding down
 	    if(move == false)
-	    if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2){
+	    
+	    	if((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2){
 	    	SevenDungeons.getPlayer().move();
 	    	x = SevenDungeons.getPlayer().getX();
 	    	y = SevenDungeons.getPlayer().getY();
 	    	move = true;
-	    }
+	   }
 	}
 	
 
@@ -210,8 +211,8 @@ public class BoardScreen implements Screen, GestureListener {
 	public boolean tap(float x, float y, int count, int button) {
 		SevenDungeons.changeTurn();
 		 move = false;
-		this.x = SevenDungeons.getPlayer().getX() - 75;
-	    this.y = SevenDungeons.getPlayer().getY() - 75;
+		this.x = SevenDungeons.getPlayer().getX();
+	    this.y = SevenDungeons.getPlayer().getY();
 	  
 		//dice.roll();
 

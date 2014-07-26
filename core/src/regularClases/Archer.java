@@ -6,7 +6,7 @@ import com.mygdx.game.GameBoard;
 public class Archer extends HumanCharacter {
 
 	public Archer() {
-		super("archer.png" ,0,0,0);
+		super("archer.png" ,15,2,2);
 		// TODO Auto-generated constructor stub
 	}
 	

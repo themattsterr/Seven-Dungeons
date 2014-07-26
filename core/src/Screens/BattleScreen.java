@@ -96,24 +96,21 @@ public class BattleScreen implements Screen {
 	}
 
 
-	public void setBattle(HumanCharacter player1, Player player2){
-		fighter = player1;
-		defender = player2;
-		//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
-	//	music.play();
-	}
+
 
 	//THIS FUNCTION TAKES IN TWO FIGHTERS AND MAKES THE BATTLE 
-		public void setBattle(HumanCharacter player1, HumanCharacter player2){
+		public void setBattle(HumanCharacter player1, Player player2){
 			fighter = player1;
 			defender = player2;
+			fighterImage = new Image(fighter.getTexture());
+			defenderImage = new Image(defender.getTexture());
 			//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
 		//	music.play();
 			//music.play();
 			fight(player1, player2);
 		}
 		
-		private void fight(HumanCharacter attacker, HumanCharacter defender){
+		private void fight(HumanCharacter attacker, Player defender){
 			
 			int diceNumb = (int)(Math.random() * 6);
 			int  theAttack;
@@ -156,7 +153,10 @@ public class BattleScreen implements Screen {
 		//defender.drawDefennder();
 		
 		
-		
+		if(Gdx.input.isButtonPressed(Keys.A)){
+			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+			this.dispose();
+		}
 		stage.draw();
 		
 		Table.drawDebug(stage);
@@ -173,9 +173,6 @@ public class BattleScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 		float imageHeight = 100;
-		
-		fighterImage = new Image(fighter.getTexture());
-		defenderImage = new Image(defender.getTexture());
 		
 		fighterTable = createInfoTable(this.fighter, stage.getWidth()/3, stage.getWidth()/6);
 		defenderTable = createInfoTable(this.defender, stage.getWidth()/3, stage.getWidth()/6);
@@ -238,10 +235,11 @@ public class BattleScreen implements Screen {
 		
 		float cellWidth = width/3;
 		float imageSize = height/2;
-		Integer health = player.getCurrentHealth();
-		Integer attack = player.getAttack();
-		Integer defense = player.getDefense();
+		Integer health = new Integer(player.getCurrentHealth());
+		Integer attack =  new Integer(player.getAttack());
 		
+		Integer defense = new Integer(player.getDefense());
+		System.out.print(defense);
 		Table table = new Table();
 		table.setWidth(width);
 		table.setHeight(height);

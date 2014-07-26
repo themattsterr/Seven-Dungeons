@@ -46,6 +46,7 @@ public abstract class HumanCharacter extends Player {
 		
 		SevenDungeons.board.getTile(level, position).addPlayer(this);
 		super.move(SevenDungeons.board.getTile(level, position).getVector());
+		SevenDungeons.board.getTile(level, position).execute(this);
 	
 	}
 	

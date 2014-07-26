@@ -164,8 +164,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		rightArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("right arrow pressed");
-				SevenDungeons.battleScreen.setBattle(SevenDungeons.getPlayer(0),SevenDungeons.getPlayer(1));
-				SevenDungeons.game.setScreen(SevenDungeons.battleScreen);
+			
 				return true;
 			}
 		});

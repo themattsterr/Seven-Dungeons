@@ -24,6 +24,7 @@ import regularClases.Assassin;
 import regularClases.HumanCharacter;
 import regularClases.Knight;
 import regularClases.Mage;
+import regularClases.Player;
 
 public  class SevenDungeons extends Game{
 	
@@ -31,7 +32,6 @@ public  class SevenDungeons extends Game{
 	public static NewGameScreen newGameScreen;
 	public static ChooseClassScreen chooseClassScreen;
 	public static BoardScreen boardScreen;
-	public static BattleScreen battleScreen;
 	public static ShopScreen shopScreen;
 	public static HandScreen handScreen; 
 	public static GameBoard board = new GameBoard();
@@ -61,10 +61,8 @@ public  class SevenDungeons extends Game{
 		newGameScreen = new NewGameScreen();
 		chooseClassScreen = new ChooseClassScreen();
 		boardScreen = new BoardScreen();
-		battleScreen = new BattleScreen();
 		shopScreen = new ShopScreen();
 		handScreen = new HandScreen();
-		
 		batch = new SpriteBatch();
 		//sets the initial screen
 		//this.setScreen(newGameScreen);
@@ -94,7 +92,6 @@ public  class SevenDungeons extends Game{
 		super.render();
 	}
 	
-	
 	//adds a new player to the game
 	public static void addPlayer(HumanCharacter player){
 		players.add(player);
@@ -120,10 +117,12 @@ public  class SevenDungeons extends Game{
 		return players.get(i);
 	}
 	//starts a battle with a monster
-	public static void setEncounter(Monster defender){
-		battleScreen = new BattleScreen();
-		game.setScreen(battleScreen);
-		battleScreen.setBattle(players.get(turn), defender);	
+	public static void setEncounter(HumanCharacter attacker, Player defender){
+		
+		BattleScreen battleScreen = new BattleScreen();
+		battleScreen.setBattle(attacker, defender);	
+	 	game.setScreen(battleScreen);
+		
 	}
 
 	

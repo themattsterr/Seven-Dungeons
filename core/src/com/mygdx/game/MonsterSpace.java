@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import regularClases.HumanCharacter;
 import Screens.BattleScreen;
 
 import com.badlogic.gdx.math.Vector2;
@@ -14,8 +15,9 @@ public class MonsterSpace extends Tile {
 	}
 
 	@Override
-	public void execute() {
-		SevenDungeons.setEncounter( new Monster(level, new Dice().roll()));
+	public void execute(HumanCharacter active) {
+		if(super.ifClash()) super.execute(active);
+		else SevenDungeons.game.setEncounter( active, new Monster(level, new Dice().roll()));
 		
 	}
 

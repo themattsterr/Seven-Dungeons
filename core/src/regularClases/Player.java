@@ -26,6 +26,9 @@ public abstract class Player extends Actor {
 	public Player(String texture, int health, int attack, int defense) {
 		this.texture = new Texture(texture);
 		this.batch = SevenDungeons.batch;
+		this.maxHealth = this.currentHealth = health;
+		this.attack = attack;
+		this.defense = defense;
 	}
 
 	public void draw(Batch batch, float alpha) {

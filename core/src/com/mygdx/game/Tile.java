@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import regularClases.HumanCharacter;
 
+import Screens.BattleScreen;
+
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Tile {
@@ -41,5 +43,9 @@ public abstract class Tile {
 		return vector;
 	}
 	
-	public abstract void execute();
+	public void execute(HumanCharacter active){
+		if(this.ifClash()){
+				SevenDungeons.game.setEncounter(active, this.playersOnSpace.get(0));
+		}
+	}
 }
