@@ -37,6 +37,19 @@ public class Dice extends Actor implements ActionListener {
 		value = roll();
 		
 		this.setSize(width, height);
+		
+		this.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("dice clicked");
+				if (SevenDungeons.boardScreen.move == false 
+						&& SevenDungeons.boardScreen.rolled == false) {
+		    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
+		    		SevenDungeons.boardScreen.rolled = true;
+		    		SevenDungeons.boardScreen.dock.show();
+				}
+				return true;
+			}
+		});
 				
 	}
 	
@@ -55,7 +68,12 @@ public class Dice extends Actor implements ActionListener {
 		this.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("dice clicked");
-				
+				if (SevenDungeons.boardScreen.move == false 
+						&& SevenDungeons.boardScreen.rolled == false) {
+		    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
+		    		SevenDungeons.boardScreen.rolled = true;
+		    		SevenDungeons.boardScreen.dock.show();
+				}
 				return true;
 			}
 		});
