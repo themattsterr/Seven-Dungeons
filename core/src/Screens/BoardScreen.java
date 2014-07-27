@@ -53,7 +53,7 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	private Back back;
 	private BoardActor board;
-	private int roll;
+	public int roll;
 	public boolean rolled;
 
 	
@@ -152,11 +152,9 @@ public class BoardScreen implements Screen, GestureListener {
 	    if(move == false){
 	    	if(rolled == false){
 		    	//if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R))){
-		    	if(Gdx.input.isKeyPressed(Keys.R)){
-	    		roll = SevenDungeons.getPlayer().rollDice(dock);
-		    	rolled = true;
-
-		    	}
+		    	
+	    		// moved into input listener in the dice class
+	    		
 	    	}
 	    	
 	    	if(dock.rightArrowButton.isPressed()){
@@ -179,9 +177,8 @@ public class BoardScreen implements Screen, GestureListener {
 	    
 	    
 	    //new turn
-	    if(Gdx.input.isKeyPressed(Keys.ENTER) && move == true){
+	    if(dock.exitButton.isPressed() && move == true){
 	    	SevenDungeons.changeTurn();
-
 	    }
 	    
 
