@@ -23,6 +23,11 @@ public class ItemCard extends Card {
 	
 	private Table infoTable;
 	
+	private Group group;
+	public boolean isSpell = false;
+	public boolean purchased = false;
+	public int scaledCost;
+	
 	public ItemCard(int type, int price) {
 		
 		this.type = type;
@@ -30,25 +35,36 @@ public class ItemCard extends Card {
 		//this.setImageButton("item_card");
 		
 		
-		
+		group = new Group();
 	}
 	
 	public Group getGroup(){
 		
-		Group group = new Group();
+		//Group group = new Group();
 		//group.addActor(this.button);
 		
 		infoTable = createInfoTable();
-		infoTable.setBackground(Card.skin.getDrawable("item_card"));
+		if (isSpell)
+			infoTable.setBackground(Card.skin.getDrawable("spell_card"));
+		else
+			infoTable.setBackground(Card.skin.getDrawable("item_card"));
 		group.addActor(infoTable);
 		group.setSize(width,height);
 		
 		group.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("item card pressed");
+				//System.out.println("item card pressed");
+				HumanCharacter currentPlayer = SevenDungeons.getPlayer();
+
+				Group target = (Group) event.getListenerActor();
+				SevenDungeons.shopScreen.removeFromShop(target);
+
+				
 				return true;
 			}
 		});
+		
+		
 		
 		return group;
 	}
@@ -94,11 +110,31 @@ public class ItemCard extends Card {
 	
 	public int purchase(HumanCharacter active){
 		//method subtracts the cards cost from the players gold.
+		scaledCost = (int) (this.price * (active.Purchased(type) * 1.5 + 1));
+		System.out.println("cost: " + scaledCost + " ");
+		
 		if(active.getGold() >= (this.price * (active.Purchased(type) * 1.5 + 1))){
 			this.activate(active);
 			return (int) (this.price * (active.Purchased(type) * 1.5 + 1));
 		}
-		else return 0;
+		else
+			System.out.println("did not purchase");
+		return 0;
+	}
+	
+	
+	public boolean canPurchase(HumanCharacter active) {
+		
+		// change this
+		boolean enoughGold = true;
+		
+		if(enoughGold) {
+			//if player has enough gold purchase and return true
+			return true;
+		}
+		//else dont purchase and return false
+		return false;
+		
 	}
 	
 	public int getCost(HumanCharacter active){

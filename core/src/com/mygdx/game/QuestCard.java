@@ -65,6 +65,8 @@ public class QuestCard extends Card {
 		return null;
 	}
 
+
+
 	
 
 }

@@ -30,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.mygdx.game.Dice;
 import com.mygdx.game.SevenDungeons;
 
 public class Dock extends WidgetGroup implements ActionListener {
@@ -72,6 +73,8 @@ public class Dock extends WidgetGroup implements ActionListener {
 	private ImageButtonStyle cardsStyle;
 	private ImageButton cardsButton;
 	
+	public Dice dice;
+	
 	public Dock(int width, int height) {
 
 		dockWidth = width;
@@ -88,6 +91,8 @@ public class Dock extends WidgetGroup implements ActionListener {
 		
 		dockTexture = new Texture("background_table.png");
 		dockRegion = new TextureRegion(dockTexture, 0, 0, dockWidth, dockHeight);
+		
+		dice = new Dice(dockHeight/2, dockHeight/2);
 		
 		/*
 		 * Skin constructor takes nothing
@@ -152,7 +157,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		pauseButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("end turn pressed");
-
 				SevenDungeons.changeTurn();
 				return true;
 			}
@@ -171,34 +175,34 @@ public class Dock extends WidgetGroup implements ActionListener {
 		
 	}
 	
-	public void refreshPlayer(){
-		if(this.getChildren().removeValue(playerTable, false)){
-			System.out.println("removed playerTable");
-		}
-		playerTable = createPlayerTable(SevenDungeons.getPlayer(),dockHeight);
-		playerTable.setPosition(this.getOriginX(), this.getOriginY());
-		playerTable.debug();
-		
-		this.addActor(playerTable);
-	}
-	
 	public void show() {
 				
+		if(this.getChildren().removeValue(arrowTable, false)){
+			System.out.println("arrow table updated");
+		}
 		arrowTable = createArrowTable(dockHeight);
 		arrowTable.setPosition(this.getCenterX(), this.getCenterY());
 		arrowTable.debug();
 		this.addActor(arrowTable);
 		
-		refreshPlayer();
+		if(this.getChildren().removeValue(playerTable, false)){
+			System.out.println("player table updated");
+		}
+		playerTable = createPlayerTable(SevenDungeons.getPlayer(),dockHeight);
+		playerTable.setPosition(this.getOriginX(), this.getOriginY());
+		playerTable.debug();
+		this.addActor(playerTable);
 		
 		float buttonSize = dockHeight/2;
 		Table buttonTable = new Table();
+		buttonTable.add(dice).size(buttonSize, buttonSize);
+		buttonTable.add().width(buttonSize/2);
 		buttonTable.add(cardsButton).size(buttonSize, buttonSize);
 		buttonTable.add().width(buttonSize/2);
 		buttonTable.add(pauseButton).size(buttonSize, buttonSize);
 		
-		buttonTable.setSize((float) (2.5*buttonSize), buttonSize);
-		buttonTable.setPosition(this.getOriginY() + dockWidth - buttonTable.getWidth(), this.getCenterY() - buttonTable.getHeight()/2);
+		buttonTable.setSize(4*buttonSize, buttonSize);
+		buttonTable.setPosition(this.getOriginX() + dockWidth - buttonTable.getWidth(), this.getCenterY() - buttonTable.getHeight()/2);
 		buttonTable.debug();
 		this.addActor(buttonTable);
 	}
