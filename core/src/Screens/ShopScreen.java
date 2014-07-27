@@ -104,7 +104,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+		buttonTable = new Table();
 		
 		for(int i = 0; i < 6; i++) {
 			Card curCard = inventory.get(i);
