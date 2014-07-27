@@ -53,18 +53,14 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	private Back back;
 	private BoardActor board;
-<<<<<<< HEAD
 	private int roll;
 	public boolean rolled;
-=======
->>>>>>> Matt-Branch-2
+
 	
 	public Dock dock;
 	private Stage dockStage;
 	private InputMultiplexer multiplexer;
-	
-	private int roll;
-	private boolean rolled;
+
 	
 	
 	public BoardScreen(){
@@ -157,15 +153,9 @@ public class BoardScreen implements Screen, GestureListener {
 	    	if(rolled == false){
 		    	//if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R))){
 		    	if(Gdx.input.isKeyPressed(Keys.R)){
-<<<<<<< HEAD
 	    		roll = SevenDungeons.getPlayer().rollDice(dock);
-	    	
 		    	rolled = true;
-=======
-		    		roll = SevenDungeons.getPlayer().rollDice(dock);
-		    		System.out.println(" goooooooold baby " + SevenDungeons.getPlayer().getGold());
-		        	rolled = true;
->>>>>>> Matt-Branch-2
+
 		    	}
 	    	}
 	    	
@@ -191,20 +181,10 @@ public class BoardScreen implements Screen, GestureListener {
 	    //new turn
 	    if(Gdx.input.isKeyPressed(Keys.ENTER) && move == true){
 	    	SevenDungeons.changeTurn();
-<<<<<<< HEAD
-=======
-			move = false;
-			rolled = false;
-			 
-			dock.downArrowButton.setVisible(false);
-		    dock.rightArrowButton.setVisible(false);
-		    dock.leftArrowButton.setVisible(false);
-		    dock.upArrowButton.setVisible(false);
-		    
-			this.x = SevenDungeons.getPlayer().getX();
-		    this.y = SevenDungeons.getPlayer().getY();
->>>>>>> Matt-Branch-2
+
 	    }
+	    
+
 	  
 	}
 
@@ -248,7 +228,7 @@ public class BoardScreen implements Screen, GestureListener {
 	}
 
  public void moveUpdate(){
-	 dock.downArrowButton.setVisible(false);
+	dock.downArrowButton.setVisible(false);
  	dock.rightArrowButton.setVisible(false);
  	dock.leftArrowButton.setVisible(false);
  	dock.upArrowButton.setVisible(false);

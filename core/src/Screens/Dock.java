@@ -67,8 +67,8 @@ public class Dock extends WidgetGroup implements ActionListener {
 	public ImageButton downArrowButton;
 	public ImageButton rightArrowButton;
 	
-	private ImageButtonStyle pauseStyle;
-	public ImageButton pauseButton;
+	private ImageButtonStyle exitStyle;
+	public ImageButton exitButton;
 	
 	private ImageButtonStyle cardsStyle;
 	private ImageButton cardsButton;
@@ -151,10 +151,10 @@ public class Dock extends WidgetGroup implements ActionListener {
 			}
 		});
 		
-		pauseStyle = new ImageButtonStyle();
-		pauseStyle.up = skin.getDrawable("exit");
-		pauseButton = new ImageButton(pauseStyle);
-		pauseButton.addListener(new InputListener(){
+		exitStyle = new ImageButtonStyle();
+		exitStyle.up = skin.getDrawable("exit");
+		exitButton = new ImageButton(exitStyle);
+		exitButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("end turn pressed");
 				SevenDungeons.changeTurn();
@@ -199,7 +199,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		buttonTable.add().width(buttonSize/2);
 		buttonTable.add(cardsButton).size(buttonSize, buttonSize);
 		buttonTable.add().width(buttonSize/2);
-		buttonTable.add(pauseButton).size(buttonSize, buttonSize);
+		buttonTable.add(exitButton).size(buttonSize, buttonSize);
 		
 		buttonTable.setSize(4*buttonSize, buttonSize);
 		buttonTable.setPosition(this.getOriginX() + dockWidth - buttonTable.getWidth(), this.getCenterY() - buttonTable.getHeight()/2);

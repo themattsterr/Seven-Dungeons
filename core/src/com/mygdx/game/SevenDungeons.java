@@ -125,13 +125,9 @@ public  class SevenDungeons extends Game{
 		turn++;
 		turn %= players.size();
 		boardScreen.setFocus(getPlayer().xPos, getPlayer().yPos);
-<<<<<<< HEAD
-		boardScreen.dock.refreshPlayer();
 		boardScreen.move = false;
 		boardScreen.rolled = false;
-=======
 		boardScreen.dock.show();
->>>>>>> Matt-Branch-2
 	}
 	
 	//gets the current player
