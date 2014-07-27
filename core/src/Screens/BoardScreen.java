@@ -53,13 +53,13 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	private Back back;
 	private BoardActor board;
-	private int roll;
-	private boolean rolled;
 	
 	public Dock dock;
 	private Stage dockStage;
 	private InputMultiplexer multiplexer;
-	//private Dice dice;
+	
+	private int roll;
+	private boolean rolled;
 	
 	
 	public BoardScreen(){
@@ -101,6 +101,7 @@ public class BoardScreen implements Screen, GestureListener {
 		this.y = y;
 	}
 	
+	
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
@@ -137,14 +138,23 @@ public class BoardScreen implements Screen, GestureListener {
 	    }
 	    	
 	 
-	    	//rolls the dice if the player shakes the game while holding down
+	    /*
+	    if (move == false){
+	    	if (SevenDungeons.getPlayer().hasRolled){
+	    		roll = dock.dice.roll();
+	    		SevenDungeons.getPlayer().hasRolled = true;
+	    	}
+	    }
+	    */
+	    
+		//rolls the dice if the player shakes the game while holding down
 	    if(move == false){
 	    	if(rolled == false){
 		    	//if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R))){
 		    	if(Gdx.input.isKeyPressed(Keys.R)){
-	    		roll = SevenDungeons.getPlayer().rollDice(dock);
-	    		System.out.println(" goooooooold baby " + SevenDungeons.getPlayer().getGold());
-		    	rolled = true;
+		    		roll = SevenDungeons.getPlayer().rollDice(dock);
+		    		System.out.println(" goooooooold baby " + SevenDungeons.getPlayer().getGold());
+		        	rolled = true;
 		    	}
 	    	}
 	    	
@@ -200,8 +210,8 @@ public class BoardScreen implements Screen, GestureListener {
 			dock.downArrowButton.setVisible(false);
 		    dock.rightArrowButton.setVisible(false);
 		    dock.leftArrowButton.setVisible(false);
-		    dock.upArrowButton.setVisible(false)
-		    ;
+		    dock.upArrowButton.setVisible(false);
+		    
 			this.x = SevenDungeons.getPlayer().getX();
 		    this.y = SevenDungeons.getPlayer().getY();
 	    }
@@ -226,10 +236,7 @@ public class BoardScreen implements Screen, GestureListener {
 		for(int i = 0; i < SevenDungeons.getNumPlayers(); i++){
 			boardStage.addActor(SevenDungeons.getPlayer(i));
 		}
-		
-		//x = SevenDungeons.getPlayer().getX();
-    	//y = SevenDungeons.getPlayer().getY();
-    	
+		    	
     	setFocus(SevenDungeons.getPlayer().getX(),SevenDungeons.getPlayer().getY());
     	
     	dock.downArrowButton.setVisible(false);
@@ -275,7 +282,7 @@ public class BoardScreen implements Screen, GestureListener {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		boardStage.dispose();
-	//	dockStage.dispose();
+	    dockStage.dispose();
 	}
 
 

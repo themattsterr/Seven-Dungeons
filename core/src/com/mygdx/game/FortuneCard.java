@@ -34,6 +34,10 @@ public class FortuneCard extends Card {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
 	
 	
 }

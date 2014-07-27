@@ -65,7 +65,7 @@ public class BattleScreen implements Screen {
 		fighterTable = new Table();
 		defenderTable = new Table();
 		
-		dice = new Dice();
+		dice = new Dice(40,40);
 		
 	
 	}
@@ -96,7 +96,7 @@ public class BattleScreen implements Screen {
 		
 		private void fight(Player attacker, Player defender){
 			
-			int diceNumb = new Dice().roll();
+			int diceNumb = dice.roll();
 			int  theAttack;
 			
 			

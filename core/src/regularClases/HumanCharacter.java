@@ -26,6 +26,8 @@ public abstract class HumanCharacter extends Player {
 	
 	private int items[] = {0,0,0};
 	
+	public boolean hasRolled = false;
+	
 	
 	//will be replaced with dice class
 	Random rand = new Random();
@@ -75,7 +77,7 @@ public abstract class HumanCharacter extends Player {
 	public int rollDice(Dock dock){
 		
 		SevenDungeons.board.getTile(level, position).getArrow(dock);
-		return new Dice().roll();
+		return dock.dice.roll();
 		
 	}
 	
@@ -102,9 +104,9 @@ public abstract class HumanCharacter extends Player {
 	
 	public void getItem(ItemCard item){
 		switch(item.type){
-		case 1: maxHealth += (item.magnitude * (items[0] + 1));
-		case 2: attack += (item.magnitude * (items[1] + 1));
-		case 3: defense += (item.magnitude  * (items[2] + 1));
+		case 1: maxHealth += (item.magnitude);
+		case 2: attack += (item.magnitude);
+		case 3: defense += (item.magnitude);
 		}
 		
 		items[item.type - 1]++;

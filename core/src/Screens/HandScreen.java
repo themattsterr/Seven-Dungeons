@@ -115,7 +115,7 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 			if (player.hand.size() >= i+1){
 				Card curCard = player.hand.get(i);
 				//buttonTable.add(curCard.button).size(curCard.width, curCard.height);
-				buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
+				buttonTable.add(curCard).size(curCard.width, curCard.height);
 			}
 		}
 		

@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
@@ -124,7 +125,7 @@ public  class SevenDungeons extends Game{
 		turn++;
 		turn %= players.size();
 		boardScreen.setFocus(getPlayer().xPos, getPlayer().yPos);
-		boardScreen.dock.refreshPlayer();
+		boardScreen.dock.show();
 	}
 	
 	//gets the current player
@@ -157,17 +158,22 @@ public  class SevenDungeons extends Game{
 	
 	// opens shop screen
 	public static void openShop(){
-		ArrayList<Card> cards = new ArrayList<Card>(6);
+		ArrayList<ItemCard> cards = new ArrayList<ItemCard>(6);
 		for (int i = 0; i < 6; i++){
-			Card curCard = new ItemCard((i%3)+1,i*5);
+			
+			ItemCard curCard = new ItemCard((i%3)+1,i*5);
 			curCard.create();
+			if (i>2)
+				curCard.isSpell = true;
 			cards.add(curCard);
+			
 		}
 		
 		shopScreen.setInventory(cards);
 		game.setScreen(shopScreen);
 	}
 	
+
 
 	
 }

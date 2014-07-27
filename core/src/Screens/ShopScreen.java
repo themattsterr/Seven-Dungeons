@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,6 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Card;
+import com.mygdx.game.ItemCard;
 import com.mygdx.game.SevenDungeons;
 
 public class ShopScreen implements Screen, GestureListener, ActionListener{
@@ -46,12 +48,14 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	private ImageButtonStyle exitStyle;
 	private ImageButton exitButton;
 
-	private List<Card> inventory;
+	public List<ItemCard> inventory;
+	
+	public List<ItemCard> activeCards = new ArrayList<ItemCard>();
 	
 
 	public ShopScreen() {
 		// TODO Auto-generated constructor stub
-		inventory = new ArrayList<Card>();
+		inventory = new ArrayList<ItemCard>();
 		
 		stage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
 		background = new Back();
@@ -67,6 +71,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		exitButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("exit button pressed");
+				exitShop();
 				SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
 				return true;
 			}
@@ -74,8 +79,9 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 
 	}
 	
-	public void setInventory(List<Card> cards) {
+	public void setInventory(List<ItemCard> cards) {
 		this.inventory = cards;
+		
 	}
 	
 	
@@ -86,11 +92,46 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		}
 	}
 	
+	public void exitShop(){
+		while (activeCards.size() > 0){
+			activeCards.get(0).purchase(SevenDungeons.getPlayer());
+			activeCards.remove(0);
+		}
+	}
+	
+	public  void removeFromShop(Group cardGroup){
+		
+		for (int i = 0; i < 6; i++){
+			
+			if (cardGroup.equals(inventory.get(i).getGroup())){
+				if(!inventory.get(i).purchased) {
+					System.out.println(i);
+					//inventory.get(i).purchase(SevenDungeons.getPlayer());
+					//if (!activeCards.contains(inventory.get(i))){
+					if (inventory.get(i).canPurchase(SevenDungeons.getPlayer())){
+						inventory.get(i).purchased = true;
+						cardGroup.setVisible(false);
+						activeCards.add(inventory.get(i));
+					}
+					break;
+				}
+
+			}
+				
+		}
+		
+		
+
+		
+		
+		
+	}
+	
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		
-		
+		//inventory.get(0).hit(Gdx.input.setCursorPosition(x, y);)
 		stage.draw();
 		Table.drawDebug(stage);
 	}
@@ -109,12 +150,14 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		for(int i = 0; i < 6; i++) {
 			Card curCard = inventory.get(i);
 			buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
-			if ((i+1)%3 == 0)
+			if (i == 2)
 				buttonTable.row();
 		}
-		
+				
 		stage.addActor(background);
 		stage.addActor(buttonTable);
+		
+		
 		buttonTable.setPosition(WIDTH/2, HEIGHT/2);
 		
 		stage.addActor(exitButton);

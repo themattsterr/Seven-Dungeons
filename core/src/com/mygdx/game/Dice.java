@@ -1,14 +1,18 @@
 package com.mygdx.game;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Dice extends Actor {
+public class Dice extends Actor implements ActionListener {
 	
 	private Random rand = new Random();
 	private int value;
@@ -19,8 +23,7 @@ public class Dice extends Actor {
 	
 
 	//dice
-	public Dice() {
-		
+	public Dice(float width, float height) {
 		
 		texture = new Texture("die.png");
 		regions = new TextureRegion[6];
@@ -33,6 +36,29 @@ public class Dice extends Actor {
 		
 		value = roll();
 		
+		this.setSize(width, height);
+				
+	}
+	
+	public Dice(){
+		texture = new Texture("die.png");
+		regions = new TextureRegion[6];
+		regions[0] = new TextureRegion(texture,138,138,138,138);
+		regions[1] = new TextureRegion(texture,138,414,138,138);
+		regions[2] = new TextureRegion(texture,276,414,138,138);
+		regions[3] = new TextureRegion(texture,138,0,138,138);
+		regions[4] = new TextureRegion(texture,0,414,138,138);
+		regions[5] = new TextureRegion(texture,138,414,138,138);
+		
+		value = roll();
+		
+		this.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("dice clicked");
+				
+				return true;
+			}
+		});
 	}
 	
 	public int roll() {
@@ -47,6 +73,12 @@ public class Dice extends Actor {
 	
 	private int generateValue() {
 		return rand.nextInt(6) + 1;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
