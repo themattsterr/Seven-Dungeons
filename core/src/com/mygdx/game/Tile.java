@@ -54,6 +54,7 @@ public abstract class Tile {
 	}
 	
 	public void getArrow(Dock dock){
+		System.out.print("test");
 		dock.rightArrowButton.setVisible(true);
 		
 		if (anywhere){

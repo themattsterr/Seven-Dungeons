@@ -125,6 +125,8 @@ public  class SevenDungeons extends Game{
 		turn %= players.size();
 		boardScreen.setFocus(getPlayer().xPos, getPlayer().yPos);
 		boardScreen.dock.refreshPlayer();
+		boardScreen.move = false;
+		boardScreen.rolled = false;
 	}
 	
 	//gets the current player
