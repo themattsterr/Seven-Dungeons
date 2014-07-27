@@ -20,7 +20,7 @@ public abstract class Player extends Actor {
 	public float xPos = 0;
 	public float yPos = 0;
 	Batch batch;
-	ArrayList<Card> hand = new ArrayList<Card>();
+	public ArrayList<Card> hand = new ArrayList<Card>();
 
 
 	public Player(String texture, int health, int attack, int defense) {

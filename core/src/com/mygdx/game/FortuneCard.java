@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import java.util.Random;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
+
 import regularClases.HumanCharacter;
 
 public class FortuneCard extends Card {
@@ -23,6 +25,14 @@ public class FortuneCard extends Card {
 		active.giveGold(value);
 		System.out.println("congradulations " + value);
 		return true;
+	}
+
+
+
+	@Override
+	public Group getGroup() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

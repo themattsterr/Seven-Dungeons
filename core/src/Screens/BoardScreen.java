@@ -7,6 +7,7 @@ import regularClases.Knight;
 import regularClases.Mage;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -55,7 +56,7 @@ public class BoardScreen implements Screen, GestureListener {
 	private int roll;
 	private boolean rolled;
 	
-	private Dock dock;
+	public Dock dock;
 	private Stage dockStage;
 	private InputMultiplexer multiplexer;
 	//private Dice dice;
@@ -71,7 +72,7 @@ public class BoardScreen implements Screen, GestureListener {
 		board = new BoardActor();
 		back = new Back();
 		
-		// int dock and its own stage
+		// instantiate dock and its own stage
 		dockStage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
 		dock = new Dock(WIDTH,HEIGHT);
 	}
@@ -93,6 +94,11 @@ public class BoardScreen implements Screen, GestureListener {
 			batch.draw(texture, -500, -500);
 			//batch.end();
 		}
+	}
+	
+	public void setFocus(float x, float y) {
+		this.x = x;
+		this.y = y;
 	}
 	
 	@Override
@@ -122,6 +128,14 @@ public class BoardScreen implements Screen, GestureListener {
 	    //sets the camera
 	    camera.position.set(x, y,0);
 	    camera.update();
+	    
+	    if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+	    	SevenDungeons.openShop();
+	    }
+	    if(Gdx.input.isKeyPressed(Input.Keys.B)) {
+			SevenDungeons.setEncounter(SevenDungeons.getPlayer(0), SevenDungeons.getPlayer(1));
+	    }
+	    	
 	 
 	    	//rolls the dice if the player shakes the game while holding down
 	    if(move == false){
@@ -213,8 +227,10 @@ public class BoardScreen implements Screen, GestureListener {
 			boardStage.addActor(SevenDungeons.getPlayer(i));
 		}
 		
-		x = SevenDungeons.getPlayer().getX();
-    	y = SevenDungeons.getPlayer().getY();
+		//x = SevenDungeons.getPlayer().getX();
+    	//y = SevenDungeons.getPlayer().getY();
+    	
+    	setFocus(SevenDungeons.getPlayer().getX(),SevenDungeons.getPlayer().getY());
     	
     	dock.downArrowButton.setVisible(false);
     	dock.rightArrowButton.setVisible(false);

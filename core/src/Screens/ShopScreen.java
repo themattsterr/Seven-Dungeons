@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import Screens.HandScreen.Back;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -25,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.game.Card;
 import com.mygdx.game.SevenDungeons;
 
 public class ShopScreen implements Screen, GestureListener, ActionListener{
@@ -36,45 +39,29 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	private Back background;
 	
 	private Table buttonTable;
-	private TextureAtlas buttonAtlas;
-	private Skin skin;
 	
-	private List<ImageButtonStyle> shopStyles;
-	private List<ImageButton> shopButtons;
+	public static Skin skin = new Skin();
+	public static TextureAtlas atlas = new TextureAtlas("buttons/button.pack");
 	
 	private ImageButtonStyle exitStyle;
 	private ImageButton exitButton;
+
+	private List<Card> inventory;
 	
 
 	public ShopScreen() {
 		// TODO Auto-generated constructor stub
+		inventory = new ArrayList<Card>();
 		
 		stage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
 		background = new Back();
 		
-		
-		skin = new Skin();
-		buttonAtlas = new TextureAtlas("buttons/button.pack");
-		skin.addRegions(buttonAtlas);
-		
 		buttonTable = new Table();
 		
-		shopStyles = new ArrayList<ImageButtonStyle>(6);
-		shopButtons = new ArrayList<ImageButton>(6);
-		
-		for(int i = 0; i < 6; i++) {
-			ImageButtonStyle style = new ImageButtonStyle();
-			style.up = skin.getDrawable(getButtonImage(i));
-			shopStyles.add(style);
-			
-			ImageButton button = new ImageButton(style);
-			button.addListener(createButtonListener(i));
-			
-			shopButtons.add(button);
-		}
+		skin.addRegions(atlas);
 		
 		exitStyle = new ImageButtonStyle();
-		exitStyle.up = skin.getDrawable("pauseicon");
+		exitStyle.up = skin.getDrawable("exit");
 		
 		exitButton = new ImageButton(exitStyle);
 		exitButton.addListener(new InputListener(){
@@ -87,87 +74,10 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 
 	}
 	
-	private InputListener createButtonListener(int index) {
-		
-		InputListener listener;
-		switch(index){
-		case 0:
-			listener =  new InputListener(){
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					System.out.println("card 0 button pressed");
-					return true;
-				}};
-			break;
-		case 1:
-			listener =  new InputListener(){
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					System.out.println("card 1 button pressed");
-					return true;
-				}};
-			break;
-		case 2:
-			listener =  new InputListener(){
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					System.out.println("card 2 button pressed");
-					return true;
-				}};
-			break;
-		case 3:
-			listener =  new InputListener(){
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					System.out.println("card 3 button pressed");
-					return true;
-				}};
-			break;
-		case 4:
-			listener =  new InputListener(){
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					System.out.println("card 4 button pressed");
-					return true;
-				}};
-			break;
-		case 5:
-			listener =  new InputListener(){
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					System.out.println("card 5 button pressed");
-					return true;
-				}};
-			break;
-		default:
-			listener = new InputListener();
-			System.out.println("Error with shop buttons");
-			break;
-		}
-		return listener;
+	public void setInventory(List<Card> cards) {
+		this.inventory = cards;
 	}
 	
-	private String getButtonImage(int index) {
-		String path;
-		switch(index){
-		case 0:
-			path =  "cardicon";
-			break;
-		case 1:
-			path =  "cardicon";
-			break;
-		case 2:
-			path =  "cardicon";
-			break;
-		case 3:
-			path =  "cardicon";
-			break;
-		case 4:
-			path =  "cardicon";
-			break;
-		case 5:
-			path =  "cardicon";
-			break;
-		default:
-			path =  "cardicon";
-			break;
-		}
-		return path;
-	}
 	
 	public class Back extends Actor{
 		public Texture texture = new Texture("shop_screen1.png");
@@ -196,9 +106,10 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		// TODO Auto-generated method stub
 		
 		
-		for(int i = 1; i <= 6; i++) {
-			buttonTable.add(shopButtons.get(i-1)).size(50, 50);
-			if (i%3 == 0)
+		for(int i = 0; i < 6; i++) {
+			Card curCard = inventory.get(i);
+			buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
+			if ((i+1)%3 == 0)
 				buttonTable.row();
 		}
 		

@@ -1,5 +1,15 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+
 import regularClases.HumanCharacter;
 
 public class ItemCard extends Card {
@@ -11,12 +21,76 @@ public class ItemCard extends Card {
 	private int price;
 	public int magnitude = 2;
 	
-	public ItemCard( int type, int price) {
+	private Table infoTable;
+	
+	public ItemCard(int type, int price) {
 		
 		this.type = type;
 		this.price = price;
+		//this.setImageButton("item_card");
+		
+		
+		
 	}
 	
+	public Group getGroup(){
+		
+		Group group = new Group();
+		//group.addActor(this.button);
+		
+		infoTable = createInfoTable();
+		infoTable.setBackground(Card.skin.getDrawable("item_card"));
+		group.addActor(infoTable);
+		group.setSize(width,height);
+		
+		group.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("item card pressed");
+				return true;
+			}
+		});
+		
+		return group;
+	}
+	
+	private Table createInfoTable() {
+		Table table = new Table();
+		Image statImage;
+		Image goldImage = new Image(SevenDungeons.goldRegion);
+		
+		switch (type){
+		case 1:
+			statImage = new Image(SevenDungeons.healthRegion);
+			break;
+		case 2:
+			statImage = new Image(SevenDungeons.attackRegion);
+			break;
+		case 3:
+			statImage = new Image(SevenDungeons.defenseRegion);
+			break;
+		default:
+			statImage = new Image();
+			break;
+		}
+		
+		table.add(new Label(this.getText(), SevenDungeons.labelStyle)).align(Align.center).align(Align.bottom).height(height/2);
+		table.row();
+		
+		Table innerTable = new Table();
+		innerTable.add(statImage).align(Align.center).size(height/2, height/2).expand();
+		innerTable.add(new Label(String.valueOf(magnitude), SevenDungeons.labelStyle));
+		innerTable.add(goldImage).align(Align.center).size(height/2, height/2).expand();
+		innerTable.add(new Label(String.valueOf(price), SevenDungeons.labelStyle));
+		innerTable.setSize(width, height/2);
+		innerTable.debug();
+		
+		table.add(innerTable);
+		table.setSize(width, height);
+		
+		table.debug();
+		
+		return table;
+	}
 	
 	public int purchase(HumanCharacter active){
 		//method subtracts the cards cost from the players gold.
@@ -32,7 +106,7 @@ public class ItemCard extends Card {
 		return price * (active.Purchased(type) + 1);
 	}
 	
-	public int getMagnitude(HumanCharacter acative){
+	public int getMagnitude(HumanCharacter active){
 		return magnitude;
 	}
 

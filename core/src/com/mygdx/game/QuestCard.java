@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Group;
+
 import regularClases.HumanCharacter;
 
 public class QuestCard extends Card {
@@ -55,6 +58,13 @@ public class QuestCard extends Card {
 		else return false;
 		
 	}
+
+	@Override
+	public Group getGroup() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

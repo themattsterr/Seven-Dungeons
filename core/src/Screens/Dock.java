@@ -40,15 +40,8 @@ public class Dock extends WidgetGroup implements ActionListener {
 	private Texture dockTexture;
 	private TextureRegion dockRegion;
 	
-	private Texture iconTexture;
-	private TextureRegion healthRegion;
-	private TextureRegion attackRegion;
-	private TextureRegion defenseRegion;
-	private TextureRegion goldRegion;
-	
 	private Table playerTable;
-	private LabelStyle labelStyle;
-	private BitmapFont font;
+
 	
 	/* 
 	 * HOW TO BUTTONS:
@@ -96,15 +89,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		dockTexture = new Texture("background_table.png");
 		dockRegion = new TextureRegion(dockTexture, 0, 0, dockWidth, dockHeight);
 		
-		iconTexture = new Texture("playericons.png");
-		healthRegion = new TextureRegion(iconTexture, 0, 0, 180, 180);
-		attackRegion = new TextureRegion(iconTexture, 180, 0, 180, 180); 
-		defenseRegion = new TextureRegion(iconTexture, 360, 0, 180, 180);
-		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
-		
-		font = new BitmapFont(Gdx.files.internal("exo-small.fnt"), false);
-		labelStyle = new LabelStyle(font, Color.BLACK);
-
 		/*
 		 * Skin constructor takes nothing
 		 * TextureAtlas constructor takes in path to .pack file that 
@@ -127,12 +111,9 @@ public class Dock extends WidgetGroup implements ActionListener {
 		 */
 		upArrowStyle = new ImageButtonStyle();
 		upArrowStyle.up = skin.getDrawable("uparrow");
-		upArrowStyle.disabled = skin.getDrawable("uparrowdisabled");
 		upArrowButton = new ImageButton(upArrowStyle);
 		upArrowButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				
-				upArrowButton.setDisabled(!upArrowButton.isDisabled());
 				return true;
 			}
 		});
@@ -166,12 +147,13 @@ public class Dock extends WidgetGroup implements ActionListener {
 		});
 		
 		pauseStyle = new ImageButtonStyle();
-		pauseStyle.up = skin.getDrawable("pauseicon");
+		pauseStyle.up = skin.getDrawable("exit");
 		pauseButton = new ImageButton(pauseStyle);
 		pauseButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("pause button pressed");
-				SevenDungeons.game.setScreen(SevenDungeons.shopScreen);
+				System.out.println("end turn pressed");
+
+				SevenDungeons.changeTurn();
 				return true;
 			}
 		});
@@ -182,11 +164,22 @@ public class Dock extends WidgetGroup implements ActionListener {
 		cardsButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("cards button pressed");
-				SevenDungeons.game.setScreen(SevenDungeons.handScreen);
+				SevenDungeons.openInventory();
 				return true;
 			}
 		});
 		
+	}
+	
+	public void refreshPlayer(){
+		if(this.getChildren().removeValue(playerTable, false)){
+			System.out.println("removed playerTable");
+		}
+		playerTable = createPlayerTable(SevenDungeons.getPlayer(),dockHeight);
+		playerTable.setPosition(this.getOriginX(), this.getOriginY());
+		playerTable.debug();
+		
+		this.addActor(playerTable);
 	}
 	
 	public void show() {
@@ -196,10 +189,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		arrowTable.debug();
 		this.addActor(arrowTable);
 		
-		playerTable = createPlayerTable(SevenDungeons.getPlayer(),dockHeight);
-		playerTable.setPosition(this.getOriginX(), this.getOriginY());
-		playerTable.debug();
-		this.addActor(playerTable);
+		refreshPlayer();
 		
 		float buttonSize = dockHeight/2;
 		Table buttonTable = new Table();
@@ -230,8 +220,9 @@ public class Dock extends WidgetGroup implements ActionListener {
 		innerTable.add(infoTable);
 		innerTable.debug();
 		
+		String labelText = "Player " + String.valueOf(SevenDungeons.turn + 1);
 		
-		table.add(new Label("Player 1", labelStyle)).align(Align.left).height(height - infoTable.getHeight());
+		table.add(new Label(labelText, SevenDungeons.labelStyle)).align(Align.left).height(height - infoTable.getHeight());
 		table.row();
 		table.add(innerTable);
 		table.setWidth(imageSize + infoTable.getWidth());
@@ -281,37 +272,38 @@ public class Dock extends WidgetGroup implements ActionListener {
 		Integer defense = player.getDefense();
 		Integer gold = player.getGold();
 		
+		
+		Image healthImage = new Image(SevenDungeons.healthRegion);
+		Image attackImage = new Image(SevenDungeons.attackRegion);
+		Image defenseImage = new Image(SevenDungeons.defenseRegion);
+		Image goldImage = new Image(SevenDungeons.goldRegion);
+		
 		Table table = new Table();
 		table.setWidth(width);
 		table.setHeight(height);
 		
 		Table healthTable = new Table();
-		Image healthImage = new Image(healthRegion);
 		healthTable.add(healthImage).size(imageSize, imageSize).expand();
 		healthTable.row();
-		healthTable.add(new Label(health.toString(), labelStyle)).expand();
+		healthTable.add(new Label(health.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(healthTable).size(cellWidth, height);
 
-		
 		Table attackTable = new Table();
-		Image attackImage = new Image(attackRegion);
 		attackTable.add(attackImage).size(imageSize, imageSize).expand();
 		attackTable.row();
-		attackTable.add(new Label(attack.toString(), labelStyle)).expand();
+		attackTable.add(new Label(attack.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(attackTable).size(cellWidth, height);
 		
 		Table defenseTable = new Table();
-		Image defenseImage = new Image(defenseRegion);
 		defenseTable.add(defenseImage).size(imageSize, imageSize).expand();
 		defenseTable.row();
-		defenseTable.add(new Label(defense.toString(), labelStyle)).expand();
+		defenseTable.add(new Label(defense.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(defenseTable).size(cellWidth, height);
 		
 		Table goldTable = new Table();
-		Image goldImage = new Image(goldRegion);
 		goldTable.add(goldImage).size(imageSize, imageSize).expand();
 		goldTable.row();
-		goldTable.add(new Label(gold.toString(), labelStyle)).expand();
+		goldTable.add(new Label(gold.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(goldTable).size(cellWidth, height);
 		
 		//table.setFillParent(true);

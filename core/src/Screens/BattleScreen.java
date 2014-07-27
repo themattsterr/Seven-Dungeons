@@ -42,17 +42,9 @@ public class BattleScreen implements Screen {
 	private Table fighterTable;
 	private Table defenderTable;
 	
-	private Texture iconTexture;
-	private TextureRegion healthRegion;
-	private TextureRegion attackRegion;
-	private TextureRegion defenseRegion;
-	private TextureRegion goldRegion;
-	
 	private Image fighterImage;
 	private Image defenderImage;
 	
-	private LabelStyle labelStyle;
-	private BitmapFont font;
 	private int turn;
 	private boolean fought = false;
 	
@@ -64,16 +56,6 @@ public class BattleScreen implements Screen {
 	Sound music;
 	public BattleScreen() {
 		// TODO Auto-generated constructor stub
-		iconTexture = new Texture("playericons.png");
-		healthRegion = new TextureRegion(iconTexture, 0, 0, 180, 180);
-		attackRegion = new TextureRegion(iconTexture, 180, 0, 180, 180); 
-		defenseRegion = new TextureRegion(iconTexture, 360, 0, 180, 180);
-		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
-		
-
-		
-		font = new BitmapFont(Gdx.files.internal("exo-small.fnt"), false);
-		labelStyle = new LabelStyle(font, Color.BLACK);
 		
 		stage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
 		background = new Back();
@@ -155,18 +137,20 @@ public class BattleScreen implements Screen {
 		//fighter.drawFighter();
 		//defender.drawDefennder();
 		
+		
 		if ((fought == false) && (Gdx.input.isKeyPressed(Keys.R))){
 			fought = true;
 			if((turn % 2) == 0)fight(fighter, defender);
 			else fight(defender, fighter);
 			
 			System.out.println(" your health " + fighter.getCurrentHealth() + " their health + " + defender.getCurrentHealth());
+			
 			turn++;
 			
 		}
 	
 		
-		if(Gdx.input.isKeyPressed(Keys.A)){
+		if(Gdx.input.isKeyPressed(Keys.V)){
 			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
 			this.dispose();
 		}
@@ -185,26 +169,38 @@ public class BattleScreen implements Screen {
 		
 	}
 
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
+	private void refresh(){
 		
-		float imageHeight = 100;
+		
 		
 		fighterTable = createInfoTable(this.fighter, stage.getWidth()/3, stage.getWidth()/6);
 		defenderTable = createInfoTable(this.defender, stage.getWidth()/3, stage.getWidth()/6);
 		
-		
+		battleTable = new Table();
 		
 		battleTable.add().size(stage.getWidth()/3, stage.getWidth()/3);
 		battleTable.add(defenderTable).align(Align.top);
-		battleTable.add(defenderImage).align(Align.top);
+		battleTable.add(defenderImage).align(Align.top).expand();
 		battleTable.row();
-		battleTable.add(fighterImage).align(Align.bottom);
+		battleTable.add(fighterImage).align(Align.bottom).expand();
 		battleTable.add(fighterTable).align(Align.bottom);
 		battleTable.add().size(stage.getWidth()/3, stage.getWidth()/3);
 		
 		battleTable.setFillParent(true);
+		
+		if(stage.getActors().removeValue(battleTable, true)){
+			stage.addActor(battleTable);
+		}
+		
+	}
+	
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+		
+		refresh();
+
 		
 		stage.addActor(background);
 		stage.addActor(battleTable);
@@ -254,33 +250,33 @@ public class BattleScreen implements Screen {
 		float imageSize = height/2;
 		Integer health = new Integer(player.getCurrentHealth());
 		Integer attack =  new Integer(player.getAttack());
-		
 		Integer defense = new Integer(player.getDefense());
-		System.out.print(defense);
+		
+		
 		Table table = new Table();
 		table.setWidth(width);
 		table.setHeight(height);
 		
 		Table healthTable = new Table();
-		Image healthImage = new Image(healthRegion);
+		Image healthImage = new Image(SevenDungeons.healthRegion);
 		healthTable.add(healthImage).size(imageSize, imageSize).expand();
 		healthTable.row();
-		healthTable.add(new Label(health.toString(), labelStyle)).expand();
+		healthTable.add(new Label(health.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(healthTable).size(cellWidth, height);
 
 		
 		Table attackTable = new Table();
-		Image attackImage = new Image(attackRegion);
+		Image attackImage = new Image(SevenDungeons.attackRegion);
 		attackTable.add(attackImage).size(imageSize, imageSize).expand();
 		attackTable.row();
-		attackTable.add(new Label(attack.toString(), labelStyle)).expand();
+		attackTable.add(new Label(attack.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(attackTable).size(cellWidth, height);
 		
 		Table defenseTable = new Table();
-		Image defenseImage = new Image(defenseRegion);
+		Image defenseImage = new Image(SevenDungeons.defenseRegion);
 		defenseTable.add(defenseImage).size(imageSize, imageSize).expand();
 		defenseTable.row();
-		defenseTable.add(new Label(defense.toString(), labelStyle)).expand();
+		defenseTable.add(new Label(defense.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(defenseTable).size(cellWidth, height);
 		
 		

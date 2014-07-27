@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Screens.BattleScreen;
 import Screens.BoardScreen;
@@ -13,11 +14,15 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 import regularClases.Archer;
 import regularClases.Assassin;
@@ -34,14 +39,22 @@ public  class SevenDungeons extends Game{
 	public static BoardScreen boardScreen;
 	public static ShopScreen shopScreen;
 	public static HandScreen handScreen; 
+	public static BattleScreen battleScreen;
 	public static GameBoard board = new GameBoard();
 	
-
+	public static LabelStyle labelStyle;
+	public static BitmapFont font;
+	
+	private static Texture iconTexture;
+	public static TextureRegion healthRegion;
+	public static TextureRegion attackRegion; 
+	public static TextureRegion defenseRegion;
+	public static TextureRegion goldRegion;
 	
 	 //Holds Players
 	static ArrayList<HumanCharacter> players = new ArrayList<HumanCharacter>();
 	//whos turn is it
-	static int turn = 0; 
+	public static int turn = 0; 
 	
 	
 	//saves the first instance of itself, allows us to cheat and use non static members on a static class
@@ -63,11 +76,20 @@ public  class SevenDungeons extends Game{
 		boardScreen = new BoardScreen();
 		shopScreen = new ShopScreen();
 		handScreen = new HandScreen();
+		battleScreen = new BattleScreen();
 		batch = new SpriteBatch();
 		//sets the initial screen
 		//this.setScreen(newGameScreen);
 		
+		// used for labels throughout UI
+		font = new BitmapFont(Gdx.files.internal("exo-small.fnt"), false);
+		labelStyle = new LabelStyle(font, Color.BLACK);
 		
+		iconTexture = new Texture("playericons.png");
+		healthRegion = new TextureRegion(iconTexture, 0, 0, 180, 180);
+		attackRegion = new TextureRegion(iconTexture, 180, 0, 180, 180); 
+		defenseRegion = new TextureRegion(iconTexture, 360, 0, 180, 180);
+		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
 		
 		/*TEMPERARY PLACING PLAYERS PLAYER SELECT SCREEN WILL HANDLE THIS */
 		players.add(new Mage(0));
@@ -101,6 +123,8 @@ public  class SevenDungeons extends Game{
 	public static void changeTurn(){
 		turn++;
 		turn %= players.size();
+		boardScreen.setFocus(getPlayer().xPos, getPlayer().yPos);
+		boardScreen.dock.refreshPlayer();
 	}
 	
 	//gets the current player
@@ -123,6 +147,25 @@ public  class SevenDungeons extends Game{
 		battleScreen.setBattle(attacker, defender);	
 	 	game.setScreen(battleScreen);
 		
+	}
+	
+	// opens current players inventory
+	public static void openInventory() {
+		handScreen.setPlayer(getPlayer());
+		game.setScreen(handScreen);
+	}
+	
+	// opens shop screen
+	public static void openShop(){
+		ArrayList<Card> cards = new ArrayList<Card>(6);
+		for (int i = 0; i < 6; i++){
+			Card curCard = new ItemCard((i%3)+1,i*5);
+			curCard.create();
+			cards.add(curCard);
+		}
+		
+		shopScreen.setInventory(cards);
+		game.setScreen(shopScreen);
 	}
 	
 
