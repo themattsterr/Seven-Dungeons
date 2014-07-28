@@ -73,20 +73,10 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 	
 	public void setPlayer(HumanCharacter player) {
 		this.player = player;
-		//debugHand();
-	}
-	
-	private void debugHand(){
-		for (int i = 1; i <= 3; i++) {
-			ItemCard card = new ItemCard(i,i*5);
-			card.create();
-			player.giveCard(card);
-		}
-	}
-	
+	}	
 
 	public class Back extends Actor{
-		public Texture texture = new Texture("shop_screen2.png");
+		public Texture texture = new Texture("background_table.png");
 		public void draw(Batch batch, float parentAlpha){
 			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}
@@ -98,7 +88,6 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 		
 		
 		stage.draw();
-		Table.drawDebug(stage);
 	}
 
 	@Override
@@ -120,6 +109,9 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 			Card curCard = player.hand.get(i);
 			curCard.getGroup().setVisible(true);
 			buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
+			buttonTable.row();
+			buttonTable.add().size(15);
+			buttonTable.row();
 		}
 		
 		stage.addActor(background);

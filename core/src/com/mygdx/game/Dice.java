@@ -30,8 +30,8 @@ public class Dice extends Actor implements ActionListener {
 		texture = new Texture("die.png");
 		regions = new TextureRegion[6];
 		regions[0] = new TextureRegion(texture,138,138,138,138);
-		regions[1] = new TextureRegion(texture,138,414,138,138);
-		regions[2] = new TextureRegion(texture,276,414,138,138);
+		regions[1] = new TextureRegion(texture,276,414,138,138);
+		regions[2] = new TextureRegion(texture,138,276,138,138);
 		regions[3] = new TextureRegion(texture,138,0,138,138);
 		regions[4] = new TextureRegion(texture,0,414,138,138);
 		regions[5] = new TextureRegion(texture,138,414,138,138);
