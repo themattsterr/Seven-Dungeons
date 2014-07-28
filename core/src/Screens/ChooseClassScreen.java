@@ -1,5 +1,10 @@
 package Screens;
 
+import regularClases.Archer;
+import regularClases.Assassin;
+import regularClases.Knight;
+import regularClases.Mage;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +20,7 @@ public class ChooseClassScreen implements Screen{
 	private static Texture img;
 	private int width; 
 	private int height;
-	
+	private int players = 0;
 	public ChooseClassScreen() {
 		// TODO Auto-generated constructor stub
 		
@@ -26,12 +31,18 @@ public class ChooseClassScreen implements Screen{
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		// TODO Auto-generated method stub
 		if(Gdx.input.justTouched()){
-			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
-			dispose();
+			if(Gdx.input.getX() < width / 2){
+				if(Gdx.input.getY() < height / 2){System.out.println("Knight"); SevenDungeons.addPlayer(new Knight(players));}
+				else {System.out.println("Mage"); SevenDungeons.addPlayer(new Mage(players));}
+			}
+			else{
+				if(Gdx.input.getY() < height / 2) {System.out.println("Assassin"); SevenDungeons.addPlayer(new Assassin(players));}
+				else{System.out.println("Archer"); SevenDungeons.addPlayer(new Archer(players));}
+			}
+			
+			if(++players == 4){ SevenDungeons.initialize(); SevenDungeons.game.setScreen(SevenDungeons.boardScreen);}
 		}
-		
 		SevenDungeons.batch.begin();
 		SevenDungeons.batch.draw(img,0,0, width, height);
 		SevenDungeons.batch.end();

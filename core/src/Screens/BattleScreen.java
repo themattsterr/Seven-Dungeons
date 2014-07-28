@@ -99,12 +99,12 @@ public class BattleScreen implements Screen {
 		}
 	}
 
-
 	//THIS FUNCTION TAKES IN TWO FIGHTERS AND MAKES THE BATTLE 
 		public void setBattle(HumanCharacter player1, Player player2){
 			fighter = player1;
 			defender = player2;
 			turn = 0;
+
 			
 		}
 		
@@ -139,7 +139,6 @@ public class BattleScreen implements Screen {
 			}
 				
 			defender.takeHit(theAttack, attacker);
-			
 		}
 	
 
@@ -174,6 +173,7 @@ public class BattleScreen implements Screen {
 		stage.getActors().removeValue(battleTable, true);
 		stage.getActors().removeValue(dice, true);
 
+		
 		dice = new Dice(40,40);
 		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
 		dice.setSize(40, 40);

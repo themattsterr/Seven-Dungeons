@@ -61,7 +61,7 @@ public abstract class HumanCharacter extends Player {
 	
 
 		SevenDungeons.board.getTile(level, position).land(this);
-	
+		SevenDungeons.boardScreen.dock.show();
 	
 	}
 	
