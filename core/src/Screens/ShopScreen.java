@@ -94,8 +94,12 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	
 	public void exitShop(){
 		while (activeCards.size() > 0){
-			activeCards.get(0).purchase(SevenDungeons.getPlayer());
+			ItemCard current = activeCards.get(0);
+			current.purchase(SevenDungeons.getPlayer());
+			if (current.isSpell)
+				SevenDungeons.getPlayer().giveCard(current);
 			activeCards.remove(0);
+			
 		}
 	}
 	
@@ -106,8 +110,6 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 			if (cardGroup.equals(inventory.get(i).getGroup())){
 				if(!inventory.get(i).purchased) {
 					System.out.println(i);
-					//inventory.get(i).purchase(SevenDungeons.getPlayer());
-					//if (!activeCards.contains(inventory.get(i))){
 					if (inventory.get(i).canPurchase(SevenDungeons.getPlayer())){
 						inventory.get(i).purchased = true;
 						cardGroup.setVisible(false);

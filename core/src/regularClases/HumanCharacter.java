@@ -77,6 +77,7 @@ public abstract class HumanCharacter extends Player {
 	public int rollDice(Dock dock){
 		
 		SevenDungeons.board.getTile(level, position).getArrow(dock);
+		hasRolled = true;
 		return dock.dice.roll();
 		
 	}

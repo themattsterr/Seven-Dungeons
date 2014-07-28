@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -72,6 +73,7 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 	
 	public void setPlayer(HumanCharacter player) {
 		this.player = player;
+		//debugHand();
 	}
 	
 	private void debugHand(){
@@ -110,12 +112,11 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 		// TODO Auto-generated method stub
 		buttonTable = new Table();
 		
-		for(int i = 0; i < 3; i++) {
-			if (player.hand.size() >= i+1){
-				Card curCard = player.hand.get(i);
-				//buttonTable.add(curCard.button).size(curCard.width, curCard.height);
-				buttonTable.add(curCard).size(curCard.width, curCard.height);
-			}
+		int handCount = player.hand.size();
+		for(int i = 0; i < handCount; i++) {
+			Card curCard = player.hand.get(i);
+			curCard.getGroup().setVisible(true);
+			buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
 		}
 		
 		stage.addActor(background);
@@ -130,6 +131,23 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 		
 		Gdx.input.setInputProcessor(stage);
 		
+	}
+	
+	public void useSpell(Group spellCard){
+		
+		if (!player.hand.isEmpty()){
+			int handCount = player.hand.size();
+			
+			for (int i = 0; i < handCount; i++){
+				Card current = player.hand.get(i);
+				if (spellCard.equals(current.getGroup())){
+					player.hand.remove(i);
+					handCount--;
+					current.getGroup().setVisible(false);
+					// add whatever the spell does here
+				}
+			}
+		}
 	}
 
 	@Override

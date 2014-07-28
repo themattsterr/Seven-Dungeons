@@ -36,7 +36,7 @@ public class QuestCard extends Card {
 			case 0: position %= 36;
 		}
 		
-		this.value = 10 * new Dice().roll() *  (level + 1);
+		this.value = 10 * SevenDungeons.randomDice.roll() *  (level + 1);
 		
 		SevenDungeons.board.getTile(level, position).addQuest(this);
 		
