@@ -25,8 +25,8 @@ public abstract class Card extends Actor{
 		
 	public ImageButtonStyle style;
 	public ImageButton button;
-	public int width = 100;
-	public int height = 50;
+	public int width = 150;
+	public int height = 75;
 	
 	private boolean clicked = false;
 	
