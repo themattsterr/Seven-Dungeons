@@ -100,16 +100,12 @@ public class BattleScreen implements Screen {
 	}
 
 
-	private void endBattle(){
-		exitButton.setVisible(true);
-	}
 
 	//THIS FUNCTION TAKES IN TWO FIGHTERS AND MAKES THE BATTLE 
 		public void setBattle(HumanCharacter player1, Player player2){
 			fighter = player1;
 			defender = player2;
 			turn = 0;
-			exitButton.setVisible(false);
 			
 		}
 		
@@ -145,7 +141,6 @@ public class BattleScreen implements Screen {
 				
 			defender.takeHit(theAttack, attacker);
 			
-			endBattle();
 		}
 	
 
