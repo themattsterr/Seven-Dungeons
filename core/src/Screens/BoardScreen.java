@@ -150,10 +150,12 @@ public class BoardScreen implements Screen, GestureListener {
 	    
 		//rolls the dice if the player shakes the game while holding down
 	    if(move == false){
+	    	dock.exitButton.setVisible(false);
 	    	if(rolled == false){
 		    	//if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R))){
 		    	
 	    		// moved into input listener in the dice class
+	    		
 	    		
 	    	}
 	    	
@@ -173,7 +175,10 @@ public class BoardScreen implements Screen, GestureListener {
 	    		SevenDungeons.getPlayer().move(roll - 1, 1);
 	    		moveUpdate();
 	    	}
-	}
+	    }
+	    else {
+	    	dock.exitButton.setVisible(true);
+	    }
 	    
 	    
 	    //new turn

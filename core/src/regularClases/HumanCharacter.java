@@ -111,6 +111,7 @@ public abstract class HumanCharacter extends Player {
 		
 		items[item.type - 1]++;
 	}
+	
 
 	public void giveGold(int value){
 		this.gold+= value;

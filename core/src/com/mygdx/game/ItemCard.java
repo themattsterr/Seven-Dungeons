@@ -129,7 +129,7 @@ public class ItemCard extends Card {
 		boolean enoughGold = true;
 		
 		if(enoughGold) {
-			//if player has enough gold purchase and return true
+			//if player has enough gold and room inventory purchase and return true
 			return true;
 		}
 		//else dont purchase and return false
@@ -148,7 +148,10 @@ public class ItemCard extends Card {
 
 	@Override
 	public boolean activate(HumanCharacter active) {
-		active.getItem(this);
+		if (this.isSpell)
+			active.getItem(this);
+		else
+			active.giveCard(this);
 		return true;
 	}
 

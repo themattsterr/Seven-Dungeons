@@ -72,7 +72,6 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 	
 	public void setPlayer(HumanCharacter player) {
 		this.player = player;
-		debugHand();
 	}
 	
 	private void debugHand(){

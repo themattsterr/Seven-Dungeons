@@ -14,6 +14,7 @@ public class ShopSpace extends Tile {
 		super.execute(active);
 		// TODO Auto-generated method stub
 		//make shop screen
+		SevenDungeons.openShop();
 	}
 	
 	

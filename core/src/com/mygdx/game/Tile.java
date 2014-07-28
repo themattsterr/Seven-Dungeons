@@ -75,7 +75,7 @@ public abstract class Tile {
 		}
 		
 		if(this.ifClash()){
-				SevenDungeons.game.setEncounter(active, this.playersOnSpace.get(0));
+				SevenDungeons.setEncounter(active, this.playersOnSpace.get(0));
 				return false;
 		}
 	

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -68,11 +70,27 @@ public class Dice extends Actor implements ActionListener {
 		this.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("dice clicked");
-				if (SevenDungeons.boardScreen.move == false 
-						&& SevenDungeons.boardScreen.rolled == false) {
-		    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
-		    		SevenDungeons.boardScreen.rolled = true;
-		    		SevenDungeons.boardScreen.dock.show();
+				if(SevenDungeons.game.getScreen() == SevenDungeons.boardScreen) {
+					if (SevenDungeons.boardScreen.move == false 
+							&& SevenDungeons.boardScreen.rolled == false) {
+			    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
+			    		SevenDungeons.boardScreen.rolled = true;
+			    		SevenDungeons.boardScreen.dock.show();
+					}
+				}
+				if (SevenDungeons.game.getScreen() == SevenDungeons.battleScreen){
+					if ((SevenDungeons.battleScreen.fought == false)){
+						SevenDungeons.battleScreen.fought = true;
+						if((SevenDungeons.battleScreen.turn % 2) == 0)
+							SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.fighter, SevenDungeons.battleScreen.defender);
+						else 
+							SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.defender, SevenDungeons.battleScreen.fighter);
+						
+						System.out.println(" your health " + SevenDungeons.battleScreen.fighter.getCurrentHealth() + " their health + " + SevenDungeons.battleScreen.defender.getCurrentHealth());
+						
+						SevenDungeons.battleScreen.turn++;
+					}
+					SevenDungeons.battleScreen.refresh();
 				}
 				return true;
 			}

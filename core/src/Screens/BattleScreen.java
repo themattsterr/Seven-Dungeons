@@ -45,13 +45,13 @@ public class BattleScreen implements Screen {
 	private Image fighterImage;
 	private Image defenderImage;
 	
-	private int turn;
-	private boolean fought = false;
+	public int turn;
+	public boolean fought = false;
 	
 	Dice dice;
 	
-	HumanCharacter fighter;
-	Player defender;
+	public HumanCharacter fighter;
+	public Player defender;
 	
 	Sound music;
 	public BattleScreen() {
@@ -94,7 +94,7 @@ public class BattleScreen implements Screen {
 			//music.play();
 		}
 		
-		private void fight(Player attacker, Player defender){
+		public void fight(Player attacker, Player defender){
 			
 			int diceNumb = dice.roll();
 			int  theAttack;
@@ -138,16 +138,7 @@ public class BattleScreen implements Screen {
 		//defender.drawDefennder();
 		
 		
-		if ((fought == false) && (Gdx.input.isKeyPressed(Keys.R))){
-			fought = true;
-			if((turn % 2) == 0)fight(fighter, defender);
-			else fight(defender, fighter);
-			
-			System.out.println(" your health " + fighter.getCurrentHealth() + " their health + " + defender.getCurrentHealth());
-			
-			turn++;
-			
-		}
+		// moved to dice class
 	
 		
 		if(Gdx.input.isKeyPressed(Keys.V)){
@@ -169,7 +160,7 @@ public class BattleScreen implements Screen {
 		
 	}
 
-	private void refresh(){
+	public void refresh(){
 		
 		
 		
@@ -191,6 +182,11 @@ public class BattleScreen implements Screen {
 		if(stage.getActors().removeValue(battleTable, true)){
 			stage.addActor(battleTable);
 		}
+		
+		if(stage.getActors().removeValue(dice, true)){
+			stage.addActor(dice);
+		}
+		
 		
 	}
 	
