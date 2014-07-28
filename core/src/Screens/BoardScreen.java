@@ -36,8 +36,8 @@ public class BoardScreen implements Screen, GestureListener {
 	//holds the actors
 	private Stage boardStage;
 	//initial screen size (samsung galaxy s5
-	static final int WIDTH = Gdx.graphics.getWidth();
-	static final int HEIGHT = Gdx.graphics.getHeight();
+	static int screenWidth = Gdx.graphics.getWidth();
+	static int screenHeight = Gdx.graphics.getHeight();
 	//initialized already ?
 	static boolean initial = false;
 	public boolean move = false; 
@@ -48,8 +48,8 @@ public class BoardScreen implements Screen, GestureListener {
 	private OrthographicCamera camera; 
 	
 	//initial position of screen
-	float x =  WIDTH / 2;
-	float y = HEIGHT /2;
+	float x =  screenWidth / 2;
+	float y = screenHeight /2;
 	
 	private Back back;
 	private BoardActor board;
@@ -67,15 +67,15 @@ public class BoardScreen implements Screen, GestureListener {
 		// stuff taken from show
 		camera = new OrthographicCamera();
 		viewport = new ScreenViewport();
-		boardStage = new Stage(new FitViewport(WIDTH,HEIGHT,camera), SevenDungeons.batch);
+		boardStage = new Stage(new FitViewport(screenWidth,screenHeight,camera), SevenDungeons.batch);
 		
 		//creates the board 
 		board = new BoardActor();
 		back = new Back();
 		
 		// instantiate dock and its own stage
-		dockStage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
-		dock = new Dock(WIDTH,HEIGHT);
+		dockStage = new Stage(new FitViewport(screenWidth,screenHeight), SevenDungeons.batch);
+		dock = new Dock(screenWidth,screenHeight);
 	}
 	
 	//the game board
@@ -120,10 +120,6 @@ public class BoardScreen implements Screen, GestureListener {
 		boardStage.draw();
 	    dockStage.draw();
 		
-	    
-	    
-	    Table.drawDebug(dockStage);
-	    
 		//checks the cameras max bounsd 
 	    checkMax();
 	    
@@ -186,6 +182,11 @@ public class BoardScreen implements Screen, GestureListener {
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
+		screenWidth = Gdx.graphics.getWidth();
+		screenHeight = Gdx.graphics.getHeight();
+		dock.resize(screenWidth,screenHeight);
+		boardStage.getViewport().update(width, height);
+		dockStage.getViewport().update(width, height);
 		viewport.update(width, height);
 	}
 
@@ -340,8 +341,8 @@ public class BoardScreen implements Screen, GestureListener {
 		 
 		 if (camera.zoom >3) camera.zoom = 3;
 		 if (camera.zoom < .5) camera.zoom = 0.5f;
-		 if(y < HEIGHT / 2) y = HEIGHT / 2;
-		 if (x < WIDTH / 2) x = WIDTH /2;
+		 if(y < screenHeight / 2) y = screenHeight / 2;
+		 if (x < screenWidth / 2) x = screenWidth /2;
 		 
 		 if(y > 1509.0) y =  1509;
 		 if (x > 2665.0) x = 2665;

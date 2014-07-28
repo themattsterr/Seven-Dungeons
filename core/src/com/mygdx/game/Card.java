@@ -34,6 +34,10 @@ public abstract class Card extends Actor{
 		skin.addRegions(atlas);
 	}
 	
+	public void setText(String text){
+		this.text = text;
+	}
+	
 	public String getText(){
 		return text;
 		

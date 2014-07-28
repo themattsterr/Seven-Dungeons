@@ -149,7 +149,7 @@ public  class SevenDungeons extends Game{
 	//starts a battle with a monster
 	public static void setEncounter(HumanCharacter attacker, Player defender){
 		
-		 battleScreen = new BattleScreen();
+		battleScreen = new BattleScreen();
 		battleScreen.setBattle(attacker, defender);	
 	 	game.setScreen(battleScreen);
 		
@@ -166,10 +166,11 @@ public  class SevenDungeons extends Game{
 		ArrayList<ItemCard> cards = new ArrayList<ItemCard>(6);
 		for (int i = 0; i < 6; i++){
 			
-			ItemCard curCard = new ItemCard((i%3)+1,i*5);
+			ItemCard curCard = new ItemCard((i%3)+1,(i+1)*5);
 			curCard.create();
-			if (i>2)
+			if (i>2){
 				curCard.isSpell = true;
+			}
 			cards.add(curCard);
 			
 		}
@@ -178,6 +179,7 @@ public  class SevenDungeons extends Game{
 		game.setScreen(shopScreen);
 	}
 	
+
 
 
 	

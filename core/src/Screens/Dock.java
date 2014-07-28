@@ -207,6 +207,11 @@ public class Dock extends WidgetGroup implements ActionListener {
 		this.addActor(buttonTable);
 	}
 	
+	public void resize(int width, int height){
+		dockWidth = width;
+		dockHeight = height/5;
+	}
+	
 	private Table createPlayerTable(HumanCharacter player, float height) {
 		
 		float imageSize = 50;

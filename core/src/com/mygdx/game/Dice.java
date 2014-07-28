@@ -40,6 +40,7 @@ public class Dice extends Actor implements ActionListener {
 
 		this.setSize(width, height);
 
+
 		this.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("dice clicked");
@@ -53,7 +54,6 @@ public class Dice extends Actor implements ActionListener {
 			    		SevenDungeons.boardScreen.dock.show();
 					}
 				}
-
 
 				if (SevenDungeons.game.getScreen() == SevenDungeons.battleScreen){
 				

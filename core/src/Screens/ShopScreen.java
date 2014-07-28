@@ -34,8 +34,8 @@ import com.mygdx.game.SevenDungeons;
 
 public class ShopScreen implements Screen, GestureListener, ActionListener{
 	
-	static final float WIDTH = Gdx.graphics.getWidth();
-	static final float HEIGHT = Gdx.graphics.getHeight();
+	static float screenWidth = Gdx.graphics.getWidth();
+	static float screenHeight = Gdx.graphics.getHeight();
 	
 	private Stage stage;
 	private Back background;
@@ -51,13 +51,12 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	public List<ItemCard> inventory;
 	
 	public List<ItemCard> activeCards = new ArrayList<ItemCard>();
-	
 
 	public ShopScreen() {
 		// TODO Auto-generated constructor stub
 		inventory = new ArrayList<ItemCard>();
 		
-		stage = new Stage(new FitViewport(WIDTH,HEIGHT), SevenDungeons.batch);
+		stage = new Stage(new FitViewport(screenWidth,screenHeight), SevenDungeons.batch);
 		background = new Back();
 		
 		buttonTable = new Table();
@@ -88,7 +87,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	public class Back extends Actor{
 		public Texture texture = new Texture("shop_screen1.png");
 		public void draw(Batch batch, float parentAlpha){
-			batch.draw(texture, 0, 0,WIDTH,HEIGHT);
+			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}
 	}
 	
@@ -135,13 +134,14 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		
 		//inventory.get(0).hit(Gdx.input.setCursorPosition(x, y);)
 		stage.draw();
-		Table.drawDebug(stage);
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+		screenWidth = Gdx.graphics.getWidth();
+		screenHeight = Gdx.graphics.getHeight();
+		stage.getViewport().update(width,height);
 	}
 
 	@Override
@@ -151,20 +151,24 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		
 		for(int i = 0; i < 6; i++) {
 			Card curCard = inventory.get(i);
+			//buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
 			buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
-			if (i == 2)
-				buttonTable.row();
+			buttonTable.add().size(10);
+			if (i == 2){
+				buttonTable.row().height(10);
+			}
 		}
 				
 		stage.addActor(background);
 		stage.addActor(buttonTable);
 		
 		
-		buttonTable.setPosition(WIDTH/2, HEIGHT/2);
+		buttonTable.setPosition(screenWidth/2, screenHeight/2);
+		
 		
 		stage.addActor(exitButton);
-		exitButton.setSize(75, 75);
-		exitButton.setPosition(100, HEIGHT - exitButton.getHeight() - 100);
+		exitButton.setSize(50, 50);
+		exitButton.setPosition(100, screenHeight - exitButton.getHeight() - 100);
 		
 		stage.draw();
 		
