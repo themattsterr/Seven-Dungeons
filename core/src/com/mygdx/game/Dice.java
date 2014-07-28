@@ -56,16 +56,15 @@ public class Dice extends Actor implements ActionListener {
 				}
 
 				if (SevenDungeons.game.getScreen() == SevenDungeons.battleScreen){
-				
-						if((SevenDungeons.battleScreen.turn % 2) == 0)
-							SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.fighter, SevenDungeons.battleScreen.defender);
-						else 
-							SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.defender, SevenDungeons.battleScreen.fighter);
-
-						System.out.println(" your health " + SevenDungeons.battleScreen.fighter.getCurrentHealth() + " their health + " + SevenDungeons.battleScreen.defender.getCurrentHealth());
-
-						SevenDungeons.battleScreen.turn++;
 					
+					if((SevenDungeons.battleScreen.turn % 2) == 0)
+						SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.fighter, SevenDungeons.battleScreen.defender);
+					else 
+						SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.defender, SevenDungeons.battleScreen.fighter);
+
+					System.out.println(" your health " + SevenDungeons.battleScreen.fighter.getCurrentHealth() + " their health " + SevenDungeons.battleScreen.defender.getCurrentHealth());
+
+					SevenDungeons.battleScreen.turn++;
 					SevenDungeons.battleScreen.refresh();
 				}
 				return true;

@@ -167,9 +167,9 @@ public  class SevenDungeons extends Game{
 		for (int i = 0; i < 6; i++){
 			int price = 0;
 			if (i>2){
-				price = 30;
-			} else {
 				price = 10;
+			} else {
+				price = 5;
 			}
 			
 			ItemCard curCard = new ItemCard((i%3)+1, price);

@@ -27,14 +27,13 @@ public abstract class HumanCharacter extends Player {
 	private int items[] = {0,0,0};
 	
 	public boolean hasRolled = false;
-	
-	
+		
 	//will be replaced with dice class
 	Random rand = new Random();
 	
 	
 	public HumanCharacter(String texture, int id, int health, int attack, int defense) {
-		super(texture, health, attack, defense);
+		super(texture, health, attack, defense, true);
 		this.id = id;
 	}
 	
@@ -105,7 +104,13 @@ public abstract class HumanCharacter extends Player {
 	
 	public void getItem(ItemCard item){
 		switch(item.type){
-		case 1: maxHealth += (item.magnitude);
+		case 1: 
+			if (currentHealth != maxHealth){
+				currentHealth += (item.magnitude);
+				items[item.type - 1]--;
+			} else {
+				maxHealth += (item.magnitude);
+			}
 		case 2: attack += (item.magnitude);
 		case 3: defense += (item.magnitude);
 		}
@@ -122,14 +127,14 @@ public abstract class HumanCharacter extends Player {
 
 	public void recover(){
 		currentHealth = maxHealth;
+		this.warp(0, 0);
+		this.setDead(false);
 	}
 	
 	public void death(Player attacker){
-		SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+		//SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
 		this.gold *=  .5;
-		currentHealth = maxHealth;
-		attacker.giveGold(gold);
-		this.warp(0, 0);
-		
+		attacker.giveGold((int)(gold*.5));
+		this.setDead(true);
 	}
 }

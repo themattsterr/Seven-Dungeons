@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -49,6 +50,7 @@ public class BattleScreen implements Screen {
 	
 	public int turn;
 	public boolean fought = false;
+	public boolean isFinished = false;
 	
 	public Dice dice;
 	
@@ -85,8 +87,12 @@ public class BattleScreen implements Screen {
 		exitButton = new ImageButton(exitStyle);
 		exitButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if(SevenDungeons.randomDice.roll() > 4)SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
-				else{ turn++; refresh(); }
+				//if(SevenDungeons.randomDice.roll() > 4)SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+				//else{ turn++; refresh(); }
+				if((turn % 2) == 0)
+					run(fighter, defender);
+				else
+					run(defender, fighter);
 				return true;
 			}
 		});
@@ -109,6 +115,36 @@ public class BattleScreen implements Screen {
 			turn = 0;
 
 			
+		}
+		
+		
+		public void removeDeadPlayerImage(){
+			if (turn%2 == 0){
+				this.defenderImage.setVisible(false);
+			}
+			else {
+				this.fighterImage.setVisible(false);
+			}
+			refresh();
+		}
+		
+		
+		public void run(Player runner, Player winner){
+			// runner loses gold and gives to winner if battle finishes early
+			if(!isFinished){
+				int gold = (int)(runner.getGold()*.25);
+				runner.giveGold(-gold);
+				winner.giveGold(gold);
+			}
+			
+			if (fighter.isDead())
+				fighter.recover();
+			
+			if (defender.isDead())
+				defender.recover();
+			
+			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+			SevenDungeons.boardScreen.setFocus(SevenDungeons.getPlayer().xPos, SevenDungeons.getPlayer().yPos);
 		}
 		
 		public void fight(Player attacker, Player defender){
@@ -141,10 +177,13 @@ public class BattleScreen implements Screen {
 					break;
 			}
 			
-			battleStatus = "The attack: " + theAttack + " Dice num: " + diceNumb;
-			refresh();
+			if (theAttack <= 0)
+				battleStatus = "No damage done";
+			else
+				battleStatus = theAttack + " damage done";
 			
 			defender.takeHit(theAttack, attacker);
+			refresh();
 		}
 	
 
@@ -165,7 +204,7 @@ public class BattleScreen implements Screen {
 		}
 		stage.draw();
 		
-		Table.drawDebug(stage);
+		//Table.drawDebug(stage);
 	}
 
 	@Override
@@ -186,19 +225,25 @@ public class BattleScreen implements Screen {
 		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
 		dice.setSize(40, 40);
 		
+		if (turn > 4 || isFinished)
+			exitButton.setVisible(true);
+		
 		if(turn %2 == 0){
-			dice.setPosition(stage.getWidth() /2 , stage.getHeight() /2 - 75);
+			dice.setPosition(stage.getWidth() /2 , stage.getHeight() /2 - 85);
 			exitButton.setPosition(WIDTH - exitButton.getWidth() - 75, 75);
 		}
 		else {
-			dice.setPosition(stage.getWidth() / 2, stage.getHeight() / 2 + 50);
-			exitButton.setPosition(75, HEIGHT - exitButton.getHeight() - 75);
+			if (!isFinished){
+				dice.setPosition(stage.getWidth() / 2, stage.getHeight() / 2 + 50);
+				exitButton.setPosition(75, HEIGHT - exitButton.getHeight() - 75);
+				
+				if (!defender.isHuman)
+					exitButton.setVisible(false);
+			}
 		}
 		
-		fighterImage = new Image(fighter.getTexture());
-		defenderImage = new Image(defender.getTexture());
 		
-		fighterTable = createInfoTable(this.fighter, stage.getWidth()/3, stage.getWidth()/6);
+		fighterTable = createInfoTable(this.fighter, stage.getWidth()/3, stage.getWidth()/6);	
 		defenderTable = createInfoTable(this.defender, stage.getWidth()/3, stage.getWidth()/6);
 		
 		battleTable = new Table();
@@ -218,17 +263,21 @@ public class BattleScreen implements Screen {
 		stage.addActor(battleLabel);
 		stage.addActor(dice);
 		
+		if (isFinished)
+			dice.setTouchable(Touchable.disabled);
 		
 	}
 	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+		isFinished = false;
+		fighterImage = new Image(fighter.getTexture());
+		defenderImage = new Image(defender.getTexture());
 		battleLabel = new Label(battleStatus, SevenDungeons.labelStyle);
 		dice = new Dice(40,40);
 		refresh();
-
+		
 		
 		stage.addActor(background);
 		stage.addActor(battleTable);
@@ -236,6 +285,7 @@ public class BattleScreen implements Screen {
 		stage.addActor(dice);
 		stage.addActor(exitButton);
 		exitButton.setSize(75, 75);
+		exitButton.setVisible(false);
 		
 
 		
@@ -283,28 +333,33 @@ public class BattleScreen implements Screen {
 		Integer attack =  new Integer(player.getAttack());
 		Integer defense = new Integer(player.getDefense());
 		
+		if(player.isDead()){
+			health = 0;
+			attack = 0;
+			defense = 0;
+		}
 		
 		Table table = new Table();
 		table.setWidth(width);
 		table.setHeight(height);
 		
-		Table healthTable = new Table();
 		Image healthImage = new Image(SevenDungeons.healthRegion);
+		Image attackImage = new Image(SevenDungeons.attackRegion);
+		Image defenseImage = new Image(SevenDungeons.defenseRegion);
+		
+		Table healthTable = new Table();
 		healthTable.add(healthImage).size(imageSize, imageSize).expand();
 		healthTable.row();
 		healthTable.add(new Label(health.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(healthTable).size(cellWidth, height);
 
-		
 		Table attackTable = new Table();
-		Image attackImage = new Image(SevenDungeons.attackRegion);
 		attackTable.add(attackImage).size(imageSize, imageSize).expand();
 		attackTable.row();
 		attackTable.add(new Label(attack.toString(), SevenDungeons.labelStyle)).expand();
 		table.add(attackTable).size(cellWidth, height);
 		
 		Table defenseTable = new Table();
-		Image defenseImage = new Image(SevenDungeons.defenseRegion);
 		defenseTable.add(defenseImage).size(imageSize, imageSize).expand();
 		defenseTable.row();
 		defenseTable.add(new Label(defense.toString(), SevenDungeons.labelStyle)).expand();

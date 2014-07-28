@@ -54,7 +54,6 @@ public class ItemCard extends Card {
 		group.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				//System.out.println("item card pressed");
-				HumanCharacter currentPlayer = SevenDungeons.getPlayer();
 				Group target = (Group) event.getListenerActor();
 				
 				if (SevenDungeons.game.getScreen() == SevenDungeons.shopScreen)
@@ -133,7 +132,8 @@ public class ItemCard extends Card {
 		
 		if(enoughGold) {
 			//if player has enough gold and room inventory purchase and return true
-			active.giveGold(-1 * purchase(active));
+			active.giveGold(-1 * getCost(active));
+			this.activate(active);
 			return true;
 		}
 		//else dont purchase and return false
@@ -142,8 +142,10 @@ public class ItemCard extends Card {
 	}
 	
 	public int getCost(HumanCharacter active){
-		
-		return (int) (price * (active.Purchased(type) * 1.5 + 1));
+		if (!isSpell)
+			return (int) (price * (active.Purchased(type) * 1.5 + 1));
+		else
+			return price;
 	}
 	
 	public int getMagnitude(HumanCharacter active){
