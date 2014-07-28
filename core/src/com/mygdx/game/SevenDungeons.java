@@ -45,7 +45,7 @@ public  class SevenDungeons extends Game{
 	
 	public static LabelStyle labelStyle;
 	public static BitmapFont font;
-	
+	public static Dice randomDice;
 	private static Texture iconTexture;
 	public static TextureRegion healthRegion;
 	public static TextureRegion attackRegion; 
@@ -93,20 +93,22 @@ public  class SevenDungeons extends Game{
 		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
 		
 		/*TEMPERARY PLACING PLAYERS PLAYER SELECT SCREEN WILL HANDLE THIS */
-		players.add(new Mage(0));
-		players.get(0).warp(2,0);
-		players.add(new Archer(1));
-		players.get(1).warp(2,4);
-		players.add(new Knight(2));
-		players.get(2).warp(1,18);
-		players.add(new Assassin(3));
-		players.get(3).warp(1, 27);
+	
+	
 		game = this;
 		
-		this.setScreen(boardScreen);
-		
+		this.setScreen(newGameScreen);
+		randomDice = new Dice(0,0);
 	}
 
+	
+	public static void initialize(){
+		players.get(0).warp(0, 0);
+		players.get(1).warp(0, 9);
+		players.get(2).warp(0, 18);
+		players.get(3).warp(0, 27);
+	}
+	
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 5, 1);
