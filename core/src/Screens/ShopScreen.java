@@ -85,7 +85,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("shop_screen1.png");
+		public Texture texture = new Texture("shop_screen3.png");
 		public void draw(Batch batch, float parentAlpha){
 			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}
@@ -156,6 +156,8 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 			buttonTable.add().size(10);
 			if (i == 2){
 				buttonTable.row().height(10);
+				buttonTable.add().size(60);
+				buttonTable.row().height(10);
 			}
 		}
 				
@@ -163,7 +165,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		stage.addActor(buttonTable);
 		
 		
-		buttonTable.setPosition(screenWidth/2, screenHeight/2);
+		buttonTable.setPosition(screenWidth/2, screenHeight/2 - 20);
 		
 		
 		stage.addActor(exitButton);

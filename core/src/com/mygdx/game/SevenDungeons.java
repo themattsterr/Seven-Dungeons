@@ -165,8 +165,15 @@ public  class SevenDungeons extends Game{
 	public static void openShop(){
 		ArrayList<ItemCard> cards = new ArrayList<ItemCard>(6);
 		for (int i = 0; i < 6; i++){
+			int price = 0;
+			if (i>2){
+				price = 30;
+			} else {
+				price = 10;
+			}
 			
-			ItemCard curCard = new ItemCard((i%3)+1,(i+1)*5);
+			ItemCard curCard = new ItemCard((i%3)+1,price);
+			
 			curCard.create();
 			if (i>2){
 				curCard.isSpell = true;
