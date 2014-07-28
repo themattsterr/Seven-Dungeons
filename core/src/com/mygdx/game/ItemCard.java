@@ -148,7 +148,7 @@ public class ItemCard extends Card {
 
 	@Override
 	public boolean activate(HumanCharacter active) {
-		if (this.isSpell)
+		if (!this.isSpell)
 			active.getItem(this);
 		else
 			active.giveCard(this);
