@@ -93,17 +93,17 @@ public  class SevenDungeons extends Game{
 		goldRegion = new TextureRegion(iconTexture, 540, 0, 180, 180);
 		
 		/*TEMPERARY PLACING PLAYERS PLAYER SELECT SCREEN WILL HANDLE THIS */
-		players.add(new Mage(0));
-		players.get(0).warp(2,0);
-		players.add(new Archer(1));
-		players.get(1).warp(2,4);
-		players.add(new Knight(2));
-		players.get(2).warp(1,18);
-		players.add(new Assassin(3));
-		players.get(3).warp(1, 27);
+		//players.add(new Mage(0));
+	//	
+		//players.add(new Archer(1));
+	//	
+		//players.add(new Knight(2));
+	//	
+		//players.add(new Assassin(3));
+	//	
 		game = this;
 		
-		this.setScreen(boardScreen);
+		this.setScreen(newGameScreen);
 		
 	}
 
@@ -131,6 +131,13 @@ public  class SevenDungeons extends Game{
 		
 	}
 	
+	public static void initialize(){
+		players.get(3).warp(0, 27);
+		players.get(1).warp(0,18);
+		players.get(2).warp(0,9);
+		players.get(0).warp(0,0);
+	}
+	
 	//gets the current player
 	public static HumanCharacter getPlayer(){
 		return players.get(turn);
@@ -147,7 +154,7 @@ public  class SevenDungeons extends Game{
 	//starts a battle with a monster
 	public static void setEncounter(HumanCharacter attacker, Player defender){
 		
-		BattleScreen battleScreen = new BattleScreen();
+		battleScreen = new BattleScreen();
 		battleScreen.setBattle(attacker, defender);	
 	 	game.setScreen(battleScreen);
 		

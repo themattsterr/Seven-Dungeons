@@ -42,13 +42,30 @@ public class Dice extends Actor implements ActionListener {
 		
 		this.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("dice clicked");
-				if (SevenDungeons.boardScreen.move == false 
-						&& SevenDungeons.boardScreen.rolled == false) {
-		    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
-		    		SevenDungeons.boardScreen.rolled = true;
-		    		SevenDungeons.boardScreen.dock.show();
+				if(SevenDungeons.game.getScreen() == SevenDungeons.boardScreen) {
+					System.out.println("board");
+					if (SevenDungeons.boardScreen.move == false 
+							&& SevenDungeons.boardScreen.rolled == false) {
+			    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
+			    		SevenDungeons.boardScreen.rolled = true;
+			    		SevenDungeons.boardScreen.dock.show();
+					}
 				}
+				else  {
+					System.out.println("batt");
+				
+						if((SevenDungeons.battleScreen.turn % 2) == 0)
+							SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.fighter, SevenDungeons.battleScreen.defender);
+						else 
+							SevenDungeons.battleScreen.fight(SevenDungeons.battleScreen.defender, SevenDungeons.battleScreen.fighter);
+						
+						System.out.println(" your health " + SevenDungeons.battleScreen.fighter.getCurrentHealth() + " their health + " + SevenDungeons.battleScreen.defender.getCurrentHealth());
+						
+						SevenDungeons.battleScreen.turn++;
+						SevenDungeons.battleScreen.refresh(); 
+					}
+					
+				
 				return true;
 			}
 		});
@@ -69,8 +86,8 @@ public class Dice extends Actor implements ActionListener {
 		
 		this.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("dice clicked");
 				if(SevenDungeons.game.getScreen() == SevenDungeons.boardScreen) {
+					System.out.println("board");
 					if (SevenDungeons.boardScreen.move == false 
 							&& SevenDungeons.boardScreen.rolled == false) {
 			    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
@@ -79,6 +96,7 @@ public class Dice extends Actor implements ActionListener {
 					}
 				}
 				if (SevenDungeons.game.getScreen() == SevenDungeons.battleScreen){
+					System.out.println("batt");
 					if ((SevenDungeons.battleScreen.fought == false)){
 						SevenDungeons.battleScreen.fought = true;
 						if((SevenDungeons.battleScreen.turn % 2) == 0)
