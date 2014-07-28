@@ -29,6 +29,7 @@ public abstract class Player extends Actor {
 		this.maxHealth = this.currentHealth = health;
 		this.attack = attack;
 		this.defense = defense;
+		System.out.print(defense);
 	}
 
 	public void draw(Batch batch, float alpha) {
@@ -64,7 +65,7 @@ public abstract class Player extends Actor {
 	}
 	
 	public int getDefense(){
-		return this.attack;
+		return this.defense;
 	}
 	
 	public Texture getTexture(){

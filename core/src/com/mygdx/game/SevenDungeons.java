@@ -149,7 +149,7 @@ public  class SevenDungeons extends Game{
 	//starts a battle with a monster
 	public static void setEncounter(HumanCharacter attacker, Player defender){
 		
-		//BattleScreen battleScreen = new BattleScreen();
+		battleScreen = new BattleScreen();
 		battleScreen.setBattle(attacker, defender);	
 	 	game.setScreen(battleScreen);
 		
