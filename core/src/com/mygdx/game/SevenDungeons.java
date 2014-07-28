@@ -63,6 +63,8 @@ public  class SevenDungeons extends Game{
 	
 	public static Batch batch;
 	
+	public static Dice randomDice;
+	
 	public SevenDungeons(){
 		System.out.println("created");
 		
@@ -102,6 +104,8 @@ public  class SevenDungeons extends Game{
 		players.add(new Assassin(3));
 		players.get(3).warp(1, 27);
 		game = this;
+		
+		randomDice = new Dice(0,0);
 		
 		this.setScreen(boardScreen);
 		
@@ -147,7 +151,7 @@ public  class SevenDungeons extends Game{
 	//starts a battle with a monster
 	public static void setEncounter(HumanCharacter attacker, Player defender){
 		
-		BattleScreen battleScreen = new BattleScreen();
+		//BattleScreen battleScreen = new BattleScreen();
 		battleScreen.setBattle(attacker, defender);	
 	 	game.setScreen(battleScreen);
 		

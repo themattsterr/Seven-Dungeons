@@ -43,33 +43,8 @@ public class Dice extends Actor implements ActionListener {
 		this.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				System.out.println("dice clicked");
-				if (SevenDungeons.boardScreen.move == false 
-						&& SevenDungeons.boardScreen.rolled == false) {
-		    		SevenDungeons.boardScreen.roll = SevenDungeons.getPlayer().rollDice(SevenDungeons.boardScreen.dock);
-		    		SevenDungeons.boardScreen.rolled = true;
-		    		SevenDungeons.boardScreen.dock.show();
-				}
-				return true;
-			}
-		});
 				
-	}
-	
-	public Dice(){
-		texture = new Texture("die.png");
-		regions = new TextureRegion[6];
-		regions[0] = new TextureRegion(texture,138,138,138,138);
-		regions[1] = new TextureRegion(texture,138,414,138,138);
-		regions[2] = new TextureRegion(texture,276,414,138,138);
-		regions[3] = new TextureRegion(texture,138,0,138,138);
-		regions[4] = new TextureRegion(texture,0,414,138,138);
-		regions[5] = new TextureRegion(texture,138,414,138,138);
-		
-		value = roll();
-		
-		this.addListener(new InputListener(){
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("dice clicked");
+				
 				if(SevenDungeons.game.getScreen() == SevenDungeons.boardScreen) {
 					if (SevenDungeons.boardScreen.move == false 
 							&& SevenDungeons.boardScreen.rolled == false) {
@@ -78,6 +53,8 @@ public class Dice extends Actor implements ActionListener {
 			    		SevenDungeons.boardScreen.dock.show();
 					}
 				}
+				
+				
 				if (SevenDungeons.game.getScreen() == SevenDungeons.battleScreen){
 					if ((SevenDungeons.battleScreen.fought == false)){
 						SevenDungeons.battleScreen.fought = true;
@@ -95,6 +72,7 @@ public class Dice extends Actor implements ActionListener {
 				return true;
 			}
 		});
+				
 	}
 	
 	public int roll() {
