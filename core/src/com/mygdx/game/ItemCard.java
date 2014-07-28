@@ -55,10 +55,13 @@ public class ItemCard extends Card {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				//System.out.println("item card pressed");
 				HumanCharacter currentPlayer = SevenDungeons.getPlayer();
-
 				Group target = (Group) event.getListenerActor();
-				SevenDungeons.shopScreen.removeFromShop(target);
-
+				
+				if (SevenDungeons.game.getScreen() == SevenDungeons.shopScreen)
+					SevenDungeons.shopScreen.removeFromShop(target);
+				
+				if (SevenDungeons.game.getScreen() == SevenDungeons.handScreen)
+					SevenDungeons.handScreen.useSpell(target);
 				
 				return true;
 			}

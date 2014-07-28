@@ -15,6 +15,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -48,10 +50,16 @@ public class BattleScreen implements Screen {
 	public int turn;
 	public boolean fought = false;
 	
-	Dice dice;
+	public Dice dice;
 	
 	public HumanCharacter fighter;
 	public Player defender;
+	
+	public static Skin skin = new Skin();
+	public static TextureAtlas atlas = new TextureAtlas("buttons/button.pack");
+	
+	private ImageButtonStyle exitStyle;
+	private ImageButton exitButton;
 	
 	Sound music;
 	public BattleScreen() {
@@ -65,8 +73,20 @@ public class BattleScreen implements Screen {
 		fighterTable = new Table();
 		defenderTable = new Table();
 		
-		dice = new Dice(40,40);
 		
+		
+		skin.addRegions(atlas);
+		exitStyle = new ImageButtonStyle();
+		exitStyle.up = skin.getDrawable("exit");
+		
+		exitButton = new ImageButton(exitStyle);
+		exitButton.addListener(new InputListener(){
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("exit button pressed");
+				SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+				return true;
+			}
+		});
 	
 	}
 	
@@ -81,17 +101,12 @@ public class BattleScreen implements Screen {
 
 
 
-
 	//THIS FUNCTION TAKES IN TWO FIGHTERS AND MAKES THE BATTLE 
 		public void setBattle(HumanCharacter player1, Player player2){
 			fighter = player1;
 			defender = player2;
 			turn = 0;
-			fighterImage = new Image(fighter.getTexture());
-			defenderImage = new Image(defender.getTexture());
-			//music = Gdx.audio.newSound(Gdx.files.internal("sab.mp3"));
-		//	music.play();
-			//music.play();
+			
 		}
 		
 		public void fight(Player attacker, Player defender){
@@ -125,6 +140,7 @@ public class BattleScreen implements Screen {
 			}
 				
 			defender.takeHit(theAttack, attacker);
+			
 		}
 	
 
@@ -139,12 +155,6 @@ public class BattleScreen implements Screen {
 		
 		
 		// moved to dice class
-	
-		
-		if(Gdx.input.isKeyPressed(Keys.V)){
-			SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
-			this.dispose();
-		}
 		
 		if(Gdx.input.isKeyPressed(Keys.D)){
 			fought = false; 
@@ -162,7 +172,15 @@ public class BattleScreen implements Screen {
 
 	public void refresh(){
 		
+		stage.getActors().removeValue(battleTable, true);
+		stage.getActors().removeValue(dice, true);
 		
+		dice = new Dice(40,40);
+		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
+		dice.setSize(40, 40);
+		
+		fighterImage = new Image(fighter.getTexture());
+		defenderImage = new Image(defender.getTexture());
 		
 		fighterTable = createInfoTable(this.fighter, stage.getWidth()/3, stage.getWidth()/6);
 		defenderTable = createInfoTable(this.defender, stage.getWidth()/3, stage.getWidth()/6);
@@ -179,13 +197,9 @@ public class BattleScreen implements Screen {
 		
 		battleTable.setFillParent(true);
 		
-		if(stage.getActors().removeValue(battleTable, true)){
-			stage.addActor(battleTable);
-		}
 		
-		if(stage.getActors().removeValue(dice, true)){
-			stage.addActor(dice);
-		}
+		stage.addActor(battleTable);
+		stage.addActor(dice);
 		
 		
 	}
@@ -201,8 +215,10 @@ public class BattleScreen implements Screen {
 		stage.addActor(background);
 		stage.addActor(battleTable);
 		stage.addActor(dice);
-		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
-		dice.setSize(40, 40);
+		stage.addActor(exitButton);
+		exitButton.setSize(75, 75);
+		exitButton.setPosition(100, HEIGHT - exitButton.getHeight() - 100);
+
 		
 		
 		fighterTable.debug();
