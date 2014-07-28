@@ -61,6 +61,9 @@ public class BattleScreen implements Screen {
 	private ImageButtonStyle exitStyle;
 	private ImageButton exitButton;
 	
+	public String battleStatus = "";
+	public Label battleLabel;
+	
 	Sound music;
 	public BattleScreen() {
 		// TODO Auto-generated constructor stub
@@ -137,7 +140,10 @@ public class BattleScreen implements Screen {
 			default: theAttack = 0;
 					break;
 			}
-				
+			
+			battleStatus = "The attack: " + theAttack + " Dice num: " + diceNumb;
+			refresh();
+			
 			defender.takeHit(theAttack, attacker);
 		}
 	
@@ -172,7 +178,10 @@ public class BattleScreen implements Screen {
 		
 		stage.getActors().removeValue(battleTable, true);
 		stage.getActors().removeValue(dice, true);
-
+		stage.getActors().removeValue(battleLabel, true);
+		
+		battleLabel = new Label(battleStatus, SevenDungeons.labelStyle);
+		battleLabel.setPosition(stage.getWidth()/2 - 100, stage.getHeight()/2 - 30);
 		
 		dice = new Dice(40,40);
 		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
@@ -207,6 +216,7 @@ public class BattleScreen implements Screen {
 		
 		
 		stage.addActor(battleTable);
+		stage.addActor(battleLabel);
 		stage.addActor(dice);
 		
 		
@@ -216,12 +226,13 @@ public class BattleScreen implements Screen {
 	public void show() {
 		// TODO Auto-generated method stub
 		
-		
+		battleLabel = new Label(battleStatus, SevenDungeons.labelStyle);
 		refresh();
 
 		
 		stage.addActor(background);
 		stage.addActor(battleTable);
+		stage.addActor(battleLabel);
 		stage.addActor(dice);
 		stage.addActor(exitButton);
 		exitButton.setSize(75, 75);
