@@ -82,8 +82,8 @@ public class BattleScreen implements Screen {
 		exitButton = new ImageButton(exitStyle);
 		exitButton.addListener(new InputListener(){
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("exit button pressed");
-				SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+				if(SevenDungeons.randomDice.roll() > 4)SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+				else{ turn++; refresh(); }
 				return true;
 			}
 		});
@@ -179,6 +179,15 @@ public class BattleScreen implements Screen {
 		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
 		dice.setSize(40, 40);
 		
+		if(turn %2 == 0){
+			dice.setPosition(stage.getWidth() /2 , stage.getHeight() /2 - 75);
+			exitButton.setPosition(WIDTH - exitButton.getWidth() - 75, 75);
+		}
+		else {
+			dice.setPosition(stage.getWidth() / 2, stage.getHeight() / 2 + 50);
+			exitButton.setPosition(75, HEIGHT - exitButton.getHeight() - 75);
+		}
+		
 		fighterImage = new Image(fighter.getTexture());
 		defenderImage = new Image(defender.getTexture());
 		
@@ -217,7 +226,7 @@ public class BattleScreen implements Screen {
 		stage.addActor(dice);
 		stage.addActor(exitButton);
 		exitButton.setSize(75, 75);
-		exitButton.setPosition(100, HEIGHT - exitButton.getHeight() - 100);
+		
 
 		
 		
