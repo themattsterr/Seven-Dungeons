@@ -120,10 +120,6 @@ public class BoardScreen implements Screen, GestureListener {
 		boardStage.draw();
 	    dockStage.draw();
 		
-	    
-	    
-	    Table.drawDebug(dockStage);
-	    
 		//checks the cameras max bounsd 
 	    checkMax();
 	    

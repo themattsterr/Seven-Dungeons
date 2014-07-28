@@ -170,8 +170,9 @@ public  class SevenDungeons extends Game{
 			
 			ItemCard curCard = new ItemCard((i%3)+1,(i+1)*5);
 			curCard.create();
-			if (i>2)
+			if (i>2){
 				curCard.isSpell = true;
+			}
 			cards.add(curCard);
 			
 		}

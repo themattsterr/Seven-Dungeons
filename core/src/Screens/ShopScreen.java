@@ -51,7 +51,6 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	public List<ItemCard> inventory;
 	
 	public List<ItemCard> activeCards = new ArrayList<ItemCard>();
-	
 
 	public ShopScreen() {
 		// TODO Auto-generated constructor stub
@@ -135,7 +134,6 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		
 		//inventory.get(0).hit(Gdx.input.setCursorPosition(x, y);)
 		stage.draw();
-		Table.drawDebug(stage);
 	}
 
 	@Override
@@ -151,9 +149,12 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		
 		for(int i = 0; i < 6; i++) {
 			Card curCard = inventory.get(i);
+			//buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
 			buttonTable.add(curCard.getGroup()).size(curCard.width, curCard.height);
-			if (i == 2)
-				buttonTable.row();
+			buttonTable.add().size(10);
+			if (i == 2){
+				buttonTable.row().height(10);
+			}
 		}
 				
 		stage.addActor(background);
@@ -162,8 +163,9 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		
 		buttonTable.setPosition(WIDTH/2, HEIGHT/2);
 		
+		
 		stage.addActor(exitButton);
-		exitButton.setSize(75, 75);
+		exitButton.setSize(50, 50);
 		exitButton.setPosition(100, HEIGHT - exitButton.getHeight() - 100);
 		
 		stage.draw();
