@@ -172,7 +172,7 @@ public  class SevenDungeons extends Game{
 				price = 10;
 			}
 			
-			ItemCard curCard = new ItemCard((i%3)+1,price);
+			ItemCard curCard = new ItemCard((i%3)+1, price);
 			
 			curCard.create();
 			if (i>2){

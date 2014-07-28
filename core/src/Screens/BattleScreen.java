@@ -176,14 +176,13 @@ public class BattleScreen implements Screen {
 
 	public void refresh(){
 		
-		stage.getActors().removeValue(battleTable, true);
-		stage.getActors().removeValue(dice, true);
-		stage.getActors().removeValue(battleLabel, true);
+		battleTable.remove();
+		dice.remove();
+		battleLabel.remove();
 		
-		battleLabel = new Label(battleStatus, SevenDungeons.labelStyle);
+		battleLabel.setText(battleStatus);
 		battleLabel.setPosition(stage.getWidth()/2 - 100, stage.getHeight()/2 - 30);
 		
-		dice = new Dice(40,40);
 		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
 		dice.setSize(40, 40);
 		
@@ -227,6 +226,7 @@ public class BattleScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 		battleLabel = new Label(battleStatus, SevenDungeons.labelStyle);
+		dice = new Dice(40,40);
 		refresh();
 
 		

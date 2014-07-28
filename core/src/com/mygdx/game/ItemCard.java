@@ -43,7 +43,7 @@ public class ItemCard extends Card {
 		//Group group = new Group();
 		//group.addActor(this.button);
 		
-		infoTable = createInfoTable();
+		infoTable = createInfoTable(SevenDungeons.getPlayer());
 		if (isSpell)
 			infoTable.setBackground(Card.skin.getDrawable("spell_card"));
 		else
@@ -72,7 +72,7 @@ public class ItemCard extends Card {
 		return group;
 	}
 	
-	private Table createInfoTable() {
+	private Table createInfoTable(HumanCharacter active) {
 		Table table = new Table();
 		Image statImage;
 		Image goldImage = new Image(SevenDungeons.goldRegion);
@@ -99,7 +99,7 @@ public class ItemCard extends Card {
 		innerTable.add(statImage).align(Align.center).size(height/2, height/2).expand();
 		innerTable.add(new Label(String.valueOf(magnitude), SevenDungeons.labelStyle));
 		innerTable.add(goldImage).align(Align.center).size(height/2, height/2).expand();
-		innerTable.add(new Label(String.valueOf(price), SevenDungeons.labelStyle));
+		innerTable.add(new Label(String.valueOf(getCost(active)), SevenDungeons.labelStyle));
 		innerTable.setSize(width, height/2);
 		innerTable.debug();
 		
@@ -129,10 +129,11 @@ public class ItemCard extends Card {
 	public boolean canPurchase(HumanCharacter active) {
 		
 		// change this
-		boolean enoughGold = true;
+		boolean enoughGold = (active.getGold() >= getCost(active) && active.hand.size() < 3);
 		
 		if(enoughGold) {
 			//if player has enough gold and room inventory purchase and return true
+			active.giveGold(-1 * purchase(active));
 			return true;
 		}
 		//else dont purchase and return false
@@ -142,7 +143,7 @@ public class ItemCard extends Card {
 	
 	public int getCost(HumanCharacter active){
 		
-		return price * (active.Purchased(type) + 1);
+		return (int) (price * (active.Purchased(type) * 1.5 + 1));
 	}
 	
 	public int getMagnitude(HumanCharacter active){

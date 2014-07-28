@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Screens.HandScreen.Back;
+import regularClases.HumanCharacter;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -22,7 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
@@ -41,6 +44,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	private Back background;
 	
 	private Table buttonTable;
+	private Table goldTable;
 	
 	public static Skin skin = new Skin();
 	public static TextureAtlas atlas = new TextureAtlas("buttons/button.pack");
@@ -60,6 +64,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		background = new Back();
 		
 		buttonTable = new Table();
+		goldTable = new Table();
 		
 		skin.addRegions(atlas);
 		
@@ -91,12 +96,29 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		}
 	}
 	
+	private void refresh(){
+		goldTable.remove();
+		
+		HumanCharacter active = SevenDungeons.getPlayer();
+		Integer gold = active.getGold();
+		Image goldImage = new Image(SevenDungeons.goldRegion);
+		float imageSize = 20;
+		
+		goldTable = new Table();
+		goldTable.add(goldImage).size(imageSize, imageSize).expand();
+		goldTable.add(new Label(gold.toString(), SevenDungeons.labelStyle)).expand();
+		goldTable.setSize(imageSize*2, imageSize);
+		goldTable.setPosition(screenWidth - 200, 100);
+		
+		stage.addActor(goldTable);
+	}
+	
 	public void exitShop(){
 		while (activeCards.size() > 0){
-			ItemCard current = activeCards.get(0);
-			current.purchase(SevenDungeons.getPlayer());
-			if (current.isSpell)
-				SevenDungeons.getPlayer().giveCard(current);
+			ItemCard curCard = activeCards.get(0);
+			HumanCharacter curPlayer = SevenDungeons.getPlayer();
+			if (curCard.isSpell)
+				curPlayer.giveCard(curCard);
 			activeCards.remove(0);
 			
 		}
@@ -113,6 +135,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 						inventory.get(i).purchased = true;
 						cardGroup.setVisible(false);
 						activeCards.add(inventory.get(i));
+						refresh();
 					}
 					break;
 				}
@@ -148,6 +171,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	public void show() {
 		// TODO Auto-generated method stub
 		buttonTable = new Table();
+		buttonTable.setPosition(screenWidth/2, screenHeight/2 - 20);
 		
 		for(int i = 0; i < 6; i++) {
 			Card curCard = inventory.get(i);
@@ -163,14 +187,10 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 				
 		stage.addActor(background);
 		stage.addActor(buttonTable);
-		
-		
-		buttonTable.setPosition(screenWidth/2, screenHeight/2 - 20);
-		
-		
 		stage.addActor(exitButton);
 		exitButton.setSize(50, 50);
 		exitButton.setPosition(100, screenHeight - exitButton.getHeight() - 100);
+		refresh();
 		
 		stage.draw();
 		
