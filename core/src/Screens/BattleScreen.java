@@ -220,6 +220,10 @@ public class BattleScreen implements Screen {
 		dice.remove();
 		battleLabel.remove();
 		
+		battleTable.remove();
+		dice.remove();
+		battleLabel.remove();
+		
 		battleLabel.setText(battleStatus);
 		battleLabel.setPosition(stage.getWidth()/2 - 100, stage.getHeight()/2 - 30);
 		
@@ -272,6 +276,7 @@ public class BattleScreen implements Screen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+
 		isFinished = false;
 		fighterImage = new Image(fighter.getTexture());
 		defenderImage = new Image(defender.getTexture());
@@ -287,6 +292,7 @@ public class BattleScreen implements Screen {
 		stage.addActor(exitButton);
 		exitButton.setSize(75, 75);
 		exitButton.setVisible(false);
+
 		
 
 		

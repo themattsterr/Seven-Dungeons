@@ -108,17 +108,17 @@ public abstract class HumanCharacter extends Player {
 			if (currentHealth != maxHealth){
 				currentHealth += (item.magnitude);
 				items[item.type - 1]--;
-				this.setStatus(" health +" + item.magnitude);
+				this.setStatus(" health+" + item.magnitude);
 			} else {
 				maxHealth += (item.magnitude);
-				this.setStatus(" max health +" + item.magnitude);
+				this.setStatus(" max health+" + item.magnitude);
 			}
 			break;
 		case 2: attack += (item.magnitude);
-				this.setStatus(" attack +" + item.magnitude);
+				this.setStatus(" attack+" + item.magnitude);
 				break;
 		case 3: defense += (item.magnitude);
-				this.setStatus(" defense +" + item.magnitude);
+				this.setStatus(" defense+" + item.magnitude);
 				break;
 		}
 		
@@ -171,16 +171,17 @@ public abstract class HumanCharacter extends Player {
 		if(this.gold < 0) this.gold = 0;
 		
 		if (value > 0)
-			this.setStatus(" gold +" + value);
+			this.setStatus(" gold+" + value);
 		else if(this.gold == 0){
-			this.setStatus(" gold -" + goldBefore);
-		} else {
-			this.setStatus(" gold -" + (-value));
+			this.setStatus(" gold-" + goldBefore);
+		} else if (value != 0){
+			this.setStatus(" gold-" + (-value));
 		}
 	}
 
 	public void recover(){
-		this.setStatus(" died");
+		if (this.isDead())
+			this.setStatus(" died");
 		currentHealth = maxHealth;
 		this.warp(0, 0);
 		this.setDead(false);

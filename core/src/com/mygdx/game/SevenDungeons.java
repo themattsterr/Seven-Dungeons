@@ -124,13 +124,13 @@ public  class SevenDungeons extends Game{
 	
 	//changes turn
 	public static void changeTurn(){
+		getPlayer().setStatus("");
 		turn++;
 		turn %= players.size();
 		boardScreen.dock.show();
 		boardScreen.setFocus(getPlayer().xPos, getPlayer().yPos);
 		boardScreen.move = false;
 		boardScreen.rolled = false;
-		
 	}
 	
 	//gets the current player

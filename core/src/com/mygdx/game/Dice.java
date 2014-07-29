@@ -65,6 +65,7 @@ public class Dice extends Actor implements ActionListener {
 					System.out.println(" your health " + SevenDungeons.battleScreen.fighter.getCurrentHealth() + " their health " + SevenDungeons.battleScreen.defender.getCurrentHealth());
 
 					SevenDungeons.battleScreen.turn++;
+
 					SevenDungeons.battleScreen.refresh();
 				}
 				return true;
