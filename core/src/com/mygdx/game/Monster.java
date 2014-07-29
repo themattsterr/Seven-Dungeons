@@ -48,7 +48,7 @@ public class Monster extends Player {
 	@Override
 	public void death(Player attacker) {
 		//SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
-		this.setDead(false);
+		this.setDead(true);
 		attacker.giveGold(this.gold[type] * (level + 1));
 	}
 

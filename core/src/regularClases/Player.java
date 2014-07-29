@@ -25,6 +25,7 @@ public abstract class Player extends Actor {
 	public ArrayList<Card> hand = new ArrayList<Card>();
 	
 	private boolean dead = false;
+	private String status = "";
 
 
 	public Player(String texture, int health, int attack, int defense, boolean human) {
@@ -100,6 +101,14 @@ public abstract class Player extends Actor {
 		//	 attack += card.activateAttack();
 		//	 defense += card.activateDefense();
 		
+	}
+	
+	public String getStatus(){
+		return status;
+	}
+	
+	public void setStatus(String status){
+		this.status = status;
 	}
 	
 	public boolean isDead(){

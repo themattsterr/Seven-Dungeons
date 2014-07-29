@@ -102,30 +102,85 @@ public abstract class HumanCharacter extends Player {
 		return items[type - 1];
 	}
 	
-	public void getItem(ItemCard item){
+	public void useItem(ItemCard item){
 		switch(item.type){
 		case 1: 
 			if (currentHealth != maxHealth){
 				currentHealth += (item.magnitude);
 				items[item.type - 1]--;
+				this.setStatus(" health +" + item.magnitude);
 			} else {
 				maxHealth += (item.magnitude);
+				this.setStatus(" max health +" + item.magnitude);
 			}
+			break;
 		case 2: attack += (item.magnitude);
+				this.setStatus(" attack +" + item.magnitude);
+				break;
 		case 3: defense += (item.magnitude);
+				this.setStatus(" defense +" + item.magnitude);
+				break;
 		}
 		
 		items[item.type - 1]++;
 	}
 	
+	// uses spell on all other players
+	public void useSpell(ItemCard spell){
+		for (int i = 0; i < SevenDungeons.getNumPlayers(); i++)
+		{
+			if (SevenDungeons.getPlayer() != SevenDungeons.getPlayer(i)){
+				switch(spell.type){
+				case 1: 
+					SevenDungeons.getPlayer().setStatus(" used a health spell");
+					//SevenDungeons.getPlayer(i).setStatus(" -" + spell.magnitude + " health");
+					if (SevenDungeons.getPlayer(i).currentHealth - spell.magnitude > 0){
+						//SevenDungeons.getPlayer(i).currentHealth -= (spell.magnitude);
+					} else {
+						SevenDungeons.getPlayer(i).death(SevenDungeons.getPlayer());
+						SevenDungeons.getPlayer(i).recover();
+					}
+				case 2: 
+					SevenDungeons.getPlayer().setStatus(" used an attack spell");
+					if (SevenDungeons.getPlayer(i).attack - spell.magnitude > 0){
+						//SevenDungeons.getPlayer(i).setStatus(" attack -" + spell.magnitude);
+						SevenDungeons.getPlayer(i).attack -= (spell.magnitude);
+					} else {
+						//SevenDungeons.getPlayer(i).setStatus(" attack -" + SevenDungeons.getPlayer(i).attack);
+						SevenDungeons.getPlayer(i).attack = 0;
+					}
+				case 3: 
+					SevenDungeons.getPlayer().setStatus(" used a defense spell");
+					if (SevenDungeons.getPlayer(i).defense - spell.magnitude > 0){
+						//SevenDungeons.getPlayer(i).setStatus("defense -" + spell.magnitude);
+						SevenDungeons.getPlayer(i).defense -= (spell.magnitude);
+					} else {
+						//SevenDungeons.getPlayer(i).setStatus(" defense -" + SevenDungeons.getPlayer(i).defense);
+						SevenDungeons.getPlayer(i).defense = 0;
+					}
+				}
+			}
+				
+		}
+	}
+	
 
 	public void giveGold(int value){
-		this.gold+= value;
-		System.out.print(" give gold + " + value + " have gold " + gold);
+		int goldBefore = this.gold;
+		this.gold += value;
 		if(this.gold < 0) this.gold = 0;
+		
+		if (value > 0)
+			this.setStatus(" gold +" + value);
+		else if(this.gold == 0){
+			this.setStatus(" gold -" + goldBefore);
+		} else {
+			this.setStatus(" gold -" + (-value));
+		}
 	}
 
 	public void recover(){
+		this.setStatus(" died");
 		currentHealth = maxHealth;
 		this.warp(0, 0);
 		this.setDead(false);

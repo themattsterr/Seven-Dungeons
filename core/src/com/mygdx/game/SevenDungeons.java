@@ -161,7 +161,7 @@ public  class SevenDungeons extends Game{
 		game.setScreen(handScreen);
 	}
 	
-	// opens shop screen
+	// opens shop screen sets prices and values
 	public static void openShop(){
 		ArrayList<ItemCard> cards = new ArrayList<ItemCard>(6);
 		for (int i = 0; i < 6; i++){

@@ -60,7 +60,7 @@ public class ItemCard extends Card {
 					SevenDungeons.shopScreen.removeFromShop(target);
 				
 				if (SevenDungeons.game.getScreen() == SevenDungeons.handScreen)
-					SevenDungeons.handScreen.useSpell(target);
+					SevenDungeons.handScreen.removeFromHand(target);
 				
 				return true;
 			}
@@ -110,30 +110,18 @@ public class ItemCard extends Card {
 		return table;
 	}
 	
-	public int purchase(HumanCharacter active){
-		//method subtracts the cards cost from the players gold.
-		scaledCost = (int) (this.price * (active.Purchased(type) * 1.5 + 1));
-		System.out.println("cost: " + scaledCost + " ");
-		
-		if(active.getGold() >= (this.price * (active.Purchased(type) * 1.5 + 1))){
-			this.activate(active);
-			return (int) (this.price * (active.Purchased(type) * 1.5 + 1));
-		}
-		else
-			System.out.println("did not purchase");
-		return 0;
-	}
-	
-	
+	// determines if Human can buy card and then uses card
 	public boolean canPurchase(HumanCharacter active) {
 		
-		// change this
 		boolean enoughGold = (active.getGold() >= getCost(active) && active.hand.size() < 3);
 		
 		if(enoughGold) {
 			//if player has enough gold and room inventory purchase and return true
 			active.giveGold(-1 * getCost(active));
-			this.activate(active);
+			if (!this.isSpell)
+				this.activate(active);
+			else
+				active.giveCard(this);
 			return true;
 		}
 		//else dont purchase and return false
@@ -152,12 +140,14 @@ public class ItemCard extends Card {
 		return magnitude;
 	}
 
+	// checks if usable spell or upgrade item then activates card
 	@Override
 	public boolean activate(HumanCharacter active) {
 		if (!this.isSpell)
-			active.getItem(this);
-		else
-			active.giveCard(this);
+			active.useItem(this);
+		else {
+			active.useSpell(this);
+		}
 		return true;
 	}
 

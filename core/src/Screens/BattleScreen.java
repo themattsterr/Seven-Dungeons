@@ -183,6 +183,7 @@ public class BattleScreen implements Screen {
 				battleStatus = theAttack + " damage done";
 			
 			defender.takeHit(theAttack, attacker);
+			
 			refresh();
 		}
 	
