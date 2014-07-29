@@ -12,7 +12,7 @@ public class HealthSpace extends Tile {
 	@Override
 	public void land(HumanCharacter active) {
 		super.execute(active);
-		active.recover();
+		active.recoverHealth();
 		
 	}
 

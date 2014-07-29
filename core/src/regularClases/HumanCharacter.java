@@ -179,6 +179,9 @@ public abstract class HumanCharacter extends Player {
 		}
 	}
 
+	public void recoverHealth(){
+		currentHealth = maxHealth;
+	}
 	public void recover(){
 		if (this.isDead())
 			this.setStatus(" died");

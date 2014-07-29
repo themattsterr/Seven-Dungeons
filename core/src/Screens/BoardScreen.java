@@ -341,11 +341,11 @@ public class BoardScreen implements Screen, GestureListener {
 		 
 		 if (camera.zoom >3) camera.zoom = 3;
 		 if (camera.zoom < .5) camera.zoom = 0.5f;
-		 if(y < screenHeight / 2) y = screenHeight / 2;
+		 if(y < screenHeight / 2 - 200) y = screenHeight / 2 - 200;
 		 if (x < screenWidth / 2) x = screenWidth /2;
 		 
-		 if(y > 1509.0) y =  1509;
-		 if (x > 2665.0) x = 2665;
+		 if(y > 1709.0) y =  1709;
+		 if (x > 2865.0) x = 2865;
 	 }
 
 
