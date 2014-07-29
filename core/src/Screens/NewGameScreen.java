@@ -1,5 +1,7 @@
 package Screens;
 
+import regularClases.Mage;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,7 +22,7 @@ public class NewGameScreen implements Screen{
 	//private static Batch batch;
 	private static Texture img;
 	 
-
+int x;
 	
 
 	@Override
@@ -32,8 +34,17 @@ public class NewGameScreen implements Screen{
 		
 		// TODO Auto-generated method stub
 		if(Gdx.input.justTouched()){
-			SevenDungeons.game.setScreen(SevenDungeons.chooseClassScreen);
-			//game.setScreen(SevenDungeons.chooseClassScreen);
+			
+				if(Gdx.input.getY()  < Gdx.graphics.getHeight() / 2){
+					SevenDungeons.game.setScreen(SevenDungeons.chooseClassScreen);
+				}
+				else {
+					
+					SevenDungeons.loadGame();
+					SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+				
+				}
+			//
 			//dispose();
 			
 		
@@ -45,7 +56,7 @@ public class NewGameScreen implements Screen{
 		SevenDungeons.batch.end(); 
 
 		
-		
+	
 		
 	}
 
