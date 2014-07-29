@@ -100,7 +100,7 @@ public class BattleScreen implements Screen {
 	}
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.jpg");
+		public Texture texture = new Texture("background_table_noalpha.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
 			batch.draw(texture, 0, 0,WIDTH,HEIGHT);
@@ -225,21 +225,21 @@ public class BattleScreen implements Screen {
 		battleLabel.remove();
 		
 		battleLabel.setText(battleStatus);
-		battleLabel.setPosition(stage.getWidth()/2 - 100, stage.getHeight()/2 - 30);
+		battleLabel.setPosition(stage.getWidth()/2 - 100, stage.getHeight()/2);
 		
-		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2);
-		dice.setSize(40, 40);
+		dice.setPosition(stage.getWidth()/2, stage.getHeight()/2 - 100);
+		dice.setSize(75, 75);
 		
 		if (turn > 4 || isFinished)
 			exitButton.setVisible(true);
 		
 		if(turn %2 == 0){
-			dice.setPosition(stage.getWidth() /2 , stage.getHeight() /2 - 85);
+			dice.setPosition(stage.getWidth() /2 , stage.getHeight() /2 - 100);
 			exitButton.setPosition(WIDTH - exitButton.getWidth() - 75, 75);
 		}
 		else {
 			if (!isFinished){
-				dice.setPosition(stage.getWidth() / 2, stage.getHeight() / 2 + 50);
+				dice.setPosition(stage.getWidth() / 2, stage.getHeight() / 2 + 65);
 				exitButton.setPosition(75, HEIGHT - exitButton.getHeight() - 75);
 				
 				if (!defender.isHuman)

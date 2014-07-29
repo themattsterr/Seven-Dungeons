@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Dice extends Actor implements ActionListener {
+public class Dice extends Actor {
 
 	private Random rand = new Random();
 	private int value;
@@ -86,12 +86,6 @@ public class Dice extends Actor implements ActionListener {
 
 	private int generateValue() {
 		return rand.nextInt(6) + 1;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

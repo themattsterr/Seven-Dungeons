@@ -29,7 +29,7 @@ import com.mygdx.game.Card;
 import com.mygdx.game.ItemCard;
 import com.mygdx.game.SevenDungeons;
 
-public class HandScreen implements Screen, GestureListener, ActionListener{
+public class HandScreen implements Screen, GestureListener{
 	
 	static  float screenWidth = Gdx.graphics.getWidth();
 	static  float screenHeight = Gdx.graphics.getHeight();
@@ -76,7 +76,7 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 	}	
 
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.jpg");
+		public Texture texture = new Texture("background_table_noalpha.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}
@@ -165,12 +165,6 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

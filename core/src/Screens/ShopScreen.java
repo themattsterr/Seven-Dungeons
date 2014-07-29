@@ -35,7 +35,7 @@ import com.mygdx.game.Card;
 import com.mygdx.game.ItemCard;
 import com.mygdx.game.SevenDungeons;
 
-public class ShopScreen implements Screen, GestureListener, ActionListener{
+public class ShopScreen implements Screen, GestureListener{
 	
 	static float screenWidth = Gdx.graphics.getWidth();
 	static float screenHeight = Gdx.graphics.getHeight();
@@ -90,7 +90,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("shop_screen3.jpg");
+		public Texture texture = new Texture("shop_screen_noalpha.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}
@@ -102,13 +102,13 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		HumanCharacter active = SevenDungeons.getPlayer();
 		Integer gold = active.getGold();
 		Image goldImage = new Image(SevenDungeons.goldRegion);
-		float imageSize = 20;
+		float imageSize = 50;
 		
 		goldTable = new Table();
 		goldTable.add(goldImage).size(imageSize, imageSize).expand();
 		goldTable.add(new Label(gold.toString(), SevenDungeons.labelStyle)).expand();
 		goldTable.setSize(imageSize*2, imageSize);
-		goldTable.setPosition(screenWidth - 200, 100);
+		goldTable.setPosition(screenWidth - 375, screenHeight - 225);
 		
 		stage.addActor(goldTable);
 	}
@@ -180,7 +180,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 			buttonTable.add().size(10);
 			if (i == 2){
 				buttonTable.row().height(10);
-				buttonTable.add().size(60);
+				buttonTable.add().size(110);
 				buttonTable.row().height(10);
 			}
 		}
@@ -189,7 +189,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 		stage.addActor(buttonTable);
 		stage.addActor(exitButton);
 		exitButton.setSize(50, 50);
-		exitButton.setPosition(100, screenHeight - exitButton.getHeight() - 100);
+		exitButton.setPosition(250, screenHeight - exitButton.getHeight() - 175);
 		refresh();
 		
 		stage.draw();
@@ -220,12 +220,6 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		stage.dispose();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

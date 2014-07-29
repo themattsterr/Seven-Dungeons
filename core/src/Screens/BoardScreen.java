@@ -80,19 +80,19 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	//the game board
 	public class BoardActor extends Actor{
-		public Texture texture = new Texture("new_board.jpg");
+		public Texture texture = new Texture("new_board_small_noalpha.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
-			batch.draw(texture, 0, 0);
+			batch.draw(texture, 0, 0, 3150, 1864);
 			//batch.end();
 		}
 	}
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.jpg");
+		public Texture texture = new Texture("background_table_noalpha.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
-			batch.draw(texture, -1000, -1000,5000,5000);
+			batch.draw(texture, -3000, -3000,9000,9000);
 			//batch.end();
 		}
 	}

@@ -33,7 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.mygdx.game.Dice;
 import com.mygdx.game.SevenDungeons;
 
-public class Dock extends WidgetGroup implements ActionListener {
+public class Dock extends WidgetGroup {
 	
 	private int dockWidth;
 	private int dockHeight;
@@ -78,7 +78,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 	public Dock(int width, int height) {
 
 		dockWidth = width;
-		dockHeight = height/5;
+		dockHeight = height/6;
 		
 		this.setPosition(0, 0);
 		this.setSize(dockWidth, dockHeight);
@@ -89,7 +89,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 	
 	private void create() {
 		
-		dockTexture = new Texture("background_table.jpg");
+		dockTexture = new Texture("background_table_noalpha.jpg");
 		dockRegion = new TextureRegion(dockTexture, 0, 0, dockWidth, dockHeight);
 		
 		dice = new Dice(dockHeight/2, dockHeight/2);
@@ -214,7 +214,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 	
 	private Table createPlayerTable(HumanCharacter player, float height) {
 		
-		float imageSize = 50;
+		float imageSize = 75;
 		
 		if(this.getChildren().contains(playerTable, true))
 			this.removeActor(playerTable);
@@ -235,6 +235,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		table.row();
 		table.add(innerTable);
 		table.setWidth(imageSize + infoTable.getWidth());
+		table.setHeight(dockHeight);
 		
 		
 		return table;
@@ -333,11 +334,6 @@ public class Dock extends WidgetGroup implements ActionListener {
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 }
