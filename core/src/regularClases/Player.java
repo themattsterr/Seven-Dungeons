@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.mygdx.game.Card;
 import com.mygdx.game.SevenDungeons;
 
@@ -20,16 +21,20 @@ public abstract class Player extends Actor {
 	public float xPos = 0;
 	public float yPos = 0;
 	Batch batch;
+	public boolean isHuman;
 	public ArrayList<Card> hand = new ArrayList<Card>();
+	
+	private boolean dead = false;
+	private String status = "";
 
 
-	public Player(String texture, int health, int attack, int defense) {
+	public Player(String texture, int health, int attack, int defense, boolean human) {
 		this.texture = new Texture(texture);
 		this.batch = SevenDungeons.batch;
 		this.maxHealth = this.currentHealth = health;
 		this.attack = attack;
 		this.defense = defense;
-		System.out.print(defense);
+		this.isHuman = human;
 	}
 
 	public void draw(Batch batch, float alpha) {
@@ -74,13 +79,21 @@ public abstract class Player extends Actor {
 	
 	public void takeHit(int hit, Player attacker){
 		if (hit > 0)
-		currentHealth -= hit;
-		if (currentHealth <= 0) this.death(attacker);
+			currentHealth -= hit;
+		if (currentHealth <= 0) {
+			SevenDungeons.battleScreen.isFinished = true;
+			SevenDungeons.battleScreen.removeDeadPlayerImage();
+			this.death(attacker);
+		}
 	}
 	
 	public abstract void death(Player attacker);
 	
 	public abstract void giveGold(int value);
+	
+	public abstract int getGold();
+	
+	public abstract void recover();
 	
 	public void updateStat(Card card){
 		
@@ -88,6 +101,22 @@ public abstract class Player extends Actor {
 		//	 attack += card.activateAttack();
 		//	 defense += card.activateDefense();
 		
+	}
+	
+	public String getStatus(){
+		return status;
+	}
+	
+	public void setStatus(String status){
+		this.status = status;
+	}
+	
+	public boolean isDead(){
+		return dead;
+	}
+	
+	public void setDead(boolean dead){
+		this.dead = dead;
 	}
 	
 	public void giveCard(Card card){

@@ -229,7 +229,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 		innerTable.add(infoTable);
 		innerTable.debug();
 		
-		String labelText = "Player " + String.valueOf(SevenDungeons.turn + 1);
+		String labelText = "Player " + String.valueOf(SevenDungeons.turn + 1) + player.getStatus();
 		
 		table.add(new Label(labelText, SevenDungeons.labelStyle)).align(Align.left).height(height - infoTable.getHeight());
 		table.row();

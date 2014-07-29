@@ -124,13 +124,13 @@ public  class SevenDungeons extends Game{
 	
 	//changes turn
 	public static void changeTurn(){
+		getPlayer().setStatus("");
 		turn++;
 		turn %= players.size();
 		boardScreen.dock.show();
 		boardScreen.setFocus(getPlayer().xPos, getPlayer().yPos);
 		boardScreen.move = false;
 		boardScreen.rolled = false;
-		
 	}
 	
 	//gets the current player
@@ -161,15 +161,15 @@ public  class SevenDungeons extends Game{
 		game.setScreen(handScreen);
 	}
 	
-	// opens shop screen
+	// opens shop screen sets prices and values
 	public static void openShop(){
 		ArrayList<ItemCard> cards = new ArrayList<ItemCard>(6);
 		for (int i = 0; i < 6; i++){
 			int price = 0;
 			if (i>2){
-				price = 30;
-			} else {
 				price = 10;
+			} else {
+				price = 5;
 			}
 			
 			ItemCard curCard = new ItemCard((i%3)+1, price);

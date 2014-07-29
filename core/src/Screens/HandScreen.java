@@ -128,7 +128,8 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 		
 	}
 	
-	public void useSpell(Group spellCard){
+	// Removes Card from player hand and sets Icon in HandScreen to invisible
+	public void removeFromHand(Group spellCard){
 		
 		if (!player.hand.isEmpty()){
 			int handCount = player.hand.size();
@@ -139,7 +140,6 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 					player.hand.remove(i);
 					handCount--;
 					current.getGroup().setVisible(false);
-					// add whatever the spell does here
 				}
 			}
 		}

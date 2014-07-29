@@ -19,11 +19,10 @@ public class Monster extends Player {
 	int type;
 	int level;
 	
-	
 	public Monster(int level, int type) {
 		
 		
-		super(strings[level][type-1], health[type -1 ] *(level + 1), attack[type -1  ] * (level + 1), defense[type -1] * (level + 1));
+		super(strings[level][type-1], health[type -1 ] *(level + 1), attack[type -1  ] * (level + 1), defense[type -1] * (level + 1),false);
 		this.level = level;
 		this.type = type - 1;
 	}
@@ -38,12 +37,23 @@ public class Monster extends Player {
 	}
 	
 	public void giveGold(int gold){
-		
+		// keep empty used in battleScreen
+	}
+	
+	public void recover(){
+		// keep empty used in battleScreen
+		this.setDead(false);
 	}
 
 	@Override
 	public void death(Player attacker) {
-		SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+		//SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+		this.setDead(true);
 		attacker.giveGold(this.gold[type] * (level + 1));
+	}
+
+	@Override
+	public int getGold() {
+		return this.gold[type] * (level + 1);
 	}
 }
