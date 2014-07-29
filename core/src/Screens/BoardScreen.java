@@ -92,7 +92,7 @@ public class BoardScreen implements Screen, GestureListener {
 		public Texture texture = new Texture("background_table.png");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
-			batch.draw(texture, -500, -500);
+			batch.draw(texture, -1000, -1000,5000,5000);
 			//batch.end();
 		}
 	}

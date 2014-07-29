@@ -26,6 +26,10 @@ public class Monster extends Player {
 		this.level = level;
 		this.type = type - 1;
 	}
+	
+	public Monster(String texture, int health, int attack, int defense){
+		super(texture, health, attack, defense, false);
+	}
 
 	private int attack(){
 	//	return new Dice().roll;
