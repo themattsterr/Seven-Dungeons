@@ -76,7 +76,7 @@ public class HandScreen implements Screen, GestureListener, ActionListener{
 	}	
 
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.jpg");
+		public Texture texture = new Texture("background_table.png");
 		public void draw(Batch batch, float parentAlpha){
 			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}

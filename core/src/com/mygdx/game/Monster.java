@@ -6,9 +6,9 @@ import regularClases.Player;
 
 public class Monster extends Player {
 	
-	private static String[][] strings = {{new String("grenflytrap.jpg"), new String("greensprite.jpg"), new String("greenbiclops.jpg"), new String("greenslime.jpg"), new String("greengargoyle.jpg"), new String("greenspider.jpg")},
-									{new String("blueflytrap.jpg"), new String("bluesprite.jpg"), new String("bluebiclops.jpg"), new String("blueslime.jpg"), new String("greengargoyle.jpg"), new String("bluespider.jpg")},
-									{new String("redflytrap.jpg"), new String("redsprite.jpg"), new String("redbiclops.jpg"), new String("redslime.jpg"), new String("redgargoyle.jpg"), new String("redspider.jpg")}};
+	private static String[][] strings = {{new String("grenflytrap.png"), new String("greensprite.png"), new String("greenbiclops.png"), new String("greenslime.png"), new String("greengargoyle.png"), new String("greenspider.png")},
+									{new String("blueflytrap.png"), new String("bluesprite.png"), new String("bluebiclops.png"), new String("blueslime.png"), new String("greengargoyle.png"), new String("bluespider.png")},
+									{new String("redflytrap.png"), new String("redsprite.png"), new String("redbiclops.png"), new String("redslime.png"), new String("redgargoyle.png"), new String("redspider.png")}};
 									
 
 	private static int[] health = {2,3,4,5,3,5};

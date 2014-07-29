@@ -63,7 +63,7 @@ public class NewGameScreen implements Screen{
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 		
-		img = new Texture("7_dungeons_title_screen_small.jpg");
+		img = new Texture("7_dungeons_title_screen_small.png");
 		
 
 		

@@ -100,7 +100,7 @@ public class BattleScreen implements Screen {
 	}
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.jpg");
+		public Texture texture = new Texture("background_table.png");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
 			batch.draw(texture, 0, 0,WIDTH,HEIGHT);

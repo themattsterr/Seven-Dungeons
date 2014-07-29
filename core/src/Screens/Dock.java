@@ -89,7 +89,7 @@ public class Dock extends WidgetGroup implements ActionListener {
 	
 	private void create() {
 		
-		dockTexture = new Texture("background_table.jpg");
+		dockTexture = new Texture("background_table.png");
 		dockRegion = new TextureRegion(dockTexture, 0, 0, dockWidth, dockHeight);
 		
 		dice = new Dice(dockHeight/2, dockHeight/2);

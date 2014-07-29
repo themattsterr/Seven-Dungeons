@@ -90,7 +90,7 @@ public class ShopScreen implements Screen, GestureListener, ActionListener{
 	
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("shop_screen3.jpg");
+		public Texture texture = new Texture("shop_screen3.png");
 		public void draw(Batch batch, float parentAlpha){
 			batch.draw(texture, 0, 0,screenWidth,screenHeight);
 		}
