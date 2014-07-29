@@ -27,7 +27,7 @@ public class Dice extends Actor implements ActionListener {
 	//dice
 	public Dice(float width, float height) {
 
-		texture = new Texture("die.png");
+		texture = new Texture("die.jpg");
 		regions = new TextureRegion[6];
 		regions[0] = new TextureRegion(texture,138,138,138,138);
 		regions[1] = new TextureRegion(texture,276,414,138,138);

@@ -1,0 +1,39 @@
+
+card.jpg
+size: 514,927
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fortune_card
+  rotate: false
+  xy: 2, 620
+  size: 512, 307
+  orig: 512, 307
+  offset: 0, 0
+  index: -1
+item_card
+  rotate: false
+  xy: 2, 311
+  size: 512, 307
+  orig: 512, 307
+  index: -1
+quest_card
+  rotate: false
+  xy: 2, 2
+  size: 512, 307
+  orig: 512, 307
+  offset: 0, 0
+  index: -1
+
+card2.jpg
+size: 514,309
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spell_card
+  rotate: false
+  xy: 2, 2
+  size: 512, 307
+  orig: 512, 307
+  offset: 0, 0
+  index: -1

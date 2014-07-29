@@ -59,7 +59,7 @@ public class ChooseClassScreen implements Screen{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		img = new Texture("player1_class_select.png");
+		img = new Texture("player1_class_select.jpg");
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
 		

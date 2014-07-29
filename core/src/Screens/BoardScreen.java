@@ -80,7 +80,7 @@ public class BoardScreen implements Screen, GestureListener {
 	
 	//the game board
 	public class BoardActor extends Actor{
-		public Texture texture = new Texture("new_board.png");
+		public Texture texture = new Texture("new_board.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
 			batch.draw(texture, 0, 0);
@@ -89,7 +89,7 @@ public class BoardScreen implements Screen, GestureListener {
 	}
 	
 	public class Back extends Actor{
-		public Texture texture = new Texture("background_table.png");
+		public Texture texture = new Texture("background_table.jpg");
 		public void draw(Batch batch, float parentAlpha){
 			//batch.begin();
 			batch.draw(texture, -1000, -1000,5000,5000);

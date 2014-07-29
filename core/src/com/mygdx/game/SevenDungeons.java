@@ -86,7 +86,7 @@ public  class SevenDungeons extends Game{
 		font = new BitmapFont(Gdx.files.internal("exo-small.fnt"), false);
 		labelStyle = new LabelStyle(font, Color.BLACK);
 		
-		iconTexture = new Texture("playericons.png");
+		iconTexture = new Texture("playericons.jpg");
 		healthRegion = new TextureRegion(iconTexture, 0, 0, 180, 180);
 		attackRegion = new TextureRegion(iconTexture, 180, 0, 180, 180); 
 		defenseRegion = new TextureRegion(iconTexture, 360, 0, 180, 180);
