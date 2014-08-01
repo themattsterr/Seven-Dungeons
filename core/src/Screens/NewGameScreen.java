@@ -32,10 +32,16 @@ public class NewGameScreen implements Screen{
 		
 		// TODO Auto-generated method stub
 		if(Gdx.input.justTouched()){
-			SevenDungeons.game.setScreen(SevenDungeons.chooseClassScreen);
-			//game.setScreen(SevenDungeons.chooseClassScreen);
-			//dispose();
-			
+
+			if(Gdx.input.getY()  < Gdx.graphics.getHeight() / 2){
+				SevenDungeons.game.setScreen(SevenDungeons.chooseClassScreen);
+			}
+			else {
+
+				SevenDungeons.loadGame();
+				SevenDungeons.game.setScreen(SevenDungeons.boardScreen);
+
+			}
 		
 		} 
 		

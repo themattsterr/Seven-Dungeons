@@ -14,6 +14,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +25,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.JsonValue;
 
 import regularClases.Archer;
 import regularClases.Assassin;
@@ -32,7 +36,7 @@ import regularClases.Knight;
 import regularClases.Mage;
 import regularClases.Player;
 
-public  class SevenDungeons extends Game{
+public  class SevenDungeons extends Game implements Serializable{
 	
 	//references to every screen
 	public static NewGameScreen newGameScreen;
@@ -185,9 +189,47 @@ public  class SevenDungeons extends Game{
 		shopScreen.setInventory(cards);
 		game.setScreen(shopScreen);
 	}
+
+	@Override
+	public void write(Json json) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void read(Json json, JsonValue jsonData) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
+	public static void saveGame(){
+		Json json = new Json();
+		String game = json.toJson(SevenDungeons.game);
+		FileHandle file = Gdx.files.local("game.json");
+		file.writeString(game, false);
 
+
+
+	}
+
+	public static  void loadGame(){
+		FileHandle file = Gdx.files.local("game.json");
+		String games = file.readString();
+
+		if (games.equals(null)) System.out.print("file not found");
+		Json json = new Json();
+
+		SevenDungeons gamer = json.fromJson(SevenDungeons.class, games);
+		SevenDungeons.addPlayer(new Mage(2));
+		SevenDungeons.addPlayer(gamer.getPlayer(0));
+		SevenDungeons.addPlayer(gamer.getPlayer(1));
+		SevenDungeons.addPlayer(gamer.getPlayer(2));
+		SevenDungeons.addPlayer(gamer.getPlayer(3));
+
+
+
+	}
 
 	
 }
