@@ -108,7 +108,7 @@ public class ShopScreen implements Screen, GestureListener{
 		goldTable.add(goldImage).size(imageSize, imageSize).expand();
 		goldTable.add(new Label(gold.toString(), SevenDungeons.labelStyle)).expand();
 		goldTable.setSize(imageSize*2, imageSize);
-		goldTable.setPosition(screenWidth - 375, screenHeight - 225);
+		goldTable.setPosition(screenWidth - 375, screenHeight - 225	);
 		
 		stage.addActor(goldTable);
 	}

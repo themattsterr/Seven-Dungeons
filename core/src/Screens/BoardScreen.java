@@ -142,8 +142,12 @@ public class BoardScreen implements Screen, GestureListener {
 	    if(move == false){
 	    	dock.exitButton.setVisible(false);
 	    	if(rolled == false){
-		    	//if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R))){
-		    	
+		    	if((((Gdx.input.getAccelerometerX() + Gdx.input.getAccelerometerY() + Gdx.input.getAccelerometerZ()) < 2)) || (Gdx.input.isButtonPressed(Keys.R)))
+		    		{
+			    		roll = SevenDungeons.getPlayer().rollDice(dock);
+			    		rolled = true;
+			    		dock.show();
+		    		}
 	    		// moved into input listener in the dice class
 	    	    
 	    	}
